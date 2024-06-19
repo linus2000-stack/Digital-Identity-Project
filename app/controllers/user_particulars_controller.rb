@@ -1,4 +1,5 @@
 class UserParticularsController < ApplicationController
+  include UserParticularsHelper
   def show
     # Retrieve the user particular by ID
     @user_particular = UserParticular.find_by_id(params[:id])
@@ -19,9 +20,13 @@ class UserParticularsController < ApplicationController
 
   def new
     #automatically renders app/views/user_particulars/new.html.erb
+    @countries = country_options
+    @ethnicities = ethnicity_options
+    @religions = religion_options
   end
 
   def confirm
+    #TODO: Rename to singular naming
     @user_particulars = params.permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, :birth_certificate, :passport, :other_identity_documents)
     #automatically renders app/views/user_particulars/confirm.html.erb
   end

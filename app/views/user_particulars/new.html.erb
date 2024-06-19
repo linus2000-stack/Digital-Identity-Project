@@ -14,24 +14,24 @@
     <%= form.telephone_field :secondary_phone_number, class: "form-control", placeholder: "+60" %>
   </div>
 
-    <div class="form-group">
-        <%= form.label :country_of_origin, "Country of origin (Required)" %>
-        <%= form.select :country_of_origin, options_for_select(['Singapore','Malaysia']), class: "form-control", required: true %>
-    </div>
+  <div class="form-group">
+    <%= form.label :country_of_origin, "Country of origin (Required)" %>
+    <%= form.select :country_of_origin, options_for_select(@countries.unshift(["Please choose an option", ""])), {}, class: "form-control", required: true %>
+  </div>
 
   <div class="form-group">
     <%= form.label :ethnicity, "Ethnicity (Required)" %>
-    <%= form.select :ethnicity, options_for_select(['Chinese','Malay']), class: "form-control", required: true %>
+    <%= form.select :ethnicity, options_for_select(@ethnicities.unshift(["Please choose an option", ""])), class: "form-control", required: true %>
   </div>
 
   <div class="form-group">
     <%= form.label :religion, "Religion (Required)" %>
-    <%= form.select :religion, options_for_select(['Taoist','Muslim']), class: "form-control", required: true %>
+    <%= form.select :religion, options_for_select(@religions.unshift(["Please choose an option", ""])), class: "form-control", required: true %>
   </div>
 
   <div class="form-group">
     <%= form.label :gender, "Gender (Required)" %>
-    <%= form.select :gender, options_for_select(['Woman','Male']), class: "form-control", required: true %>
+    <%= form.select :gender, options_for_select(['Male', 'Female', 'Others']), class: "form-control", required: true %>
   </div>
 
   <div class="form-group">
@@ -60,5 +60,5 @@
     <%= form.submit "Next", class: "btn btn-primary" %>
   </div>
 
-
 <% end %>
+
