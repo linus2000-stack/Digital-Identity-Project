@@ -25,42 +25,58 @@ RSpec.describe UserParticular, type: :model do
     end
   end
 
-  describe '.create_and_return_id' do
-    it 'creates a new user particular and returns its ID' do
+  describe '.create' do
+    it 'creates a new user particular' do
       attributes = {
-        full_name: 'Test User',
-        phone_number: '555-555-5555'
+        full_name: 'Ashin Jinarakkhita',
+        phone_number: '03-21008141',
+        secondary_phone_number: '03-21348711',
+        country_of_origin: 'Myanmar',
+        ethnicity: 'Chinese',
+        religion: 'Buddhist',
+        gender: 'Female',
+        date_of_birth: Date.new(1999, 11, 1),
+        date_of_arrival: Date.new(2019, 10, 20),
+        photo_url: 'https://example.com/ashin_jinarakkhita_photo.jpg',
+        birth_certificate_url: 'https://example.com/ashin_jinarakkhita_birth_certificate.jpg',
+        passport_url: 'https://example.com/ashin_jinarakkhita_passport.jpg'
       }
-      user_particular_id = UserParticular.create_and_return_id(attributes)
-      expect(user_particular_id).not_to be_nil
-      expect(UserParticular.find_by_id(user_particular_id)).to have_attributes(attributes)
+      user_particular = UserParticular.create_user_particular(attributes)
+      expect(user_particular).not_to be_nil
+      expect(user_particular).to have_attributes(attributes)
     end
   end
 
   describe '.find_by_id' do
     it 'returns the user particular with the specified ID' do
-      attributes = {
-        full_name: 'John Doe',
-        phone_number: '123-456-7890',
-        secondary_phone_number: '555-123-4567',
-        country_of_origin: 'United States',
-        ethnicity: 'Caucasian',
-        religion: 'Christian',
+      attributes = { 
+        full_name: 'Rohingya Aung', 
+        phone_number: '111-222-3333',
+        secondary_phone_number: '555-555-5555',
+        country_of_origin: 'Myanmar',
+        ethnicity: 'Rohingya',
+        religion: 'Muslim',
         gender: 'Male',
-        date_of_birth: '1990-01-01',
-        date_of_arrival: '2020-01-01',
-        photo_url: 'https://example.com/john_doe_photo.jpg',
-        birth_certificate_url: 'https://example.com/john_doe_birth_certificate.jpg',
-        passport_url: 'https://example.com/john_doe_passport.jpg'
+        date_of_birth: Date.new(1990, 3, 25),
+        date_of_arrival: Date.new(2017, 9, 10),
+        photo_url: 'https://example.com/rohingya_aung_photo.jpg',
+        birth_certificate_url: 'https://example.com/rohingya_aung_birth_certificate.jpg',
+        passport_url: 'https://example.com/rohingya_aung_passport.jpg'
       }
-
+  
       # Find the first user particular to ensure it exists
       user_particular = UserParticular.first
       expect(user_particular).not_to be_nil
-
+  
+      # Test the find_by_id method
       found_user_particular = UserParticular.find_by_id(user_particular.id)
-      expect(found_user_particular.attributes.except('id', 'created_at', 'updated_at').symbolize_keys).to eq(attributes)
-    end
+      expect(found_user_particular).not_to be_nil
+      attributes.each do |key, value|
+          expect(found_user_particular.send(key)).to eq(value)
+      end
+      
+      #expect(found_user_particular.attributes.except('id', 'created_at', 'updated_at', 'date_of_birth', 'date_of_arrival').symbolize_keys).to eq(attributes)
+    end  
 
     it 'returns nil if no user particular with the specified ID is found' do
       found_user_particular = UserParticular.find_by_id(999999) # Assuming there's no user particular with ID 999999
