@@ -2,9 +2,6 @@ class UserParticularsController < ApplicationController
   def show
     # Retrieve the user particular by ID
     @user_particular = UserParticular.find_by_id(params[:id])
-    if @user_particular.nil?
-        flash['alert'] = "User cannot be found!"
-    end
   end
   
 
