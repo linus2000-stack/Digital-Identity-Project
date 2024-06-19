@@ -8,8 +8,8 @@ class CreateUserParticulars < ActiveRecord::Migration[7.1]
       t.string :ethnicity
       t.string :religion 
       t.string :gender 
-      t.string :date_of_birth
-      t.string :date_of_arrival
+      t.date :date_of_birth
+      t.date :date_of_arrival
       t.string :photo_url
       t.string :birth_certificate_url
       t.string :passport_url

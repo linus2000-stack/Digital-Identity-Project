@@ -5,7 +5,8 @@ class UserParticularsController < ApplicationController
 
   def create
     #create new userparticulars in database, retrieve item of new row 
-
+    #remember to reverse date format before passing to model
+    #id retrieve from the returned model
     # calls show method, displays userparticulars of certain id
     redirect_to user_particular_path(1)
   end
