@@ -6,6 +6,6 @@ seed_user_particulars = [
   { full_name: 'Emma Davis', phone_number: '444-444-4444' }
 ]
 
-seed_user_particulars.each do |user_particulars|
-  UserParticulars.create!(user_particulars)
+seed_user_particulars.each do |user_particular|
+  UserParticular.create!(user_particular)
 end

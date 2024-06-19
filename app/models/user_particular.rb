@@ -1,4 +1,4 @@
-class UserParticulars < ActiveRecord::Base
+class UserParticular < ActiveRecord::Base
     def self.first_user_particulars
         first
     end

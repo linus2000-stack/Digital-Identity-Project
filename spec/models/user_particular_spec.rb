@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserParticulars, type: :model do
+RSpec.describe UserParticular, type: :model do
   # Seed the database before running any tests
   before(:all) do
     Rails.application.load_seed
@@ -16,14 +16,14 @@ RSpec.describe UserParticulars, type: :model do
 
   describe '.first_user_particulars' do
     it 'returns the first user particulars in the database' do
-      user = UserParticulars.first_user_particulars
+      user = UserParticular.first_user_particulars
       expect(user).to have_attributes(full_name: 'John Doe', phone_number: '123-456-7890')
     end
   end
 
   describe '.last_user_particulars' do
     it 'returns the last user particulars in the database' do
-      user = UserParticulars.last_user_particulars
+      user = UserParticular.last_user_particulars
       expect(user).to have_attributes(full_name: 'Emma Davis', phone_number: '444-444-4444')
     end
   end
