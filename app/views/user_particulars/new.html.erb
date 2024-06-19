@@ -1,11 +1,11 @@
 <%= form_with(url: user_particulars_confirm_path, method: :get, class: 'form') do |form| %>
   <div class="form-group">
-    <%= form.label :full_name, "Full name (Required)" %>
-    <%= form.text_field :full_name, class: "form-control", required: true %>
+  <%= form.label :full_name, "Full name" %><span class="text-danger">*</span>
+  <%= form.text_field :full_name, class: "form-control", required: true %>
   </div>
 
   <div class="form-group">
-    <%= form.label :phone_number, "Phone number (Required)" %>
+    <%= form.label :phone_number, "Phone number" %><span class="text-danger">*</span>
     <%= form.telephone_field :phone_number, class: "form-control", required: true, placeholder: "+60" %>
   </div>
 
@@ -15,38 +15,38 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :country_of_origin, "Country of origin (Required)" %>
-    <%= form.select :country_of_origin, options_for_select(@countries.unshift(["Please choose an option", ""])), {}, class: "form-control", required: true %>
+    <%= form.label :country_of_origin, "Country of origin" %><span class="text-danger">*</span>
+    <%= form.select :country_of_origin, options_for_select(@countries), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
   </div>
 
   <div class="form-group">
-    <%= form.label :ethnicity, "Ethnicity (Required)" %>
-    <%= form.select :ethnicity, options_for_select(@ethnicities.unshift(["Please choose an option", ""])), class: "form-control", required: true %>
+    <%= form.label :ethnicity, "Ethnicity" %><span class="text-danger">*</span>
+    <%= form.select :ethnicity, options_for_select(@ethnicities), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
   </div>
 
   <div class="form-group">
-    <%= form.label :religion, "Religion (Required)" %>
-    <%= form.select :religion, options_for_select(@religions.unshift(["Please choose an option", ""])), class: "form-control", required: true %>
+    <%= form.label :religion, "Religion" %><span class="text-danger">*</span>
+    <%= form.select :religion, options_for_select(@religions), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
   </div>
 
   <div class="form-group">
-    <%= form.label :gender, "Gender (Required)" %>
-    <%= form.select :gender, options_for_select(['Male', 'Female', 'Others']), class: "form-control", required: true %>
+    <%= form.label :gender, "Gender" %><span class="text-danger">*</span>
+    <%= form.select :gender, options_for_select(['Male', 'Female', 'Others']), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
   </div>
 
   <div class="form-group">
-    <%= form.label :date_of_birth, "Date of birth (Required)" %>
+    <%= form.label :date_of_birth, "Date of birth" %><span class="text-danger">*</span>
     <%= form.date_field :date_of_birth, class: "form-control", required: true %>
   </div>
  
  <div class="form-group">
-    <%= form.label :date_of_arrival, "Date of arrival in Malaysia (Required)" %>
+    <%= form.label :date_of_arrival, "Date of arrival in Malaysia" %><span class="text-danger">*</span>
     <%= form.date_field :date_of_arrival, class: "form-control", required: true %>
   </div>
  
  <div class="form-group">
-    <%= form.label :passport_photo, "Upload a copy of your passport size photo (Required)" %>
-    <%= form.file_field :passport_photo, accept: 'image/jpeg,image/gif,image/png,application/pdf', class: "form-control-file", required: true %>
+    <%= form.label :passport_photo, "Upload a copy of your passport size photo (optional)"%>
+    <%= form.file_field :passport_photo, accept: 'image/jpeg,image/gif,image/png,application/pdf', class: "form-control-file"%>
   </div>
  
  <div class="form-group">
