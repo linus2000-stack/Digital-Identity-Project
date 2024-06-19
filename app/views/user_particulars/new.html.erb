@@ -1,2 +1,65 @@
-<h1>Form to fill up user particulars</h1>
-<p>Find me in app/views/user_particulars/new.html.erb</p>
+<h1 style="background-color: #0072bc; color: white">Update Particulars</h1>
+<p class="note">Please fill in this form in English or Malay only.</p>
+
+<%= form_tag url:'user_particulars/confirm', :method => :get, :class => 'form' do %>
+    <div class="form-group">
+    <%= form.label :user_particulars, :full_name, "Full name (Required)" %>
+    <%= form.text_field :user_particulars, :full_name, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :phone_number, "Phone number (Required)" %>
+    <%= form.telephone_field :user_particulars, :phone_number, class: "form-control", required: true, placeholder: "+60" %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :secondary_phone_number, "Secondary phone number (optional)" %>
+    <%= form.telephone_field :user_particulars, :secondary_phone_number, class: "form-control", placeholder: "+60" %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :country_of_origin, "Country of origin (Required)" %>
+    <%= form.select :user_particulars, :country_of_origin, options_for_select([["Please choose an option", ""], "Country 1", "Country 2"]), {}, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :ethnicity, "Ethnicity (Required)" %>
+    <%= form.select :user_particulars, :ethnicity, options_for_select([["Please choose an option", ""], "Ethnicity 1", "Ethnicity 2"]), {}, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :religion, "Religion (Required)" %>
+    <%= form.select :user_particulars, :religion, options_for_select([["Please choose an option", ""], "Religion 1", "Religion 2"]), {}, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :gender, "Gender (Required)" %>
+    <%= form.select :user_particulars, :gender, options_for_select([["Please choose an option", ""], "Male", "Female", "Other"]), {}, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :date_of_birth, "Date of birth (Required)" %>
+    <%= form.date_field :user_particulars, :date_of_birth, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :user_particulars, :date_of_arrival, "Date of arrival in Malaysia (Required)" %>
+    <%= form.date_field :user_particulars, :date_of_arrival, class: "form-control", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :passport_photo, "Upload a copy of your passport size photo (Required)" %>
+    <%= form.file_field :passport_photo, accept: 'image/jpeg,image/gif,image/png,application/pdf', class: "form-control-file", required: true %>
+    </div>
+
+    <div class="form-group">
+    <%= form.label :documents, "I have the following documents (optional)" %><br>
+    <%= form.check_box :birth_certificate %> Birth certificate<br>
+    <%= form.check_box :passport %> Passport<br>
+    <%= form.check_box :other_identity_documents %> Other identity documents
+    </div>
+
+    <div class="text-center">
+    <%= form.submit "Next", class: "btn btn-primary" %>
+    </div>
+<% end %>
