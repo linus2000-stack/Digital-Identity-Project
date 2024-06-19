@@ -1,11 +1,9 @@
 class UserParticular < ActiveRecord::Base    
-    def self.create_and_return_id(attributes)
-        user_particular = UserParticular.create(attributes)
-        user_particular.id
+    def self.create_user_particular(attributes)
+        UserParticular.create(attributes)
     end
 
-    def self.find_by_id(user_particular_id)
-        UserParticular.find_by(id: user_particular_id)
+    def self.find_by_id(id)
+        UserParticular.find_by(id: id)
     end
-      
 end
