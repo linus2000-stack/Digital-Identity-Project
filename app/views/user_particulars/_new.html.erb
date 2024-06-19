@@ -1,0 +1,63 @@
+<h2 class="text-center" style="color: black">Fill in your particulars</h2>
+<%= form_with(url: user_particulars_confirm_path, method: :get, class: 'form') do |form| %>
+  <div class="form-group">
+  <%= form.label :full_name, "Full Name" %><span class="text-danger">*</span>
+  <%= form.text_field :full_name, value: @user_particulars[:full_name], class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :phone_number, "Phone number" %><span class="text-danger">*</span>
+    <%= form.telephone_field :phone_number, value: @user_particulars[:phone_number], class: "form-control", required: true, placeholder: "+60" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :secondary_phone_number, "Secondary phone number (optional)" %>
+    <%= form.telephone_field :secondary_phone_number, value: @user_particulars[:secondary_phone_number], class: "form-control", placeholder: "+60" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :country_of_origin, "Country of origin" %><span class="text-danger">*</span>
+    <%= form.select :country_of_origin, value: @user_particulars[:country_of_origin], options_for_select(@countries), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :ethnicity, "Ethnicity" %><span class="text-danger">*</span>
+    <%= form.select :ethnicity, value: @user_particulars[:ethnicity], options_for_select(@ethnicities), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :religion, "Religion" %><span class="text-danger">*</span>
+    <%= form.select :religion, value: @user_particulars[:religion], options_for_select(@religions), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :gender, "Gender" %><span class="text-danger">*</span>
+    <%= form.select :gender, value: @user_particulars[:gender], options_for_select(['Male', 'Female', 'Others']), { include_blank: "Please choose an option" }, { class: "form-control", required: true } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :date_of_birth, "Date of birth" %><span class="text-danger">*</span>
+    <%= form.date_field :date_of_birth, value: @user_particulars[:date_of_birth], class: "form-control", required: true %>
+  </div>
+ 
+ <div class="form-group">
+    <%= form.label :date_of_arrival, "Date of arrival in Malaysia" %><span class="text-danger">*</span>
+    <%= form.date_field :date_of_arrival, value: @user_particulars[:date_of_arrival], class: "form-control", required: true %>
+  </div>
+ 
+ <div class="form-group">
+    <%= form.label :passport_photo, "Upload a copy of your passport size photo (optional)"%>
+    <%= form.file_field :passport_photo, accept: 'image/jpeg,image/gif,image/png,application/pdf', class: "form-control-file"%>
+  </div>
+ 
+ <div class="form-group">
+   <%= form.label :documents, "I have the following documents (optional)" %><br>
+    <%= form.check_box :birth_certificate, id: 'birth_certificate' %> <label for="birth_certificate">Birth certificate</label><br>
+    <%= form.check_box :passport, id: 'passport' %> <label for="passport">Passport</label><br>
+    <%= form.check_box :other_identity_documents, id: 'other_identity_documents' %> <label for="other_identity_documents">Other identity documents</label>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit "Next", class: "btn btn-primary" %>
+  </div>
+<% end %>

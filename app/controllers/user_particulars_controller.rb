@@ -27,7 +27,7 @@ class UserParticularsController < ApplicationController
 
   def confirm
     #TODO: Rename to singular naming
-    @user_particulars = params.permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, :birth_certificate, :passport, :other_identity_documents)
+    @user_particular = params.permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, :birth_certificate, :passport, :other_identity_documents)
     #automatically renders app/views/user_particulars/confirm.html.erb
   end
 
