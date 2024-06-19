@@ -1,2 +1,16 @@
-<h1>View user's already filledup userparticulars</h1>
-<p>Find me in app/views/user_particulars/show.html.erb</p>
+<h1>View user's already filled up userparticulars</h1>
+
+</div><div class="card">
+  <div class="card-body">
+    <h3 class="card-title">Your Details</h5>
+    <p class="card-text"><strong>Full Name:</strong> <%= @user_particulars.[full_name] %></p>
+    <p class="card-text"><strong>Phone Number:</strong> <%= @user_particulars[:phone_number] %></p>
+    <p class="card-text"><strong>Secondary Phone Number:</strong> <%= @user_particulars[:secondary_phone_number] || "N/A" %></p>
+    <p class="card-text"><strong>Country of Origin:</strong> <%= @user_particulars[:country_of_origin] %></p>
+    <p class="card-text"><strong>Ethnicity:</strong> <%= @user_particulars[:ethnicity] %></p>
+    <p class="card-text"><strong>Religion:</strong> <%= @user_particulars[:religion] %></p>
+    <p class="card-text"><strong>Gender:</strong> <%= @user_particulars[:gender] %></p>
+    <p class="card-text"><strong>Date of Birth:</strong> <%= @user_particulars[:date_of_birth] %></p>
+    <p class="card-text"><strong>Date of Arrival in Malaysia:</strong> <%= @user_particulars[:date_of_arrival] %></p>
+  </div>
+</div>
