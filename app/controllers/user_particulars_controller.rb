@@ -15,6 +15,7 @@ class UserParticularsController < ApplicationController
     @user_particular = UserParticular.create_user_particular(params.permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival))
     
     #redirect to show
+    flash[:notice] = "User successfully created!"
     redirect_to user_particular_path(@user_particular.id)
   end
 
