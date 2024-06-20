@@ -1,11 +1,10 @@
 Feature: Confirm and View Particulars
   As an undocumented user,
   I want to confirm my particulars
-  So that I can view them on the "Digital ID" page
+  So that I can view my "Digital ID" on the main page
 
 Scenario: All Fields Displayed
-  Given I am on the "Confirmation" page
-  And I see the following particulars:
+  Given I entered the following particulars:
     | Full Name                 | Alice Tan
     | Phone Number              | 99999999
     | Secondary Phone Number    | 87654321
@@ -15,9 +14,7 @@ Scenario: All Fields Displayed
     | Gender                    | Female
     | Date of Birth             | 12-04-1990
     | Date of Arrival in Malaysia | 20-01-2020
-  When I press "Confirm"
-  Then I will be redirected to the "Digital ID" page
-  And I should see the filled-in details:
+  Then I should see the filled-in details:
     | Full Name                 | Alice Tan
     | Phone Number              | 99999999
     | Secondary Phone Number    | 87654321
@@ -27,10 +24,11 @@ Scenario: All Fields Displayed
     | Gender                    | Female
     | Date of Birth             | 12-04-1990
     | Date of Arrival in Malaysia | 20-01-2020
+  Then I press "Confirm" 
+  And I should see the foli
 
 Scenario: Secondary Phone Number Not Provided
-  Given I am on the "Confirmation" page
-  And I see the following particulars:
+  Given I entered the following particulars:
     | Full Name                 | Bob Lim
     | Phone Number              | 88888888
     | Secondary Phone Number    | 
@@ -53,7 +51,7 @@ Scenario: Secondary Phone Number Not Provided
     | Date of Birth             | 25-12-1985
     | Date of Arrival in Malaysia | 15-07-2018
 
-Scenario: Fill, Confirm, and Go Back to Form
+Scenario: Want to Go Back to Form to edit fields
   Given I enter the following particulars accordingly:
     | Full Name                 | Charlie Ng
     | Phone Number              | 77777777
