@@ -13,13 +13,14 @@ class UserParticularsController < ApplicationController
   end
 
   def new
-    @user_particular = UserParticular.new #An empty Model object to store the new details to be keyed in
-    set_dropdown_options # DRY up options population
+    @user_particular = UserParticular.new(session.fetch(:user_particular_params, {}))
+    #An Model object based on session details
+    set_dropdown_options # Only populate options if it's a fresh visit to the page.
   end
 
   def confirm
+    session[:user_particular_params] = user_particular_params # Use the session to store the model
     @user_particular = UserParticular.new(user_particular_params) #The Model object to store the hidden keyed params
-    # Use the session to store the data (or a separate model) if necessary.
   end
 
   def home; end
