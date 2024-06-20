@@ -18,21 +18,22 @@
 
   <div class="form-group">
     <%= form.label :country_of_origin, "Country of origin" %><span class="text-danger">*</span>
-    <%= form.select :country_of_origin, options_for_select(@countries), { include_blank: @user_particular["country_of_origin"] },  { class: "form-control", required: true } %> 
-  </div>
+    <%= form.select :country_of_origin, options_for_select(@countries, @user_particular["country_of_origin"]), {}, { class: "form-control", required: true } %>  </div>
   <div class="form-group">
-    <%= form.label :ethnicity, "Ethnicity" %><span class="text-danger">*</span>
-    <%= form.select :ethnicity, options_for_select(@ethnicities), { include_blank: @user_particular["ethnicity"] },  { class: "form-control", required: true } %> 
+<div class="form-group">
+  <%= form.label :ethnicity, "Ethnicity" %><span class="text-danger">*</span>
+  <%= form.select :ethnicity, options_for_select(@ethnicities, @user_particular["ethnicity"]), {}, { class: "form-control", required: true } %>
+</div>
   </div>
 
   <div class="form-group">
     <%= form.label :religion, "Religion" %><span class="text-danger">*</span>
-    <%= form.select :religion, options_for_select(@religions), { include_blank: @user_particular["religion"] }, { class: "form-control", required: true } %>
+    <%= form.select :religion, options_for_select(@religions, @user_particular["religion"]), {}, { class: "form-control", required: true } %>
   </div>
 
   <div class="form-group">
     <%= form.label :gender, "Gender" %><span class="text-danger">*</span>
-    <%= form.select :gender, options_for_select(['Male', 'Female', 'Others']), { include_blank: @user_particular["gender"] }, { class: "form-control", required: true } %>
+    <%= form.select :gender, options_for_select(['Male', 'Female', 'Others'], @user_particular["gender"]), {}, { class: "form-control", required: true } %> 
   </div>
 
   <div class="form-group">
