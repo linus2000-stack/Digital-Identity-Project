@@ -70,5 +70,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '~> 1.3.0'
+  gem 'pg', '~> 1.5.6' # for gcloud deployment
 end
