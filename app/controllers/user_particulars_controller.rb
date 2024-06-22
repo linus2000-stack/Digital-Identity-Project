@@ -78,7 +78,7 @@ class UserParticularsController < ApplicationController
       error_messages_arr << "Date of arrival cannot be in the future."
     end
     
-    flash[:alert] = error_messages_arr.join(", ") unless error_messages_arr.empty?
+    flash[:error] = error_messages_arr.join(", ") unless error_messages_arr.empty?
 
     error_messages_arr.empty?
   end
