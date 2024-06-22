@@ -7,32 +7,18 @@ class UserParticularsController < ApplicationController
     @user_particular = UserParticular.find_by_id(params[:id])
   end
   
-
   def create
     @user_particular = UserParticular.new(user_particular_params) #Model object with keyed params
     if @user_particular.save #the .save method checks whether the @user_particular was actually saved in the database.
       flash[:notice] = "Digital ID was successfully created!"
       redirect_to @user_particular
     end
-
-
-    #create new userparticulars in database, retrieve item of new row 
-    
-    #TODO: Parse date format before passing to model???
-
-    #id retrieve from the returned model
-    #@user_particular = UserParticular.create_user_particular(params.permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival))
-    
-    #redirect to show
-    #flash[:notice] = "User successfully created!"
-    #redirect_to user_particular_path(@user_particular.id)
   end
 
   def new
     #automatically renders app/views/user_particulars/new.html.erb
     @user_particular = UserParticular.new(session.fetch(:user_particular_params, {}))
-    #An Model object based on session details
-    set_dropdown_options # Only populate options if it's a fresh visit to the page.
+    set_dropdown_options 
   end
 
   def confirm
@@ -42,15 +28,12 @@ class UserParticularsController < ApplicationController
       # Render confirm if validation passes
       render :confirm
     else
-      # Render new with an error message if validation fails
-      flash[:error] = flash[:error].join(", ")
-      render :new
+      # Render new error message(s) if validation fails
+      redirect_to new_user_particular_path
     end
   end
 
   def home; end
-
-  private
 
   def user_particular_params
     params.require(:user_particular).permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, 
@@ -67,38 +50,39 @@ class UserParticularsController < ApplicationController
     @ethnicities = ethnicity_options
     @religions = religion_options
   end
-
+  
   def validate_user_particulars(user_particular)
-    valid = true
-    flash[:error] = []
-
+    error_messages_arr = []
+  
     if user_particular[:full_name] =~ /\d/
-      valid = false
-      flash[:error] << "Full name cannot contain numbers."
+      error_messages_arr << "Full name cannot contain numbers."
     end
-
+  
     if user_particular[:phone_number] =~ /[a-zA-Z]/
-      valid = false
-      flash[:error] << "Phone number cannot contain letters."
+      error_messages_arr << "Phone number cannot contain letters."
     end
-
+  
     if user_particular[:secondary_phone_number] =~ /[a-zA-Z]/
-      valid = false
-      flash[:error] << "Secondary phone number cannot contain letters."
+      error_messages_arr << "Secondary phone number cannot contain letters."
     end
-
+  
     if user_particular[:country_of_origin] =~ /[^a-zA-Z\s]/
-      valid = false
-      flash[:error] << "Country of origin should only contain letters."
+      error_messages_arr << "Country of origin should only contain letters."
+    end
+  
+    if user_particular[:date_of_birth] > Date.today 
+      error_messages_arr << "Date of birth cannot be in the future."
     end
 
-    if user_particular[:date_of_birth] or user_particular[:date_of_arrival] > Date.today
-      valid = false
-      flash[:error] << "Date not valid."
+    if user_particular[:date_of_arrival] > Date.today
+      error_messages_arr << "Date of arrival cannot be in the future."
     end
+    
+    flash[:alert] = error_messages_arr.join(", ") unless error_messages_arr.empty?
 
-    valid
+    error_messages_arr.empty?
   end
+  
 
   
 end
