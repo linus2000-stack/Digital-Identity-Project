@@ -8,10 +8,21 @@ class UserParticularsController < ApplicationController
   end
   
   def create
-    @user_particular = UserParticular.new(user_particular_params) #Model object with keyed params
-    if @user_particular.save #the .save method checks whether the @user_particular was actually saved in the database.
-      flash[:notice] = "Digital ID was successfully created!"
-      redirect_to @user_particular
+    if validate_user_particulars(UserParticular.new(user_particular_params))
+      @user_particular = UserParticular.create_user_particular(user_particular_params)
+
+      #Check if user particular creation was successful
+      if @user_particular.persisted? 
+        flash[:success] = "Digital ID was successfully created!"
+        redirect_to @user_particular #redirects to /user_particulars/:id
+      else 
+        flash[:error] = ["Error creating digital id"]
+        redirect_to user_particulars_confirm_path
+      end
+    
+    #Invalid user_particular_params
+    else 
+      redirect_to user_particulars_confirm_path
     end
   end
 
@@ -95,7 +106,4 @@ class UserParticularsController < ApplicationController
 
     error_messages_arr.empty?
   end
-  
-
-  
 end
