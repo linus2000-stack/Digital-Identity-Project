@@ -20,11 +20,11 @@
       <!--Display messages at the top of the page-->
       <%- if flash[:notice]%>
       <div class="alert alert-info text-center"><%=flash[:notice]%></div>
-      <% elsif flash[:error] %>
+      <% elsif flash[:error].present? %>
         <div class="alert alert-danger">
-          <ul>Please fix these errors: </ul>
+          <ul>Please fix the error(s) below: </ul>
           <ul>
-            <% flash[:error].split(',').each do |error| %>
+            <% flash[:error].each do |error| %>
               <li><%= error %></li>
             <% end %>
           </ul>
