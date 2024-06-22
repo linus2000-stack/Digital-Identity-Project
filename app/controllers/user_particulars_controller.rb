@@ -53,9 +53,9 @@ class UserParticularsController < ApplicationController
   private
 
   def user_particular_params
-    params.require(:user_particular).permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, :passport_photo, :birth_certificate, :passport, :other_identity_documents)
-    #params.require(:user_particular)
-    params[:user_particular]
+    params.require(:user_particular).permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, 
+                                            :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, 
+                                            :photo_url, :birth_certificate_url, :passport_url)
   end
 
   def set_user_particular
@@ -67,26 +67,6 @@ class UserParticularsController < ApplicationController
     @ethnicities = ethnicity_options
     @religions = religion_options
   end
-
-  #def confirm
-    #TODO: Rename to singular naming
-    #@user_particular = params.permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, :birth_certificate, :passport, :other_identity_documents)
-    #automatically renders app/views/user_particulars/confirm.html.erb
-    #correct validation for full name, phone number, secondary phone number, date of birth, date of arrival
-    #render confirm
-  #   if validate_user_particulars(@user_particular)
-  #     # Render confirm if validation passes
-  #     render :confirm
-  #   else
-  #     # Render new with an error message if validation fails
-  #     flash[:error] = flash[:error].join(", ")
-  #     render :new
-  #   end
-
-  #   #incorrect validation
-  #   #return to new page
-  # end
-
 
   def validate_user_particulars(user_particular)
     valid = true
@@ -116,8 +96,6 @@ class UserParticularsController < ApplicationController
       valid = false
       flash[:error] << "Date not valid."
     end
-
-    # Add more validations if necessary
 
     valid
   end
