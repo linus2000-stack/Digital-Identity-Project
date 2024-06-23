@@ -11,13 +11,13 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item text-nowrap"><strong>Full Name:</strong> <%= @user_particular.full_name %></li>
           <li class="list-group-item text-nowrap"><strong>Gender:</strong> <%= @user_particular.gender %></li>
-          <li class="list-group-item text-nowrap"><strong>Ethnicity:</strong> <%= @user_particular.ethnicity %></li>
+            <li class="list-group-item text-nowrap"><strong>Ethnicity:</strong> <%= @user_particular.ethnicity %></li>
           <li class="list-group-item text-nowrap"><strong>Religion:</strong> <%= @user_particular.religion %></li>
         </ul>
       </div>
       <div class="col-md-5 mb-3 mb-md-0">
         <ul class="list-group list-group-flush">
-                <li class="list-group-item text-nowrap"><strong>Country of Origin:</strong> <%= @user_particular.country_of_origin %></li>
+          <li class="list-group-item text-nowrap"><strong>Country of Origin:</strong> <%= @user_particular.country_of_origin %></li>
           <li class="list-group-item text-nowrap"><strong>Date of Birth:</strong> <%= Date.parse(@user_particular.date_of_birth).strftime("%d-%m-%Y") %></li>
           <li class="list-group-item text-nowrap"><strong>Date of Arrival:</strong> <%= Date.parse(@user_particular.date_of_arrival).strftime("%d-%m-%Y") %></li>
             <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= @user_particular.phone_number %></li>
