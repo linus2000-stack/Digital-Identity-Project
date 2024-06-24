@@ -44,6 +44,10 @@ class UserParticularsController < ApplicationController
 
   def home; end
 
+  def set_user_particular
+    @user_particular = UserParticular.find_by_id(params[:id])
+    end
+
   def user_particular_params
     params.require(:user_particular).permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin, 
                                             :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, 
@@ -101,3 +105,4 @@ class UserParticularsController < ApplicationController
     error_messages_arr.empty?
   end
 
+end
