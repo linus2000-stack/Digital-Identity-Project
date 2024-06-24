@@ -16,14 +16,24 @@
   <body>
       <h1 class="text-center" style="background-color: #0072bc; color: white">Our ID Boleh</h1>
       <div class="container mt-5">
-      <%= yield %>
       
+      <!--Display messages at the top of the page-->
       <%- if flash[:notice]%>
       <div class="alert alert-info text-center"><%=flash[:notice]%></div>
-      <%- elsif flash[:alert]%>
-      <div class="alert alert-danger text-center"><%=flash[:alert]%></div>
-
+      <%- elsif flash[:success]%>
+      <div class="alert alert-success text-center"><%=flash[:success]%></div>
+      <%- elsif flash[:error].present? %>
+        <div class="alert alert-danger">
+          <ul>Please fix the error(s) below: </ul>
+          <ul>
+            <% flash[:error].each do |error| %>
+              <li><%= error %></li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
+
+      <%= yield %>
       <footer class="footer text-center mt-5 py-3 bg-light">
         <p>Our ID Boleh © 2024 | A Documented Malaysia</p>
       </footer>
