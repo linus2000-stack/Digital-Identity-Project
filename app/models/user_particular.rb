@@ -1,4 +1,6 @@
 class UserParticular < ActiveRecord::Base  
+    belongs_to :user
+
     def self.create_user_particular(attributes)
         UserParticular.create(attributes)
     end
