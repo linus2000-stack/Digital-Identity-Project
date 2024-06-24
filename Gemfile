@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 ruby '3.2.4'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem 'devise'
 gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
-
 # Use sqlite3 as the database for Active Record
 gem 'erb_lint', require: false
 gem 'sqlite3', '~> 1.4'
