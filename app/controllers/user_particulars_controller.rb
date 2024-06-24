@@ -2,10 +2,8 @@ class UserParticularsController < ApplicationController
   include UserParticularsHelper
 
   before_action :set_user_particular, only: [:show]
-  def show
-    # Retrieve the user particular by ID
-    @user_particular = UserParticular.find_by_id(params[:id])
-  end
+  def show; end
+  # No need for content when using @user_particular from before_action
   
   def create
     if validate_user_particulars(UserParticular.new(user_particular_params))
@@ -51,11 +49,7 @@ class UserParticularsController < ApplicationController
                                             :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival, 
                                             :photo_url, :birth_certificate_url, :passport_url)
   end
-
-  def set_user_particular
-    @user_particular = UserParticular.find_by_id(params[:id])
-  end
-
+ 
   def set_dropdown_options
     @countries = country_options
     @ethnicities = ethnicity_options
@@ -106,4 +100,4 @@ class UserParticularsController < ApplicationController
 
     error_messages_arr.empty?
   end
-end
+
