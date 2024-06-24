@@ -1,13 +1,13 @@
 <div class="alert alert-warning" role="alert">
-    <strong>Beware of scam emails</strong>
-    <p>A fake email is circulating. Please do not click on hyperlinks or open attachments in the email as they may lead to phishing websites or contain malicious software. If you suspect that you have fallen prey, please call 6335 3533 to report it to Singpass Helpdesk.</p>
+    <strong>Alert!</strong>
+    <p>A fake email is circulating. Or any other alert message that should be shared</p>
 </div>
 
 <div class="row justify-content-around p-5">
     <div class="col-sm d-flex align-items-center justify-content-center">
         <div class="text-center text-nowrap">
-        <h2>Log in with Singpass</h2>
-        <p>Your trusted digital identity</p>
+        <h2>Log in with <strong style="color: #0072bc; font-size:3rem;">UnityPass</strong></h2>
+        <p>Your key to Humanitarian Needs</p>
         </div>
     </div>
     <div class="col-sm"></div>
@@ -26,14 +26,16 @@
                     <%= f.password_field :password, class: "form-control", required: true %>
                 </div>
                 <div class="d-grid gap-2">
-                    <%= f.submit "Log in", class: "btn btn-danger btn-block" %>
+                    <%= f.submit "Log in", class: "btn btn-primary btn-block", style: "background-color: #0072bc;" %>
                 </div>
                 <% end %>
-                <div class="d-flex justify-content-center mt-3">
-                <a href="<%= new_user_password_path %>">Forgot your password</a>
-                </div>
-                <div class="text-center mt-3 text-nowrap">
-                <a href="<%= new_user_registration_path %>" class="btn btn-outline-secondary">Register for Singpass</a>
+                <div class="row justify-content-around align-items-center py-3">
+                    <div class="col-sm align-items-center text-center text-nowrap my-2">
+                    <a href="<%= new_user_password_path %>">Forgot your password</a>
+                    </div>
+                    <div class="col-sm align-items-center text-center text-nowrap my-2">
+                    <a href="<%= new_user_registration_path %>" class="btn btn-outline-secondary">Register for Digital ID</a>
+                    </div>
                 </div>
             </div>
             </div>
