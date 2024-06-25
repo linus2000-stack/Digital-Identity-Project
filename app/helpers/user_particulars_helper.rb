@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/user_particulars_helper.rb
 module UserParticularsHelper
   def country_options
