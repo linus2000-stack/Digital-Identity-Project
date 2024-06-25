@@ -40,6 +40,8 @@ class UserParticularsController < ApplicationController
     end
   end
 
+  def edit; end
+
   def home; end
 
   def set_user_particular
