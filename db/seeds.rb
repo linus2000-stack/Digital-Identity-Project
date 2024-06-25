@@ -4,7 +4,8 @@ user1 = User.create!(
   username: 'user1',
   email: 'user1@example.com',
   password: 'password1',
-  password_confirmation: 'password1'
+  password_confirmation: 'password1',
+  phone_number: '90000001'
 )
 
 user1.create_user_particular!(
@@ -26,7 +27,8 @@ user2 = User.create!(
   username: 'user2',
   email: 'user2@example.com',
   password: 'password2',
-  password_confirmation: 'password2'
+  password_confirmation: 'password2',
+  phone_number: '90000002'
 )
 
 #User particular: no secondary phone number
@@ -48,7 +50,8 @@ user3 = User.create!(
   username: 'user3',
   email: 'user3@example.com',
   password: 'password3',
-  password_confirmation: 'password3'
+  password_confirmation: 'password3',
+  phone_number: '90000003'
 )
 
 #User particular: no birth_certificate_url and passport_url
@@ -69,7 +72,8 @@ user4 = User.create!(
   username: 'user4',
   email: 'user4@example.com',
   password: 'password4',
-  password_confirmation: 'password4'
+  password_confirmation: 'password4',
+  phone_number: '90000004'
 )
 
 user4.create_user_particular!(
@@ -91,7 +95,8 @@ user5 = User.create!(
   username: 'user5',
   email: 'user5@example.com',
   password: 'password5',
-  password_confirmation: 'password5'
+  password_confirmation: 'password5',
+  phone_number: '90000005'
 )
 
 user5.create_user_particular!(
