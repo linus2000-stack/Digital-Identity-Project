@@ -13,11 +13,13 @@ class UserParticularsController < ApplicationController
         flash[:success] = 'Digital ID was successfully created!'
         redirect_to @user_particular # redirects to /user_particulars/:id
       else
+        #TODO: Fails to render confirm page upon unsuccessful creation of user particular
         flash[:error] = ['Error creating digital id']
         redirect_to user_particulars_confirm_path
       end
     # Invalid user_particular_params
     else
+      #TODO: Fails to render confirm page upon unsuccessful validation of user particular
       redirect_to user_particulars_confirm_path
     end
   end
@@ -88,11 +90,11 @@ class UserParticularsController < ApplicationController
       error_messages_arr << 'Select religion from the dropdown list.'
     end
 
-    if Date.parse(user_particular[:date_of_birth]) > Date.today
+    if Date.parse(user_particular[:date_of_birth].to_s) > Date.today
       error_messages_arr << 'Date of birth cannot be in the future.'
     end
 
-    if Date.parse(user_particular[:date_of_arrival]) > Date.today
+    if Date.parse(user_particular[:date_of_arrival].to_s) > Date.today
       error_messages_arr << 'Date of arrival cannot be in the future.'
     end
 
