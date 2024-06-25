@@ -66,11 +66,17 @@ class UserParticularsController < ApplicationController
     end
 
     # Change to phone number should only contain numbers and '-'
-    error_messages_arr << 'Phone number cannot contain letters.' if user_particular[:phone_number] =~ /[a-zA-Z]/
+    #error_messages_arr << 'Phone number cannot contain letters.' if user_particular[:phone_number] =~ /[a-zA-Z]/
+    if user_particular[:phone_number] =~ /[^0-9\-]/
+      error_messages_arr << 'Phone number can only contain numbers and hyphens.' 
+
 
     # Change to secondary phone number should only contain numbers and '-'
-    if user_particular[:secondary_phone_number] =~ /[a-zA-Z]/
-      error_messages_arr << 'Secondary phone number cannot contain letters.'
+    #if user_particular[:secondary_phone_number] =~ /[a-zA-Z]/
+    #  error_messages_arr << 'Secondary phone number cannot contain letters.'
+    if user_particular[:secondary_phone_number] =~ /[^0-9\-]/
+      error_messages_arr << 'Secondary phone number can only contain numbers and hyphens.'
+
     end
 
     # Check if selected option is in dropdown options
@@ -95,6 +101,9 @@ class UserParticularsController < ApplicationController
     end
 
     # Add condition which checks that date of arrival cannot be earlier than date of birth
+    if Date.parse(user_particular[:date_of_arrival]) < Date.parse(user_particular[:date_of_birth])
+      error_messages_arr << 'Date of arrival cannot be earlier than date of birth.'
+    end
 
     flash[:error] = error_messages_arr
 
