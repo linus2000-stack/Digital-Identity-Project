@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-
 gem 'bootstrap', '~> 5.0.2'
+gem 'htmlbeautifier'
 gem 'sassc-rails', '>= 2.1.0'
 
 ruby '3.2.4'
