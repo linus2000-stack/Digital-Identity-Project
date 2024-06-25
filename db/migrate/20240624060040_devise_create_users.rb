@@ -3,7 +3,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
     create_table :users do |t|
       ## Database authenticatable
       t.string :username,              null: false, default: ""
-      t.string :email,                 null: false, default: ""  
+      t.string :email,                 null: false, default: ""
+      t.string :phone_number,          null: false, default: ""    
       t.string :encrypted_password,    null: false, default: ""
 
       ## Recoverable
@@ -37,5 +38,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
     # Add unique index on email
     add_index :users, :username, unique: true
     add_index :users, :email, unique: true
+    add_index :users, :phone_number, unique: true
   end
 end
