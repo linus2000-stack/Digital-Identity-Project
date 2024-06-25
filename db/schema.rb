@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_24_060040) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_24_081748) do
   create_table "user_particulars", force: :cascade do |t|
     t.string "full_name"
     t.string "phone_number"
@@ -19,8 +19,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_24_060040) do
     t.string "ethnicity"
     t.string "religion"
     t.string "gender"
-    t.date "date_of_birth"
-    t.date "date_of_arrival"
+    t.string "date_of_birth"
+    t.string "date_of_arrival"
     t.string "photo_url"
     t.string "birth_certificate_url"
     t.string "passport_url"
@@ -36,8 +36,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_24_060040) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_particulars_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["user_particulars_id"], name: "index_users_on_user_particulars_id"
   end
 
+  add_foreign_key "users", "user_particulars", column: "user_particulars_id"
 end
