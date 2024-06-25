@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'bootstrap', '~> 5.0.2'
 gem 'sassc-rails', '>= 2.1.0'
 
-ruby '3.2.4'
+ruby '3.3.3'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'devise'
 gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
