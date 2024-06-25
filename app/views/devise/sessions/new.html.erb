@@ -5,10 +5,10 @@
 <div class="bg-light align-content-center flex-fill flex-column">
 <div class="row align-content-center justify-content-around p-5">
     <div class="col-sm d-flex align-items-center justify-content-center my-3">
-        <%= image_tag("UnityPass.PNG", size: "100x100", alt:"Unity Pass Logo")%> 
+        <img src="/assets/fingerprint.svg" width="100" height="100" alt="EnableID Logo" /> 
         <div class="text-center text-nowrap px-2">
-            <h2>Log in with <strong style="color: #f1536a; font-size:3rem;">UnityPass</strong></h2>
-            <p>Your key to Humanitarian Needs</p>
+            <strong style="color: #f1536a; font-size:4rem;">EnableID</strong>
+            <div>Restore Dignity by Empowering Identity</div>
         </div>
     </div>
     <div class="col-sm"></div>
@@ -27,7 +27,7 @@
                     <%= f.password_field :password, class: "form-control", required: true %>
                 </div>
                 <div class="d-grid gap-2">
-                    <%= f.submit "Log in", class: "btn btn-primary btn-block", style: "background-color: #f1536a;" %>
+                    <%= f.submit "Log in", class: "btn btn-danger btn-block", style: "background-color: #f1536a;" %>
                 </div>
                 <% end %>
                 <div class="row justify-content-around align-items-center py-3">
