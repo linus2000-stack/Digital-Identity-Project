@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_one :user_particular
+  
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :phone_number, presence: true, uniqueness: true
