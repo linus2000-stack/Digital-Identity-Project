@@ -1,8 +1,12 @@
 class UserParticularsController < ApplicationController
   include UserParticularsHelper
-
+  before_action :authenticate_user!
   before_action :set_user_particular, only: [:show]
-  def show; end
+
+  def show
+    # If user no userparticular, redirect user to create user particular
+    redirect_to new_user_particular_path unless @user_particular
+  end
   # No need for content when using @user_particular from before_action
 
   def create
@@ -37,7 +41,7 @@ class UserParticularsController < ApplicationController
       # Render confirm if validation passes
       render :confirm
     else
-      # Render new error message(s) if validation fails
+      # Render error message(s) in form if validation fails
       redirect_to new_user_particular_path
     end
   end
@@ -46,8 +50,9 @@ class UserParticularsController < ApplicationController
 
   def home; end
 
+  #Retrieves user particular object linked to user object
   def set_user_particular
-    @user_particular = UserParticular.find_by_id(params[:id])
+    @user_particular = current_user.user_particular
   end
 
   def user_particular_params
