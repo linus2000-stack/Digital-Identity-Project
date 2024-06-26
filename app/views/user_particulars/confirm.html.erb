@@ -30,6 +30,7 @@
   <%= form.hidden_field :photo_url, value: @user_particular.photo_url %>
   <%= form.hidden_field :birth_certificate_url, value: @user_particular.birth_certificate_url %>
   <%= form.hidden_field :passport_url, value: @user_particular.passport_url %>
+  <%= form.hidden_field :user_id, value: @user_particular.user_id %>
 
   <div class="d-flex justify-content-center my-3">
     <%= link_to "Back", new_user_particular_path, class: "btn btn-secondary mx-2" %> 
