@@ -17,26 +17,26 @@ class UserParticularsController < ApplicationController
         flash[:success] = 'Digital ID was successfully created!'
         redirect_to @user_particular # redirects to /user_particulars/:id
       else
-        #TODO: Fails to render confirm page upon unsuccessful creation of user particular
-        flash[:error] = ['Error creating digital id']
-        redirect_to user_particulars_confirm_path
+        flash[:error] = @user_particular.errors.full_messages
+        #pass user_particular_params into params of confirm action
+        redirect_to user_particulars_confirm_path(user_particular: user_particular_params)
       end
     # Invalid user_particular_params
     else
-      #TODO: Fails to render confirm page upon unsuccessful validation of user particular
-      redirect_to user_particulars_confirm_path
+      #pass user_particular_params into params of confirm action
+      redirect_to user_particulars_confirm_path(user_particular: user_particular_params)
     end
   end
 
   def new
-    # automatically renders app/views/user_particulars/new.html.erb
+    #Fills up form with previously entered data
     @user_particular = UserParticular.new(session.fetch(:user_particular_params, {}))
     set_dropdown_options
   end
 
   def confirm
     session[:user_particular_params] = user_particular_params # Use the session to store the model
-    @user_particular = UserParticular.new(user_particular_params) # The Model object to store the hidden keyed params
+    @user_particular = UserParticular.new(session[:user_particular_params]) # The Model object to store the hidden keyed params
     if validate_user_particulars(@user_particular)
       # Render confirm if validation passes
       render :confirm
