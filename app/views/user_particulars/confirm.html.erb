@@ -17,13 +17,24 @@
   </div>
 </div>
 
-<%= form_with model:@user_particular, url: user_particulars_path, method: :post do |form| %>
-  <% @user_particular.as_json.each do |key, value| %>
-    <%= form.hidden_field key, value: value %>
-  <% end %> 
+<%= form_with model: @user_particular, url: user_particulars_path, method: :post do |form| %>
+  <%= form.hidden_field :full_name, value: @user_particular.full_name %>
+  <%= form.hidden_field :phone_number, value: @user_particular.phone_number %>
+  <%= form.hidden_field :secondary_phone_number, value: @user_particular.secondary_phone_number %>
+  <%= form.hidden_field :country_of_origin, value: @user_particular.country_of_origin %>
+  <%= form.hidden_field :ethnicity, value: @user_particular.ethnicity %>
+  <%= form.hidden_field :religion, value: @user_particular.religion %>
+  <%= form.hidden_field :gender, value: @user_particular.gender %>
+  <%= form.hidden_field :date_of_birth, value: @user_particular.date_of_birth %>
+  <%= form.hidden_field :date_of_arrival, value: @user_particular.date_of_arrival %>
+  <%= form.hidden_field :photo_url, value: @user_particular.photo_url %>
+  <%= form.hidden_field :birth_certificate_url, value: @user_particular.birth_certificate_url %>
+  <%= form.hidden_field :passport_url, value: @user_particular.passport_url %>
+
   <div class="d-flex justify-content-center my-3">
     <%= link_to "Back", :back, class: "btn btn-secondary mx-2" %> 
     <%= form.submit "Confirm", class: "btn btn-danger mx-2" %>
-</div>
+  </div>
 <% end %>
+
 </div>
