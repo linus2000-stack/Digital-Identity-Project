@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  root 'user_particulars#home' # set home path of web app as /user_particulars/home for now
+  root 'user_particulars#show' # set root path of web app as /user_particulars/show for now
 
   devise_for :users, controllers: {
   registrations: 'users/registrations/registrations'

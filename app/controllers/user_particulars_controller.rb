@@ -5,7 +5,7 @@ class UserParticularsController < ApplicationController
 
   def show
     # If user no userparticular, redirect user to create user particular
-    redirect_to new_user_particular_path unless @user_particular
+    redirect_to user_particulars_home_path unless @user_particular
   end
   # No need for content when using @user_particular from before_action
 
