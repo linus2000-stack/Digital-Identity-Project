@@ -5,43 +5,50 @@ class UserParticularsController < ApplicationController
 
   def show
     # If user no userparticular, redirect user to create user particular
-    redirect_to new_user_particular_path unless @user_particular
+    redirect_to user_particulars_home_path unless @user_particular
   end
   # No need for content when using @user_particular from before_action
 
   def create
-    if validate_user_particulars(UserParticular.new(user_particular_params))
+    error_messages_arr = validate_user_particulars(UserParticular.new(user_particular_params))
+    flash[:error] = error_messages_arr
+
+    if error_messages_arr.empty?
       @user_particular = UserParticular.create_user_particular(user_particular_params)
       # Check if user particular creation was successful
       if @user_particular.persisted?
-        flash[:success] = 'Digital ID was successfully created!'
+        flash[:success] = "Digital ID was successfully created!"
         redirect_to @user_particular # redirects to /user_particulars/:id
       else
-        #TODO: Fails to render confirm page upon unsuccessful creation of user particular
-        flash[:error] = ['Error creating digital id']
-        redirect_to user_particulars_confirm_path
+        flash[:error_message] = "Digital ID creation failed. Please try again."
+        redirect_to user_particulars_confirm_path(user_particular: user_particular_params) #pass user_particular_params into params of confirm action
       end
-    # Invalid user_particular_params
     else
-      #TODO: Fails to render confirm page upon unsuccessful validation of user particular
-      redirect_to user_particulars_confirm_path
+      #Failed validation
+      #pass user_particular_params into params of confirm action
+      flash[:error_message] = "Digital ID creation failed. Please try again."
+      redirect_to user_particulars_confirm_path(user_particular: user_particular_params) #pass user_particular_params into params of confirm action
     end
   end
 
   def new
-    # automatically renders app/views/user_particulars/new.html.erb
+    #Fills up form with previously entered data
     @user_particular = UserParticular.new(session.fetch(:user_particular_params, {}))
     set_dropdown_options
   end
 
   def confirm
     session[:user_particular_params] = user_particular_params # Use the session to store the model
-    @user_particular = UserParticular.new(user_particular_params) # The Model object to store the hidden keyed params
-    if validate_user_particulars(@user_particular)
+    @user_particular = UserParticular.new(session[:user_particular_params]) # The Model object to store the hidden keyed params
+    error_messages_arr = validate_user_particulars(@user_particular)
+    flash[:error] = error_messages_arr 
+
+    if error_messages_arr.empty?
       # Render confirm if validation passes
       render :confirm
     else
       # Render error message(s) in form if validation fails
+      flash[:error_message] = "Please fix the error(s) below:"
       redirect_to new_user_particular_path
     end
   end
@@ -58,7 +65,7 @@ class UserParticularsController < ApplicationController
   def user_particular_params
     params.require(:user_particular).permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin,
                                             :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival,
-                                            :photo_url, :birth_certificate_url, :passport_url)
+                                            :photo_url, :birth_certificate_url, :passport_url, :user_id)
   end
 
   def set_dropdown_options
@@ -74,12 +81,13 @@ class UserParticularsController < ApplicationController
       error_messages_arr << 'Full name can only contain valid letters and symbols.'
     end
 
-    # Change to phone number should only contain numbers and '-'
-    error_messages_arr << 'Phone number cannot contain letters.' if user_particular[:phone_number] =~ /[a-zA-Z]/
+    if user_particular[:phone_number] =~ /[^0-9\-]/
+      error_messages_arr << 'Phone number can only contain numbers and hyphens.' 
+    end
 
-    # Change to secondary phone number should only contain numbers and '-'
-    if user_particular[:secondary_phone_number] =~ /[a-zA-Z]/
-      error_messages_arr << 'Secondary phone number cannot contain letters.'
+    if user_particular[:secondary_phone_number] =~ /[^0-9\-]/
+      error_messages_arr << 'Secondary phone number can only contain numbers and hyphens.'
+
     end
 
     # Check if selected option is in dropdown options
@@ -104,9 +112,10 @@ class UserParticularsController < ApplicationController
     end
 
     # Add condition which checks that date of arrival cannot be earlier than date of birth
+    if Date.parse(user_particular[:date_of_arrival].to_s) < Date.parse(user_particular[:date_of_birth].to_s)
+      error_messages_arr << 'Date of arrival cannot be earlier than date of birth.'
+    end
 
-    flash[:error] = error_messages_arr
-
-    error_messages_arr.empty?
+    error_messages_arr
   end
 end
