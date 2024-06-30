@@ -8,4 +8,10 @@ class UserParticular < ActiveRecord::Base
   def self.find_by_id(id)
     UserParticular.find_by(id:)
   end
+
+
+  def self.update_user_particular(attributes)
+  UserParticular.update(attributes)
+  end
+
 end

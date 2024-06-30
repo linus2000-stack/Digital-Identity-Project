@@ -1,7 +1,7 @@
 class UserParticularsController < ApplicationController
   include UserParticularsHelper
   before_action :authenticate_user!
-  before_action :set_user_particular, only: [:show]
+  before_action :set_user_particular, only: [:show, :edit]
 
   def show
     # If user no userparticular, redirect user to create user particular
@@ -53,8 +53,25 @@ class UserParticularsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    set_dropdown_options
+  end
 
+<<<<<<< Updated upstream
+=======
+  def update
+    @user_particular = UserParticular.update_user_particular(user_particular_params)
+    # Check if edit was successful
+    if @user_particular.persisted?
+      flash[:success] = "Digital ID was successfully edited!"
+      redirect_to @user_particular # redirects to /user_particulars/:id
+    else
+      flash[:error_message] = "Edit failed. Please try again."
+      redirect_to user_particulars_confirm_path(user_particular: user_particular_params) #pass user_particular_params into params of confirm action
+    end
+  end
+
+>>>>>>> Stashed changes
   def home; end
 
   #Retrieves user particular object linked to user object
