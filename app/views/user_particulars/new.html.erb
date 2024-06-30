@@ -3,15 +3,23 @@
   <!-- user_particulars_confirm_path leads to the confirm function!-->
   <%= form_with model:@user_particular, url: user_particulars_confirm_path, method: :get, class: 'form' do |form| %>
     <%= form.hidden_field :user_id, value: current_user.id %>
-    asdsadsadadsasdsads
     <div class="form-group">
       <%= form.label :full_name, "Full Name" %><span class="text-danger">*</span>
       <%= form.text_field :full_name, class: "form-control", required: true %>
     </div>
     <div class="form-group">
-      <%= form.label :phone_number, "Phone number" %><span class="text-danger">*</span>
-      <!--Yiqing your code goes here-->
-      <%= form.telephone_field :phone_number, class: "form-control", required: true, placeholder: "+60" %>
+      <%= form.label :asd_phone_number, "Phone number" %><span class="text-danger">*</span>
+      <div class="row">
+        <div class="col" style="max-width: 100px; min-width: 100px;">
+          <%= form.select :asd_country_of_origin, options_for_select(@country_code_options, @user_particular["country_of_origin"]), {}, { class: "form-control", required: true, id: "country_code_select" } %>
+        </div>
+        <div class="col">
+          <%= form.telephone_field :phone_number, class: "form-control", required: true, id: "phone_number_field", placeholder: "+60" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= form.hidden_field :phone_number, class: "form-control", id: "full_phone_number_field", readonly: true %>
     </div>
     <div class="form-group">
       <%= form.label :secondary_phone_number, "Secondary phone number (optional)" %>
@@ -56,3 +64,22 @@
     </div>
   <% end %>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var countryCodeSelect = document.getElementById("country_code_select");
+    var phoneNumberField = document.getElementById("phone_number_field");
+    var fullPhoneNumberField = document.getElementById("full_phone_number_field");
+
+    function updateFullPhoneNumber() {
+      var countryCode = countryCodeSelect.value;
+      var phoneNumber = phoneNumberField.value;
+      fullPhoneNumberField.value = (countryCode + '-' + phoneNumber).slice(1);
+    }
+    // Update the full phone number field on page load
+    updateFullPhoneNumber();
+
+    // Add event listeners to update the full phone number field when values change
+    countryCodeSelect.addEventListener("change", updateFullPhoneNumber);
+    phoneNumberField.addEventListener("input", updateFullPhoneNumber);
+  });
+</script>
