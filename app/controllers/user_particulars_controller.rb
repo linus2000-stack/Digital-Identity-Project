@@ -58,7 +58,7 @@ class UserParticularsController < ApplicationController
   end
 
   def update
-    @user_particular = UserParticular.update_user_particular(user_particular_params)
+    @user_particular = UserParticular.update_user_particular(params[:id], user_particular_params)
     # Check if edit was successful
     if @user_particular.persisted?
       flash[:success] = 'Digital ID was successfully edited!'
