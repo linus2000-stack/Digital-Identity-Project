@@ -1,7 +1,7 @@
 <div class="container py-3">
 <h5 class="text-center" style="color: black">Edit your particulars</h2>
 <!-- user_particulars_confirm_path leads to the confirm function!-->
-<%= form_with model: @user_particular, url: user_particulars_path, method: :put do |form| %>
+<%= form_with model: @user_particular do |form| %>
 <!-- added patch which updates existing records unlike get method in new.html -->
 <div class="form-group">
 <%= form.label :full_name, "Full Name" %><span class="text-danger">*</span>
