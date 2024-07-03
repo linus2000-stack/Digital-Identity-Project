@@ -6,8 +6,8 @@ class CreateUserParticulars < ActiveRecord::Migration[7.1]
       t.string :secondary_phone_number
       t.string :country_of_origin
       t.string :ethnicity
-      t.string :religion 
-      t.string :gender 
+      t.string :religion
+      t.string :gender
       t.date :date_of_birth
       t.date :date_of_arrival
       t.string :photo_url
