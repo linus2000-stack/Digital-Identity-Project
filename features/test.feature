@@ -5,7 +5,7 @@ Feature: Confirm and View Particulars
 
 Background:
   Given I am on the "Home" page
-  And I click on "Fill in Particulars" button
+  And I press the "fill-in-particulars" button
 
 Scenario: All Fields Displayed
   Given I entered the following particulars:
