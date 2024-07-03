@@ -14,6 +14,18 @@ def verify_form_data(table)
   end
 end
 
+def path_to(page_name)
+  case page_name.downcase
+  when 'home'
+    # Replace 'show_path' with the actual path helper for your show page
+    user_particular_path
+  when 'fill in particulars'
+    new_user_session_path
+  else
+    raise "Undefined page: #{page_name}"
+  end
+end
+
 # Step Definitions
 Given(/^I fill in the following:$/) do |table|
   fill_in_form(table)
@@ -39,7 +51,7 @@ Then(/^I will see a welcome message "(.+)"$/) do |message|
   expect(page).to have_content(message)
 end
 
-Given(/^I enter the following particulars:$/) do |table|
+Given(/^I entered the following particulars:$/) do |table|
   fill_in_form(table)
 end
 
@@ -61,4 +73,8 @@ Then(/^I should see the following fields:$/) do |table|
       expect(page).to have_select(row['Field'], selected: row['Value'])
     end
   end
+end
+
+Given(/^I am on the "([^"]*)" page$/) do |page|
+  visit path_to(page)
 end
