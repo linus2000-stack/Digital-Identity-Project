@@ -13,8 +13,8 @@
       crossorigin="anonymous"
     />
   </head>
-  <body class="d-flex flex-column min-vh-100" style="overflow-x:hidden;">
-    <div class="container-fluid bg-light p-0">
+  <body class="d-flex flex-column min-vh-100 bg-light" style="overflow-x:hidden;">
+    <div class="container-fluid p-0">
       <div class="row flex-nowrap align-items-center justify-content-between p-2", style="background-color: #f1536a; color: white; margin-bottom:0;">
         <div class="col-1"></div>
         <h4 class="text-center m-0 col-10 text-nowrap">Welcome, <%= current_user.email %>!</h4>
@@ -43,7 +43,7 @@
     <%= yield %>
 
     </div>
-    <main class="flex-fill bg-light"></main>
+    <main class="flex-fill"></main>
     <footer class="footer mt-auto bg-dark text-white-50 pt-2 pb-3", style="max-height:70px;">
         <div class="container text-center">
         <small>&copy; UnityPass Digital ID 2024</small>
