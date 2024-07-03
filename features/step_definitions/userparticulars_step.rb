@@ -52,6 +52,11 @@ Then(/^I will see a welcome message "(.+)"$/) do |message|
 end
 
 Given(/^I entered the following particulars:$/) do |table|
+  # Print the current URL
+  puts "Current URL: #{current_url}"
+
+  # Print the current path
+  puts "Current Path: #{current_path}"
   fill_in_form(table)
 end
 
