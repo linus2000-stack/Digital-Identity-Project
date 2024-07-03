@@ -3,9 +3,23 @@ Feature: User Login
   I want to be able to enter my login details
   So that I can log in to my account
 
-Scenario: Successful Login
-  Given I enter the following details:
+Scenario: Successful Login with Phone Number
+  Given I enter the following details on the phone number login page:
     | Phone Number      | 98765432
+    | Password          | password123
+  And I press "Login"
+  Then I should be redirected to the home page
+
+Scenario: Successful Login with Email
+  Given I enter the following details on the email login page:
+    | Email             | brendan@gmail.com
+    | Password          | password123
+  And I press "Login"
+  Then I should be redirected to the home page
+
+Scenario: Successful Login with Username
+  Given I enter the following details on the username login page:
+    | Username          | brendannnn
     | Password          | password123
   And I press "Login"
   Then I should be redirected to the home page
