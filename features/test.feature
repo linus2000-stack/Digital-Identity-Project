@@ -4,7 +4,8 @@ Feature: Confirm and View Particulars
   So that I can view my "Digital ID" on the main page
 
 Background:
-  Given I am on the "Fill in Particulars" page
+  Given I am on the "Home" page
+  And I click on "Fill in Particulars" button
 
 Scenario: All Fields Displayed
   Given I entered the following particulars:

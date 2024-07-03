@@ -2,9 +2,9 @@
 
 source 'https://rubygems.org'
 gem 'bootstrap', '~> 5.0.2'
+gem 'bootstrap-sass'
 gem 'htmlbeautifier'
 gem 'sassc-rails', '>= 2.1.0'
-
 ruby '3.2.4'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'devise'
