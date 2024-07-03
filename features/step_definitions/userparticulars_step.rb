@@ -18,7 +18,7 @@ def path_to(page_name)
   case page_name.downcase
   when 'home'
     # Replace 'show_path' with the actual path helper for your show page
-    user_particular_path
+    root_path
   when 'fill in particulars'
     new_user_session_path
   else
@@ -77,4 +77,8 @@ end
 
 Given(/^I am on the "([^"]*)" page$/) do |page|
   visit path_to(page)
+end
+
+And(/^I press the "([^"]*)" button$/) do |button|
+  click_button(button)
 end
