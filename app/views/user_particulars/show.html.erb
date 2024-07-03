@@ -10,7 +10,7 @@
   <%= render 'digitalid' %>
   <% if @user_particular.nil? %>
     <div class="d-flex justify-content-center my-3">
-      <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", name: "Fill in Particulars" %>
+      <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", id: "fill-in-particulars" %>
     </div>
   <% else %>
     <div class="d-flex justify-content-center my-3">
