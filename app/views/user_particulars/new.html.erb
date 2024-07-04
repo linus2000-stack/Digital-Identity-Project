@@ -20,14 +20,15 @@
       </div>
     </div>
     <div class="form-group">
+      <%= form.label :phone_number, "Phone Number" %><span class="text-danger">*</span>
       <%= form.hidden_field :phone_number, class: "form-control", id: "full_phone_number_field", readonly: true %>
     </div>
     <div class="form-group">
-      <%= form.label :secondary_phone_number, "Secondary phone number (optional)" %>
+      <%= form.label :secondary_phone_number, "Secondary Phone Number (optional)" %>
       <%= form.telephone_field :secondary_phone_number, class: "form-control", placeholder: "+60" %>
     </div>
     <div class="form-group">
-      <%= form.label :country_of_origin, "Country of origin" %><span class="text-danger">*</span>
+      <%= form.label :country_of_origin, "Country of Origin" %><span class="text-danger">*</span>
       <%= form.select :country_of_origin, options_for_select(@countries, @user_particular["country_of_origin"]), {}, { class: "form-control", required: true } %>
     </div>
     <div class="form-group">
@@ -43,11 +44,11 @@
       <%= form.select :gender, options_for_select(['Male', 'Female', 'Others'], @user_particular["gender"]), {}, { class: "form-control", required: true } %>
     </div>
     <div class="form-group">
-      <%= form.label :date_of_birth, "Date of birth" %><span class="text-danger">*</span>
+      <%= form.label :date_of_birth, "Date of Birth" %><span class="text-danger">*</span>
       <%= form.date_field :date_of_birth, class: "form-control", required: true %>
     </div>
     <div class="form-group">
-      <%= form.label :date_of_arrival, "Date of arrival in Malaysia" %><span class="text-danger">*</span>
+      <%= form.label :date_of_arrival, "Date of Arrival in Malaysia" %><span class="text-danger">*</span>
       <%= form.date_field :date_of_arrival, class: "form-control", required: true %>
     </div>
     <div class="form-group">
