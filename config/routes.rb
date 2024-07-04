@@ -8,7 +8,8 @@ Rails.application.routes.draw do
 
   # Self-declared extra routes (must be before resources)
   get 'user_particulars/confirm'
-
+  get 'ngo_users/verify'
   # Resources: UserParticulars
   resources :user_particulars
+  resources :ngo_users
 end
