@@ -1,4 +1,4 @@
-Feature: Start process of filling user particular form
+Feature: reset password
     As an undocumented user
     I want to reach the “Enter Particulars” page
     So that I can enter my particulars and start the registration process

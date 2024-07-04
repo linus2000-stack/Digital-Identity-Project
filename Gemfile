@@ -1,9 +1,13 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
+source 'https://rubygems.org'
+gem 'bootstrap', '~> 5.0.2'
+gem 'htmlbeautifier'
+gem 'sassc-rails', '>= 2.1.0'
 ruby '3.2.4'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem 'devise'
 gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
-
 # Use sqlite3 as the database for Active Record
 gem 'erb_lint', require: false
 gem 'sqlite3', '~> 1.4'
@@ -27,7 +31,7 @@ gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
-
+gem 'byebug'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -65,6 +69,7 @@ group :test do
   gem 'capybara'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
+  gem 'factory_bot_rails'
   gem 'selenium-webdriver'
   gem 'simplecov'
 end
