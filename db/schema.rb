@@ -13,7 +13,9 @@
 ActiveRecord::Schema[7.1].define(version: 2024_06_24_145424) do
   create_table "user_particulars", force: :cascade do |t|
     t.string "full_name"
+    t.string "phone_number_country_code"
     t.string "phone_number"
+    t.string "secondary_phone_number_country_code"
     t.string "secondary_phone_number"
     t.string "country_of_origin"
     t.string "ethnicity"

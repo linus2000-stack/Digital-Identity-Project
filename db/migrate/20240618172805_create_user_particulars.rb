@@ -2,7 +2,9 @@ class CreateUserParticulars < ActiveRecord::Migration[7.1]
   def change
     create_table :user_particulars do |t|
       t.string :full_name
+      t.string :phone_number_country_code
       t.string :phone_number
+      t.string :secondary_phone_number_country_code
       t.string :secondary_phone_number
       t.string :country_of_origin
       t.string :ethnicity
