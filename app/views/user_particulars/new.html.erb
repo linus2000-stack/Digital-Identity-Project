@@ -11,7 +11,7 @@
       <%= form.label :abc, "Phone number" %><span class="text-danger">*</span>
       <!--Yiqing your code goes here-->
       <div class="row">
-        <div class="col" style="max-width: 100px; min-width: 100px;">
+        <div class="col" style="max-width: 125px; min-width: 125px;">
           <%= form.select :abc, options_for_select(@country_code_options, @user_particular["country_of_origin"]), {}, { class: "form-control", required: true, id: "country_code_select" } %>
         </div>
         <div class="col">
@@ -24,7 +24,14 @@
     </div>
     <div class="form-group">
       <%= form.label :secondary_phone_number, "Secondary phone number (optional)" %>
-      <%= form.telephone_field :secondary_phone_number, class: "form-control", placeholder: "+60" %>
+      <div class="row">
+        <div class="col" style="max-width: 125px; min-width: 125px;">
+          <%= form.select :secondary_country_code, options_for_select(@country_code_options, @user_particular["country_of_origin"]), {}, { class: "form-control", required: true, id: "country_code_select_secondary" } %>
+        </div>
+        <div class="col">
+          <%= form.telephone_field :secondary_phone_number, class: "form-control", required: true, id: "phone_number_field_secondary", placeholder: "+60" %>
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <%= form.label :country_of_origin, "Country of origin" %><span class="text-danger">*</span>
@@ -83,3 +90,64 @@
     phoneNumberField.addEventListener("input", updateFullPhoneNumber);
   });
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var countryCodeSelects = [
+      document.getElementById("country_code_select"),
+      document.getElementById("country_code_select_secondary")
+    ];
+
+    function updateSelectedOption(selectElement) {
+      var selectedOptionIndex = selectElement.selectedIndex;
+      var selectedOption = selectElement.options[selectedOptionIndex];
+      var selectedValue = selectedOption.value;
+
+      // Store the full text in a data attribute
+      if (!selectedOption.getAttribute("data-full-text")) {
+        selectedOption.setAttribute("data-full-text", selectedOption.text);
+      }
+
+      // Set the text of the selected option to the country code only
+      selectedOption.text = selectedValue;
+    }
+
+    function addEventListeners(selectElement) {
+      selectElement.addEventListener("change", function() {
+        updateSelectedOption(selectElement);
+      });
+
+      // Restore full text on dropdown open
+      selectElement.addEventListener("focus", function() {
+        for (var i = 0; i < selectElement.options.length; i++) {
+          var option = selectElement.options[i];
+          var fullText = option.getAttribute("data-full-text");
+          if (fullText) {
+            option.text = fullText;
+          }
+        }
+      });
+
+      // Maintain country code after selection
+      selectElement.addEventListener("blur", function() {
+        updateSelectedOption(selectElement);
+      });
+
+      // Trigger the change event on page load to set the initial display value
+      selectElement.dispatchEvent(new Event('change'));
+    }
+
+    countryCodeSelects.forEach(function(selectElement) {
+      if (selectElement) {
+        addEventListeners(selectElement);
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+
