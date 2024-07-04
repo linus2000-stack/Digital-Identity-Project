@@ -7,7 +7,7 @@ Scenario: Going to my own "NGO" page
   Given I am on the “Login” page
   When I press the "I am a NGO" button
   Then I should see a set of different NGO buttons 
-  When I press the NGO, "Gebirah", button
+  When I press the "NGO Gebirah", button
   Then I should be redirected to the "NGO: Gebirah" page
   And I should see "Welcome Gebirah!"
 
