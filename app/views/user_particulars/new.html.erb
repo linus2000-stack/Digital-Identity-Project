@@ -94,11 +94,11 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     var countryCodeSelects = [
-      document.getElementById("country_code_select"),
-      document.getElementById("country_code_select_secondary")
+      {select: document.getElementById("country_code_select"), phoneField: document.getElementById("phone_number_field")},
+      {select: document.getElementById("country_code_select_secondary"), phoneField: document.getElementById("phone_number_field_secondary")}
     ];
 
-    function updateSelectedOption(selectElement) {
+    function updateSelectedOption(selectElement, phoneField) {
       var selectedOptionIndex = selectElement.selectedIndex;
       var selectedOption = selectElement.options[selectedOptionIndex];
       var selectedValue = selectedOption.value;
@@ -110,11 +110,14 @@
 
       // Set the text of the selected option to the country code only
       selectedOption.text = selectedValue;
+
+      // Update the phone field placeholder
+      phoneField.placeholder = selectedValue;
     }
 
-    function addEventListeners(selectElement) {
+    function addEventListeners(selectElement, phoneField) {
       selectElement.addEventListener("change", function() {
-        updateSelectedOption(selectElement);
+        updateSelectedOption(selectElement, phoneField);
       });
 
       // Restore full text on dropdown open
@@ -130,20 +133,22 @@
 
       // Maintain country code after selection
       selectElement.addEventListener("blur", function() {
-        updateSelectedOption(selectElement);
+        updateSelectedOption(selectElement, phoneField);
       });
 
       // Trigger the change event on page load to set the initial display value
       selectElement.dispatchEvent(new Event('change'));
     }
 
-    countryCodeSelects.forEach(function(selectElement) {
-      if (selectElement) {
-        addEventListeners(selectElement);
+    countryCodeSelects.forEach(function(element) {
+      if (element.select && element.phoneField) {
+        addEventListeners(element.select, element.phoneField);
       }
     });
   });
 </script>
+
+
 
 
 
