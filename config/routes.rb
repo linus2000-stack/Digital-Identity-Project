@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   root 'user_particulars#show' # set root path of web app as /user_particulars/show for now
 
