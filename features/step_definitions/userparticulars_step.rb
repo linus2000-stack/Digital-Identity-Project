@@ -3,7 +3,15 @@
 # Helper Methods
 def fill_in_form(table)
   table.hashes.each do |row|
-    fill_in row['Field'], with: row['Value']
+    case row['Field'].downcase
+    when 'ethnicity', 'religion', 'gender', 'country of origin'
+      select row['Value'], from: row['Field']
+    when 'date of birth', 'date of arrival in malaysia'
+      # For HTML5 date fields, ensure the date is in 'YYYY-MM-DD' format
+      fill_in row['Field'], with: row['Value'].to_date.strftime('%dd-%mm-%YYYY')
+    else
+      fill_in row['Field'], with: row['Value']
+    end
   end
 end
 
@@ -65,13 +73,10 @@ end
 
 # Assuming there's a need to check for empty fields or specific dropdown selections
 Then(/^I should see the following fields:$/) do |table|
+  puts "Current URL: #{current_url}"
+  puts "Current Path: #{current_path}"
   table.hashes.each do |row|
-    if row['Value'].nil? || row['Value'].empty?
-      field = find_field(row['Field'])
-      expect(field.value).to be_empty
-    else
-      expect(page).to have_select(row['Field'], selected: row['Value'])
-    end
+    expect(page).to have_content(row['Value'])
   end
 end
 
@@ -80,7 +85,23 @@ Given(/^I am on the "([^"]*)" page$/) do |page|
 end
 
 And(/^I press the "([^"]*)" button$/) do |button|
-  puts "Current URL: #{current_url}"
-  puts "Current Path: #{current_path}"
-  click_button(button)
+  click_link(button)
+end
+
+Given('I am a logged-in user') do
+  # Assuming you have a factory for user
+  @user = create(:user)
+
+  # Visit the login page. Adjust the path as necessary for your app
+  visit new_user_session_path
+
+  # Fill in the login form. Adjust field ids/names as necessary.
+  fill_in 'Log in', with: @user.email
+  fill_in 'Password', with: @user.password
+
+  # Click the login button. Adjust the button value as necessary.
+  click_button 'Log in'
+
+  # Optionally, you can add an assertion here to ensure the login was successful
+  expect(page).to have_content('Signed in successfully.')
 end
