@@ -161,7 +161,7 @@ When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |ena
 end
 
 # Step to fill in the 6 digit code field
-And(/^I key in a 6 digit code that is seen on his/her EnableID: (\d+)$/) do |code|
+And(/^I key in a 6 digit code that is seen on his\/her EnableID: (\d+)$/) do |code|
   fill_in '6 digit code', with: code
 end
 
@@ -176,7 +176,7 @@ Then(/^I should be redirected to the "User Verification" page$/) do
 end
 
 # Step to check for the EnableID Card on the User Verification page
-And(/^I should see his/her "EnableID Card"$/) do
+And(/^I should see his\/her "EnableID Card"$/) do
   expect(page).to have_content('EnableID Card')
 end
 
