@@ -121,7 +121,7 @@ end
 
 # Additional steps for the new feature file
 # Step to navigate to the login page
-Given(/^I am on the “Login” page$/) do
+Given(/^I am on the "Login" page$/) do
   visit path_to('login')
 end
 
@@ -217,6 +217,6 @@ And(/^I should see "EnableID - verified by NGO: Gebirah"$/) do
 end
 
 # Step to check for the date of verification on the EnableID card
-And(/^I should see "Date of verification: (today's date)"$/) do
+And(/^I should see "Date of verification: #{Date.today.strftime('%Y-%m-%d')}"$/) do
   expect(page).to have_content("Date of verification: #{Date.today.strftime('%Y-%m-%d')}")
 end
