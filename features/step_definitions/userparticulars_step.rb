@@ -106,14 +106,14 @@ end
 
 # Step to click a specific button
 And(/^I press the "([^"]*)" button$/) do |button|
-  click_link(button)
+  click_button button
 end
 
 # Step to log in as a user
 Given('I am a logged-in user') do
   @user = create(:user)
   visit new_user_session_path
-  fill_in 'Log in', with: @user.email
+  fill_in 'Email', with: @user.email
   fill_in 'Password', with: @user.password
   click_button 'Log in'
   expect(page).to have_content('Signed in successfully.')
@@ -123,6 +123,37 @@ end
 # Step to navigate to the login page
 Given(/^I am on the "Login" page$/) do
   visit path_to('login')
+end
+
+# Step to fill in the login details
+Given(/^I enter the following details on the (phone number|email|username) login page:$/) do |login_type, table|
+  details = table.hashes.first
+  case login_type
+  when 'phone number'
+    fill_in 'Phone Number', with: details['Phone Number']
+  when 'email'
+    fill_in 'Email', with: details['Email']
+  when 'username'
+    fill_in 'Username', with: details['Username']
+  end
+  fill_in 'Password', with: details['Password']
+end
+
+# Step to enter the login details in a simplified way
+When(/^I enter the following details:$/) do |table|
+  details = table.hashes.first
+  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Password', with: details['Password']
+end
+
+# Step to click the login button
+When(/^I press "Login"$/) do
+  click_button 'Login'
+end
+
+# Step to check for redirection to the home page
+Then(/^I should be redirected to the home page$/) do
+  expect(current_path).to eq(root_path)
 end
 
 # Step to click the "I am a NGO" button
@@ -219,4 +250,27 @@ end
 # Step to check for the date of verification on the EnableID card
 And(/^I should see "Date of verification: #{Date.today.strftime('%Y-%m-%d')}"$/) do
   expect(page).to have_content("Date of verification: #{Date.today.strftime('%Y-%m-%d')}")
+end
+
+# New steps for handling incorrect login attempts
+# Step to check for an error message on the login page
+Then(/^I should see an error message "(.+)"$/) do |message|
+  expect(page).to have_content(message)
+end
+
+# Step to check for the empty login page
+Then(/^I should see the empty login page again$/) do
+  expect(page).to have_current_path(new_user_session_path)
+end
+
+# Step to enter login details (simplified)
+When(/^I enter the following details:$/) do |table|
+  details = table.hashes.first
+  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Password', with: details['Password']
+end
+
+# Step to navigate to the login page
+Given(/^I am on the login page$/) do
+  visit new_user_session_path
 end
