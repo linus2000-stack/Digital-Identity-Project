@@ -274,3 +274,36 @@ end
 Given(/^I am on the login page$/) do
   visit new_user_session_path
 end
+
+# New steps for handling account lockout period
+Given(/^my account is locked due to multiple failed login attempts$/) do
+  # Add logic to lock the account
+end
+
+When(/^I wait for the lockout period to end$/) do
+  # Add logic to wait for the lockout period to end
+end
+
+Given(/^I enter the following correct password:$/) do |table|
+  details = table.hashes.first
+  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Password', with: details['Password']
+end
+
+# Step to register with the following details
+Given(/^I have registered with the following details:$/) do |table|
+  details = table.hashes.first
+  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Password', with: details['Password']
+  click_button 'Register'
+end
+
+# Step to enter the password incorrectly three times
+When(/^I enter the password incorrectly three times:$/) do |table|
+  details = table.hashes.first
+  3.times do
+    fill_in 'Phone Number', with: details['Phone Number']
+    fill_in 'Password', with: 'wrongpassword'
+    click_button 'Login'
+  end
+end
