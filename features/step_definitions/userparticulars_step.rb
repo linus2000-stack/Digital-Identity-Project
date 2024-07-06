@@ -1,309 +1,260 @@
-# frozen_string_literal: true
+# Step definitions for login.feature
 
-# Helper Methods
-# Fills in a form based on the given table data
-def fill_in_form(table)
-  table.hashes.each do |row|
-    case row['Field'].downcase
-    when 'ethnicity', 'religion', 'gender', 'country of origin'
-      # For dropdown fields
-      select row['Value'], from: row['Field']
-    when 'date of birth', 'date of arrival in malaysia'
-      # For HTML5 date fields, ensure the date is in 'YYYY-MM-DD' format
-      fill_in row['Field'], with: row['Value'].to_date.strftime('%Y-%m-%d')
-    else
-      # For regular input fields
-      fill_in row['Field'], with: row['Value']
-    end
+Given(/^I enter the following details on the (phone number|email|username) login page:$/) do |login_type, table|
+  data = table.rows_hash
+  case login_type
+  when 'phone number'
+    fill_in 'Phone Number', with: data['Phone Number']
+  when 'email'
+    fill_in 'Email', with: data['Email']
+  when 'username'
+    fill_in 'Username', with: data['Username']
   end
+  fill_in 'Password', with: data['Password']
 end
 
-# Verifies form data based on the given table data
-def verify_form_data(table)
-  table.hashes.each do |row|
-    field = find_field(row['Field'])
-    expect(field.value).to eq row['Value']
-  end
+Given(/^I am on the login page$/) do
+  visit login_path
 end
 
-# Maps page names to their corresponding paths
-def path_to(page_name)
-  case page_name.downcase
-  when 'home'
-    root_path
-  when 'login'
-    new_user_session_path
-  when 'ngogebirah'
-    ngo_gebirah_path
-  when 'user verification'
-    user_verification_path
-  when 'fill in particulars'
-    new_user_particular_path
-  else
-    raise "Undefined page: #{page_name}"
-  end
-end
-
-# Step Definitions
-# Step to fill in a form with the given table data
-Given(/^I fill in the following:$/) do |table|
-  fill_in_form(table)
-end
-
-# Step to check for an error message
-Then(/^I will see an error message "(.+)"$/) do |message|
-  expect(page).to have_content(message)
-end
-
-# Step to verify form data with the given table data
-Then(/^I should see the following fields in the Digital ID:$/) do |table|
-  verify_form_data(table)
-end
-
-# Step to fill in a specific field with a value
-When(/^I fill in the "([^"]*)" field with "([^"]*)"$/) do |field, value|
-  fill_in field, with: value
-end
-
-# Step to leave a specific field empty
-And(/^I leave the "([^"]*)" field empty$/) do |field|
-  fill_in field, with: ''
-end
-
-# Step to check for a welcome message
-Then(/^I will see a welcome message "(.+)"$/) do |message|
-  expect(page).to have_content(message)
-end
-
-# Step to fill in particulars with the given table data
-Given(/^I entered the following particulars:$/) do |table|
-  fill_in_form(table)
-end
-
-# Step to leave the date of birth field empty
-And(/^I do not enter a date of birth$/) do
-  fill_in 'Date of Birth', with: ''
-end
-
-# Step to leave the country of origin field unselected
-And(/^I do not select a country of origin$/) do
-  select '', from: 'Country of Origin'
-end
-
-# Step to check for specific fields on the page
-Then(/^I should see the following fields:$/) do |table|
-  puts "Current URL: #{current_url}"
-  puts "Current Path: #{current_path}"
-  table.hashes.each do |row|
-    expect(page).to have_content(row['Value'])
-  end
-end
-
-# Step to navigate to a specific page
-Given(/^I am on the "([^"]*)" page$/) do |page|
-  visit path_to(page)
-end
-
-# Step to click a specific button
-And(/^I press the "([^"]*)" button$/) do |button|
+When(/^I press "([^"]*)"$/) do |button|
   click_button button
 end
 
-# Step to log in as a user
-Given('I am a logged-in user') do
-  @user = create(:user)
-  visit new_user_session_path
-  fill_in 'Email', with: @user.email
-  fill_in 'Password', with: @user.password
-  click_button 'Log in'
-  expect(page).to have_content('Signed in successfully.')
-end
-
-# Additional steps for the new feature file
-# Step to navigate to the login page
-Given(/^I am on the "Login" page$/) do
-  visit path_to('login')
-end
-
-# Step to fill in the login details
-Given(/^I enter the following details on the (phone number|email|username) login page:$/) do |login_type, table|
-  details = table.hashes.first
-  case login_type
-  when 'phone number'
-    fill_in 'Phone Number', with: details['Phone Number']
-  when 'email'
-    fill_in 'Email', with: details['Email']
-  when 'username'
-    fill_in 'Username', with: details['Username']
-  end
-  fill_in 'Password', with: details['Password']
-end
-
-# Step to enter the login details in a simplified way
-When(/^I enter the following details:$/) do |table|
-  details = table.hashes.first
-  fill_in 'Phone Number', with: details['Phone Number']
-  fill_in 'Password', with: details['Password']
-end
-
-# Step to click the login button
-When(/^I press "Login"$/) do
-  click_button 'Login'
-end
-
-# Step to check for redirection to the home page
 Then(/^I should be redirected to the home page$/) do
-  expect(current_path).to eq(root_path)
+  expect(page).to have_current_path(home_path)
 end
 
-# Step to click the "I am a NGO" button
-When(/^I press the "I am a NGO" button$/) do
-  click_button 'I am a NGO'
-end
-
-# Step to check for NGO buttons on the page
-Then(/^I should see a set of different NGO buttons$/) do
-  expect(page).to have_selector(:link_or_button, 'NGO Gebirah')
-end
-
-# Step to click the "NGO Gebirah" button
-When(/^I press the "NGO Gebirah" button$/) do
-  click_button 'NGO Gebirah'
-end
-
-# Step to check for redirection to the NGO: Gebirah page
-Then(/^I should be redirected to the "NGO: Gebirah" page$/) do
-  expect(current_path).to eq(path_to('ngogebirah'))
-end
-
-# Step to check for a welcome message on the NGO: Gebirah page
-And(/^I should see "Welcome Gebirah!"$/) do
-  expect(page).to have_content('Welcome Gebirah!')
-end
-
-# Step to navigate to the NGO: Gebirah page
-Given(/^I am already on my "NGO: Gebirah" page$/) do
-  visit path_to('ngogebirah')
-end
-
-# Step to fill in the EnableID number field
-When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |enableid|
-  fill_in 'EnableID number', with: enableid
-end
-
-# Step to fill in the 6 digit code field
-And(/^I key in a 6 digit code that is seen on his\/her EnableID: (\d+)$/) do |code|
-  fill_in '6 digit code', with: code
-end
-
-# Step to click the Enter button
-And(/^I press "Enter"$/) do
-  click_button 'Enter'
-end
-
-# Step to check for redirection to the User Verification page
-Then(/^I should be redirected to the "User Verification" page$/) do
-  expect(current_path).to eq(path_to('user verification'))
-end
-
-# Step to check for the EnableID Card on the User Verification page
-And(/^I should see his\/her "EnableID Card"$/) do
-  expect(page).to have_content('EnableID Card')
-end
-
-# Step to check for verification guidelines on the User Verification page
-And(/^I should see a set of guidelines to properly verify an EnableID user$/) do
-  expect(page).to have_content('guidelines to properly verify an EnableID user')
-end
-
-# Step to check for the Verify button on the User Verification page
-And(/^I should see a "Verified" Button$/) do
-  expect(page).to have_selector(:link_or_button, 'Verify')
-end
-
-# Step to click the Verify button
-When(/^I press the "Verify" button$/) do
-  click_button 'Verify'
-end
-
-# Step to check for a success message after verification
-Then(/^I should see "Successfully verified EnableID: (\d+)!"$/) do |enableid|
-  expect(page).to have_content("Successfully verified EnableID: #{enableid}!")
-end
-
-# Step to log in as a specific user by EnableID
-Given(/^that I am logged into user (\d+) EnableID account$/) do |enableid|
-  # Assuming there's a method to log in as a specific user by their EnableID
-  log_in_as_enableid_user(enableid)
-end
-
-# Step to check for a verified checkmark on the EnableID card
-Then(/^I should see the checkmark on the user's EnableID card$/) do
-  expect(page).to have_selector('.verified-checkmark')
-end
-
-# Step to check for verification message on the EnableID card
-And(/^I should see "EnableID - verified by NGO: Gebirah"$/) do
-  expect(page).to have_content('EnableID - verified by NGO: Gebirah')
-end
-
-# Step to check for the date of verification on the EnableID card
-And(/^I should see "Date of verification: #{Date.today.strftime('%Y-%m-%d')}"$/) do
-  expect(page).to have_content("Date of verification: #{Date.today.strftime('%Y-%m-%d')}")
-end
-
-# New steps for handling incorrect login attempts
-# Step to check for an error message on the login page
-Then(/^I should see an error message "(.+)"$/) do |message|
+Then(/^I should see an error message "([^"]*)"$/) do |message|
   expect(page).to have_content(message)
 end
 
-# Step to check for the empty login page
 Then(/^I should see the empty login page again$/) do
-  expect(page).to have_current_path(new_user_session_path)
+  expect(page).to have_current_path(login_path)
 end
 
-# Step to enter login details (simplified)
-When(/^I enter the following details:$/) do |table|
-  details = table.hashes.first
-  fill_in 'Phone Number', with: details['Phone Number']
-  fill_in 'Password', with: details['Password']
+Then(/^I should see an error message "Phone number cannot be blank"$/) do
+  expect(page).to have_content("Phone number cannot be blank")
 end
 
-# Step to navigate to the login page
-Given(/^I am on the login page$/) do
-  visit new_user_session_path
+Then(/^I should see an error message "Password cannot be blank"$/) do
+  expect(page).to have_content("Password cannot be blank")
 end
 
-# New steps for handling account lockout period
+Given(/^I am on the "Login" page$/) do
+  visit login_path
+end
+
+When(/^I click "Forgot password\?"$/) do
+  click_link 'Forgot password?'
+end
+
+Then(/^I should be redirected to the "Reset Password" page$/) do
+  expect(page).to have_current_path(reset_password_path)
+end
+
+Then(/^I should see a form to enter my phone number or email$/) do
+  expect(page).to have_selector("form input[name='phone_number']")
+  expect(page).to have_selector("form input[name='email']")
+end
+
+Given(/^I have registered with the following details:$/) do |table|
+  data = table.rows_hash
+  User.create!(phone_number: data['Phone Number'], password: data['Password'])
+end
+
+When(/^I enter the password incorrectly three times:$/) do |table|
+  data = table.rows_hash
+  3.times do
+    fill_in 'Phone Number', with: data['Phone Number']
+    fill_in 'Password', with: data['Password']
+    click_button 'Login'
+  end
+end
+
+Then(/^I should see the empty login page$/) do
+  expect(page).to have_current_path(login_path)
+end
+
 Given(/^my account is locked due to multiple failed login attempts$/) do
-  # Add logic to lock the account
+  # Assuming the user model has a field `locked` to indicate account lock status
+  user = User.find_by(phone_number: '98765432')
+  user.update!(locked: true) if user
 end
 
 When(/^I wait for the lockout period to end$/) do
-  # Add logic to wait for the lockout period to end
+  # Simulate waiting for lockout period to end
+  sleep(1)
 end
 
-Given(/^I enter the following correct password:$/) do |table|
-  details = table.hashes.first
-  fill_in 'Phone Number', with: details['Phone Number']
-  fill_in 'Password', with: details['Password']
+When(/^I enter the following correct password:$/) do |table|
+  data = table.rows_hash
+  fill_in 'Phone Number', with: data['Phone Number']
+  fill_in 'Password', with: data['Password']
 end
 
-# Step to register with the following details
-Given(/^I have registered with the following details:$/) do |table|
-  details = table.hashes.first
-  fill_in 'Phone Number', with: details['Phone Number']
-  fill_in 'Password', with: details['Password']
-  click_button 'Register'
+# Step definitions for reset_password.feature
+
+Given(/^I am on the reset password page$/) do
+  visit reset_password_path
 end
 
-# Step to enter the password incorrectly three times
-When(/^I enter the password incorrectly three times:$/) do |table|
-  details = table.hashes.first
-  3.times do
-    fill_in 'Phone Number', with: details['Phone Number']
-    fill_in 'Password', with: 'wrongpassword'
-    click_button 'Login'
+When(/^I enter my (phone number|email|username)$/) do |type|
+  case type
+  when 'phone number'
+    fill_in 'Phone Number', with: '98765432'
+  when 'email'
+    fill_in 'Email', with: 'user@example.com'
+  when 'username'
+    fill_in 'Username', with: 'user123'
   end
+end
+
+Then(/^I should receive an (SMS|email) with a reset link$/) do |method|
+  if method == 'SMS'
+    expect(page).to have_content("An SMS with a reset link has been sent")
+  else
+    expect(page).to have_content("An email with a reset link has been sent")
+  end
+end
+
+# Step definitions for sign_up.feature
+
+Given(/^I am on the sign-up page$/) do
+  visit sign_up_path
+end
+
+When(/^I enter the following details:$/) do |table|
+  data = table.rows_hash
+  fill_in 'Username', with: data['Username']
+  fill_in 'Email', with: data['Email']
+  fill_in 'Phone Number', with: data['Phone Number']
+  fill_in 'Password', with: data['Password']
+  fill_in 'Confirm Password', with: data['Confirm Password']
+end
+
+Then(/^I should see a welcome message$/) do
+  expect(page).to have_content("Welcome!")
+end
+
+Then(/^I should be redirected to the home page$/) do
+  expect(page).to have_current_path(home_path)
+end
+
+Then(/^I should see an error message "Passwords do not match"$/) do
+  expect(page).to have_content("Passwords do not match")
+end
+
+Then(/^I should see an error message "Email already registered"$/) do
+  expect(page).to have_content("Email already registered")
+end
+
+# Step definitions for confirm_user_particular.feature
+
+Given(/^I am on the "Fill in Particulars" page$/) do
+  visit fill_in_particulars_path
+end
+
+Given(/^I entered the following particulars:$/) do |table|
+  data = table.rows_hash
+  fill_in 'Full Name', with: data['Full Name']
+  fill_in 'Phone Number', with: data['Phone Number']
+  fill_in 'Secondary Phone Number', with: data['Secondary Phone Number']
+  fill_in 'Country of Origin', with: data['Country of Origin']
+  fill_in 'Ethnicity', with: data['Ethnicity']
+  fill_in 'Religion', with: data['Religion']
+  fill_in 'Gender', with: data['Gender']
+  fill_in 'Date of Birth', with: data['Date of Birth']
+  fill_in 'Date of Arrival in Malaysia', with: data['Date of Arrival in Malaysia']
+end
+
+Then(/^I should see the filled-in details:$/) do |table|
+  data = table.rows_hash
+  expect(page).to have_field('Full Name', with: data['Full Name'])
+  expect(page).to have_field('Phone Number', with: data['Phone Number'])
+  expect(page).to have_field('Secondary Phone Number', with: data['Secondary Phone Number'])
+  expect(page).to have_field('Country of Origin', with: data['Country of Origin'])
+  expect(page).to have_field('Ethnicity', with: data['Ethnicity'])
+  expect(page).to have_field('Religion', with: data['Religion'])
+  expect(page).to have_field('Gender', with: data['Gender'])
+  expect(page).to have_field('Date of Birth', with: data['Date of Birth'])
+  expect(page).to have_field('Date of Arrival in Malaysia', with: data['Date of Arrival in Malaysia'])
+end
+
+# Step definitions for fill_user_particular_form.feature
+
+Given(/^I am on the "Enter Particulars" page$/) do
+  visit enter_particulars_path
+end
+
+When(/^I press "Submit"$/) do
+  click_button 'Submit'
+end
+
+Then(/^I should see the message "Particulars submitted successfully"$/) do
+  expect(page).to have_content("Particulars submitted successfully")
+end
+
+Then(/^I should be redirected to the "Confirm Particulars" page$/) do
+  expect(page).to have_current_path(confirm_particulars_path)
+end
+
+Then(/^I should see the error message "Full Name is required"$/) do
+  expect(page).to have_content("Full Name is required")
+end
+
+# Step definitions for ngo_verify_user.feature
+
+Given(/^I am logged in as an NGO representative$/) do
+  visit ngo_login_path
+  fill_in 'Username', with: 'ngo_rep'
+  fill_in 'Password', with: 'password'
+  click_button 'Login'
+end
+
+Given(/^I have the user's Digital ID$/) do
+  @digital_id = '123456'
+end
+
+When(/^I enter the Digital ID into the system$/) do
+  fill_in 'Digital ID', with: @digital_id
+end
+
+When(/^I press "Verify"$/) do
+  click_button 'Verify'
+end
+
+Then(/^I should see the message "User verified successfully"$/) do
+  expect(page).to have_content("User verified successfully")
+end
+
+Then(/^the user's status should be updated to "Verified"$/) do
+  user = User.find_by(digital_id: @digital_id)
+  expect(user.status).to eq("Verified")
+end
+
+When(/^I enter an invalid Digital ID into the system$/) do
+  fill_in 'Digital ID', with: 'invalid_id'
+end
+
+Then(/^I should see the error message "Invalid Digital ID"$/) do
+  expect(page).to have_content("Invalid Digital ID")
+end
+
+# Step definitions for start_user_particular.feature
+
+Given(/^I am on the “Home” page$/) do
+  visit home_path
+end
+
+When(/^I press "Fill in your particulars to get your Digital ID!"$/) do
+  click_button 'Fill in your particulars to get your Digital ID!'
+end
+
+Then(/^I should be redirected to the "Enter Particulars” page$/) do
+  expect(page).to have_current_path(enter_particulars_path)
+end
+
+Then(/^I should see "Fill in your particulars"$/) do
+  expect(page).to have_content("Fill in your particulars")
 end
