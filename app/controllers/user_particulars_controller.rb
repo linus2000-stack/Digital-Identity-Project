@@ -74,7 +74,8 @@ class UserParticularsController < ApplicationController
   def user_particular_params
     params.require(:user_particular).permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin,
                                             :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival,
-                                            :photo_url, :birth_certificate_url, :passport_url, :user_id)
+                                            :photo_url, :birth_certificate_url, :passport_url, :user_id, :phone_number_country_code,
+                                            :secondary_phone_number_country_code, :full_phone_number, :full_secondary_phone_number)
   end
 
   def set_dropdown_options
