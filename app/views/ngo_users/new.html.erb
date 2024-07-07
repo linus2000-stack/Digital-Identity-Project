@@ -7,7 +7,6 @@
       </form>
     </div>
   </div>
-  
   <div class="row" style="margin-top: 20px;">
     <% @ngo_users.each do |ngo_user| %>
       <div class="col-sm-6 col-md-4 col-lg-3" style="padding: 10px;"> <!-- Adjusted grid settings for better responsiveness -->
@@ -18,10 +17,10 @@
                 <%= image_tag ngo_user.image_url, alt: "#{ngo_user.name} image", style: 'max-height: 100%; max-width: 100%; object-fit: cover;' %>
               <% else %>
                 <%= image_tag 'default.png', alt: "Default image", style: 'max-height: 100%; max-width: 100%; object-fit: cover;' %>
-              <% end %>
-            </div>
+              <% end %>            </div>
             <div class="card-body" style="height: 30%; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center;">
-              <h5 class="card-title" style="font-size: 1rem;"> <%= ngo_user.name %> </h5> <!-- Responsive text size -->
+              <h5 class="card-title" style="font-size: 1rem;"> <%= ngo_user.name %> </h5>
+<!-- Responsive text size -->
             </div>
           </div>
         <% end %>
@@ -29,7 +28,6 @@
     <% end %>
   </div>
 </div>
-
 <style>
   /* Responsive text adjustments */
   @media (max-width: 768px) {

@@ -123,8 +123,23 @@ user5.create_user_particular!(
   passport_url: 'https://example.com/hussein_abbas_passport.jpg'
 )
 
-ngolist = ['UNHCR', 'UNICEF', 'World Vision', 'Save the Children', 'Red Cross', 'Doctors Without Borders', 'Gebirah']
+ngo_users = [
+  { name: 'CARE International', image_url: 'care.png' },
+  { name: 'Amnesty International', image_url: 'AmnestyInternational.png' },
+  { name: 'Oxfam', image_url: 'oxfam.png' },
+  { name: 'World Vision', image_url: 'worldvision.png' },
+  { name: 'Human Rights Watch', image_url: 'humanrightswatch.png' },
+  { name: 'Gebirah', image_url: 'Gebirah.png' },
+  { name: 'International Rescue Committee (IRC)', image_url: 'IRC.png' },
+  { name: 'Doctors Without Borders/Médecins Sans Frontières', image_url: 'MSF.png' },
+  { name: 'Norwegian Refugee Council (NRC)', image_url: 'NRC.png' },
+  { name: 'Save the Children', image_url: 'Savethechildren.png' },
+  { name: 'UNHCR', image_url: 'unhcr.png' },
+  { name: 'World Relief', image_url: 'world relief.png' }
+]
 
-ngolist.each do |i|
-  NgoUser.create!(name: i)
+# Creating each NgoUser from the array
+ngo_users.each do |ngo|
+  ngo_user = NgoUser.find_or_initialize_by(name: ngo[:name])
+  ngo_user.update!(image_url: ngo[:image_url])
 end
