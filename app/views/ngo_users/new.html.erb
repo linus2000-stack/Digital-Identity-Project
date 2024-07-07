@@ -1,15 +1,33 @@
-<div class="container mt-5">
+ <div class="row mb-4">
+    <div class="col-12">
+      <form method="get" action="<%= new_ngo_user_path %>"> <!-- Replace `your_index_path` with the actual path -->
+        <input type="text" name="search" class="form-control" placeholder="Search for NGOs..." value="<%= params[:search] %>">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+  
   <div class="row">
-    <% # Define your URLs here with actual IDs for each NgoUser %>
-    <% ngo_user_ids = [1, 2, 3, 4] %> <!-- Replace these with actual IDs -->
-    <% ngo_user_ids.each do |id| %>
+    <% @ngo_users.each do |ngo_user| %>
       <div class="col-sm-3">
-        <div class="card">
-          <div class="card-body">
-            <%= link_to 'Click Me', ngo_user_path(id), class: 'btn btn-primary' %>
+        <%= link_to ngo_user_path(ngo_user.id), class: 'card-link' do %>
+          <div class="card">
+            <!-- Image placeholder -->
+            <% if ngo_user.image_url.present? %>
+              <%= image_tag ngo_user.image_url, alt: "#{ngo_user.name} image", class: 'card-img-top' %>
+            <% else %>
+              <%= image_tag 'default_image.jpg', alt: "Default image", class: 'card-img-top' %>
+            <% end %>
+            <div class="card-body">
+              <!-- Title placeholder -->
+              <h5 class="card-title"><%= ngo_user.name %></h5>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     <% end %>
   </div>
+
 </div>
+
+<%# ziyah code here %>
