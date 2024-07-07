@@ -85,6 +85,19 @@ class UserParticularsController < ApplicationController
     @country_code_options = country_code_options
   end
 
+  def generate_2fa
+    @user_particular = UserParticular.find(params[:id])
+    @user_particular.generate_2fa_secret
+    puts @user_particular.two_fa_passcode
+    if @user_particular.save
+      respond_to do |format|
+        format.json { render json: { two_fa_passcode: @user_particular.two_fa_passcode } }
+      end
+    else
+      render json: { error: 'Failed to generate 2FA passcode' }, status: :unprocessable_entity
+    end
+  end
+
   def validate_user_particulars(user_particular)
     error_messages_arr = []
 
