@@ -4,3 +4,11 @@
   <!-- Display other attributes of @ngo_user as needed -->
   <%= link_to 'Verify', verify_ngo_user_path(@ngo_user), class: 'btn btn-primary' %>
 </div>
+
+
+<% if @verified %>
+  <div class="alert alert-success" role="alert">
+    <strong>Verified!</strong>
+    <p>Successfully verified EnableID:<%= @user_particular.unique_id %>!</p>
+  </div>
+<% end %>
