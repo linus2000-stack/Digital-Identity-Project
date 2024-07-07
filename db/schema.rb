@@ -38,8 +38,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_083011) do
     t.string "full_secondary_phone_number"
     t.integer "unique_id", limit: 4
     t.integer "two_fa_passcode", limit: 3
-    t.index ["unique_id"], name: "index_user_particulars_on_unique_id", unique: true
-    t.index ["user_id"], name: "index_user_particulars_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
