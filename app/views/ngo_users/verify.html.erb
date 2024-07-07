@@ -1,13 +1,7 @@
 <div class="container px-5">
   <h2 class="mb-4 mt-4">EnableID Verification</h2> <!-- Added margin-bottom and margin-top for spacing -->
-  
-  <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
-    <div class="mb-3">
-      <%= label_tag :unique_id, "Enter Unique ID" %>
-      <%= text_field_tag :unique_id, params[:unique_id], class: "form-control" %>
-    </div>
-    <%= submit_tag "Search", class: "btn btn-primary" %>
-  <% end %>
+  <h1 class="text-center rounded mt-3">Your <strong style="color: #f1536a;">EnableID</strong></h1>
+  <%= render :partial => 'user_particulars/digitalid' %>
 
   <% if @user_particular.present? %>
     <div class="mt-4"> <!-- Add a margin top to create space -->
