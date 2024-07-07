@@ -37,17 +37,17 @@
     <button id="generate-2fa-btn" class="btn btn-info">Generate 2FA Passcode:</button>
     <span id='two-fa-passcode' class='border lead px-3 py-1 h-100'><%= @user_particular&.two_fa_passcode || "2FA Passcode is not set up." %></span>
   </div>
-  <div class='row justify-content-center my-1'>
+  <div class="alert alert-info text-center my-1">
+    Make sure to fill in your particulars correctly before being verified by a NGO admin!
+  </div>
+  <div class='row justify-content-center'>
     <% if @user_particular.nil? %>
       <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", id: "fill-in-particulars" %>
     <% else %>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verificationWarningModal">
+      <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal" data-bs-target="#verificationWarningModal">
         Edit your particulars!
       </button>
     <% end %>
-  </div>
-  <div class="alert alert-info text-center">
-    Make sure to fill in your particulars correctly before being verified by a NGO admin!
   </div>
   <%# End of EnableID card partial and filling in/edit button%>
   <!-- Modal -->
@@ -55,7 +55,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="verificationWarningModalLabel">Warning</h5>
+          <h5 class="modal-title" id="verificationWarningModalLabel">Caution!</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -65,7 +65,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <%= link_to "Proceed", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
+          <% if @user_particular.present? %>
+            <%= link_to "Proceed", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
+          <% end %>
         </div>
       </div>
     </div>
