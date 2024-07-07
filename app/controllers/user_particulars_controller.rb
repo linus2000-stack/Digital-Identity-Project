@@ -56,6 +56,7 @@ class UserParticularsController < ApplicationController
 
   def update
     @user_particular = UserParticular.update_user_particular(params[:id], user_particular_params)
+    @user_particular[:status] = 'pending' # Set status to pending after editing
     # Check if edit was successful
     if @user_particular.persisted?
       flash[:success] = 'Digital ID was successfully edited!'
