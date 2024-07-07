@@ -13,13 +13,13 @@ Scenario: Going to my own "NGO" page
 
 Scenario: Retrieving undocumented user's EnableID personal particulars
   Given I am already on my "NGO: Gebirah" page
-  When I key in the undocumented user's unique EnableID number: 1004209
-  And I key in a 6 digit code that is seen on his/her EnableID: 837459
-  And I press "Enter"
-  Then I should be redirected to the "User Verification" page
-  And I should see his/her "EnableID Card"
-  And I should see a set of guidelines to properly verify an EnableID user
-  And I should see a "Verified" Button
+  When I key in the undocumented user's unique EnableID number: 1071783
+  And I press "Submit"
+  Then I should see "Enter 2FA Code" with a textbox
+  When I key in a 6 digit code that is seen on his/her EnableID: 958523
+  And I press "Check"
+  Then I should see his/her EnableID card
+  And a "Verify" button below
 
 Scenario: Mark undocumented user's EnableID status as verified
   Given I am on the "User Verfication" page
