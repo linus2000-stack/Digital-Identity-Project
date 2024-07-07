@@ -10,28 +10,33 @@ class NgoUsersController < ApplicationController
 
   def show
     @ngo_user = NgoUser.find(params[:id])
-    @user_particular = UserParticular.find_by(unique_id: params[:enable_id]) if params[:enable_id].present?
+    if params[:unique_id].present?
+      @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
+      if @user_particular
+        flash.now[:notice] = "Unique ID found. Please enter your 2FA code."
+        @unique_id_exists = true
+      else
+        flash.now[:alert] = "Unique_ID does not exist. Please try again."
+        @unique_id_exists = false
+      end
+    end
   end
 
   def index
   end
 
-  def verify
+  def check_user
     @ngo_user = NgoUser.find(params[:id])
-    @user_particular = nil
-  end
-
-  def verify_user
-    @ngo_user = NgoUser.find(params[:id])
-    @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
+    @user_particular = UserParticular.find_by(unique_id: params[:unique_id], two_fa_passcode: params[:two_fa_passcode])
 
     if @user_particular
       flash.now[:notice] = "User found."
+      @checked = true
     else
       flash.now[:alert] = "User not found."
-      @user_particular = nil
+      @checked = false
     end
 
-    render :verify
+    render :show
   end
 end

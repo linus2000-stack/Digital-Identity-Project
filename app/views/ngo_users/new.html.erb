@@ -13,6 +13,7 @@
         <%= link_to ngo_user_path(ngo_user.id), class: 'card-link' do %>
           <div class="card" style="height: 300px; width: 100%; display: flex; flex-direction: column; overflow: hidden;">
             <div style="height: 70%; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                <%= image_tag 'default.png', alt: "Default image", style: 'max-height: 100%; max-width: 100%; object-fit: cover;' %>
             </div>
             <div class="card-body" style="height: 30%; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center;">
               <h5 class="card-title" style="font-size: 1rem;"> <%= ngo_user.name %> </h5>
