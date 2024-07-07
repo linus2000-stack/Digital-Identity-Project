@@ -19,7 +19,7 @@
             <li class="list-group-item text-nowrap"><strong>Country of Origin:</strong> <%= user_particular&.country_of_origin || "" %></li>
             <li class="list-group-item text-nowrap"><strong>Date of Birth:</strong> <%= user_particular&.date_of_birth ? user_particular.date_of_birth.strftime("%d-%m-%Y") : "" %></li>
             <li class="list-group-item text-nowrap"><strong>Date of Arrival:</strong> <%= user_particular&.date_of_arrival ? user_particular.date_of_arrival.strftime("%d-%m-%Y") : "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= user_particular&.full_phone_number || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= user_particular&.phone_number || "" %></li>
           </ul>
         </div>
         <div class="col-md-1 text-md-center">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="card-footer text-muted d-flex justify-content-between">
-      <span>UnityPass - Pending your action</span>
+      <span>EnableID - Pending your action</span>
     </div>
   </div>
 </div>
