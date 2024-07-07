@@ -1,5 +1,5 @@
-<div class="container py-3">
-  <h1>Confirm Your Details</h1>
+<div class="container py-3 justify-content-center">
+  <h4 class="text-center m-1 text-nowrap">Confirm Your Details</h4>
   <%= render 'digitalid' %>
   <%= form_with model: @user_particular, url: user_particulars_path, method: :post do |form| %>
     <%= form.hidden_field :full_name, value: @user_particular.full_name %>

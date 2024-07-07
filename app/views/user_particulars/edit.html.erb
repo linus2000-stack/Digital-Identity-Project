@@ -1,39 +1,40 @@
 <div class="container py-3">
-<h5 class="text-center" style="color: black">Edit your particulars</h2>
-<!-- user_particulars_confirm_path leads to the confirm function!-->
-<%= form_with model: @user_particular do |form| %>
-<!-- added patch which updates existing records unlike get method in new.html -->
-<%= form.hidden_field :user_id, value: current_user.id %>
+  <h4 class="text-center" style="color: black">Edit your particulars</h4>
+  <!-- user_particulars_confirm_path leads to the confirm function!-->
+  <%= form_with model:@user_particular, id: "form" do |form| %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
     <div class="form-group">
       <%= form.label :full_name, "Full Name" %><span class="text-danger">*</span>
       <%= form.text_field :full_name, class: "form-control", required: true %>
     </div>
     <div class="form-group">
-      <%= form.label :abc, "Phone number" %><span class="text-danger">*</span>
+      <%= form.label :phone_number, "Phone number" %><span class="text-danger">*</span>
       <!--Yiqing your code goes here-->
       <div class="row">
         <div class="col" style="max-width: 125px; min-width: 125px;">
-          <%= form.select :abc, options_for_select(@country_code_options, @user_particular["country_of_origin"]), {}, { class: "form-control", required: true, id: "country_code_select" } %>
+          <%= form.select :phone_number_country_code, options_for_select(@country_code_options, @user_particular["phone_number_country_code"]), {}, { class: "form-control", required: true, id: "country_code_select" } %>
         </div>
         <div class="col">
-          <%= form.telephone_field :abc, class: "form-control", required: true, id: "phone_number_field", placeholder: "+60" %>
+          <%= form.telephone_field :phone_number, class: "form-control", required: true, id: "phone_number_field" %>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <%= form.label :phone_number, "Phone Number" %><span class="text-danger">*</span>
-      <%= form.hidden_field :phone_number, class: "form-control", id: "full_phone_number_field", readonly: true %>
     </div>
     <div class="form-group">
       <%= form.label :secondary_phone_number, "Secondary phone number (optional)" %>
       <div class="row">
         <div class="col" style="max-width: 125px; min-width: 125px;">
-          <%= form.select :secondary_country_code, options_for_select(@country_code_options, @user_particular["country_of_origin"]), {}, { class: "form-control", required: true, id: "country_code_select_secondary" } %>
+          <%= form.select :secondary_phone_number_country_code, options_for_select(@country_code_options, @user_particular["secondary_phone_number_country_code"]), {}, { class: "form-control", required: true, id: "country_code_select_secondary" } %>
         </div>
         <div class="col">
-          <%= form.telephone_field :secondary_phone_number, class: "form-control", required: true, id: "phone_number_field_secondary", placeholder: "+60" %>
+          <%= form.telephone_field :secondary_phone_number, class: "form-control", required: true, id: "phone_number_field_secondary" %>
         </div>
       </div>
+    </div>
+    <div class="form-group">
+      <%= form.hidden_field :full_phone_number, class: "form-control", id: "full_phone_number_field", readonly: true %>
+    </div>
+    <div class="form-group">
+      <%= form.hidden_field :full_secondary_phone_number, class: "form-control", id: "full_secondary_phone_number_field", readonly: true %>
     </div>
     <div class="form-group">
       <%= form.label :country_of_origin, "Country of Origin" %><span class="text-danger">*</span>
@@ -41,15 +42,21 @@
     </div>
     <div class="form-group">
       <%= form.label :ethnicity, "Ethnicity" %><span class="text-danger">*</span>
-      <%= form.select :ethnicity, options_for_select(@ethnicities, @user_particular["ethnicity"]), {}, { class: "form-control", required: true } %>
+      <%= form.select :ethnicity, options_for_select(@ethnicities, @user_particular["ethnicity"]), {}, { class: "form-control", required: true, id: "ethnicity_select" } %>
+      <!-- Hidden Text Field for Ethnicity -->
+      <%= text_field_tag :ethnicity_other, nil, class: "form-control", style: "display:none;", placeholder: "Please specify", id: "ethnicity_other" %>
     </div>
     <div class="form-group">
       <%= form.label :religion, "Religion" %><span class="text-danger">*</span>
-      <%= form.select :religion, options_for_select(@religions, @user_particular["religion"]), {}, { class: "form-control", required: true } %>
+      <%= form.select :religion, options_for_select(@religions, @user_particular["religion"]), {}, { class: "form-control", required: true, id: "religion_select" } %>
+      <!-- Hidden Text Field for Religion -->
+      <%= text_field_tag :religion_other, nil, class: "form-control", style: "display:none;", placeholder: "Please specify", id: "religion_other" %>
     </div>
     <div class="form-group">
       <%= form.label :gender, "Gender" %><span class="text-danger">*</span>
-      <%= form.select :gender, options_for_select(['Male', 'Female', 'Others'], @user_particular["gender"]), {}, { class: "form-control", required: true } %>
+      <%= form.select :gender, options_for_select(['Male', 'Female', 'Others'], @user_particular["gender"]), {}, { class: "form-control", required: true, id: "gender_select" } %>
+      <!-- Hidden Text Field for Gender -->
+      <%= text_field_tag :gender_other, nil, class: "form-control", style: "display:none;", placeholder: "Please specify", id: "gender_other" %>
     </div>
     <div class="form-group">
       <%= form.label :date_of_birth, "Date of Birth" %><span class="text-danger">*</span>
@@ -69,82 +76,108 @@
       <%= form.check_box :passport_url, id: 'passport' %> <label for="passport">Passport</label><br>
     </div>
     <div class="text-center">
-      <%= form.submit "Submit", class: "btn btn-danger" %>
+      <%= form.submit "Update", class: "btn btn-danger" %>
     </div>
   <% end %>
 </div>
+<%# For concatenating the numbers to full number %>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    var countryCodeSelect = document.getElementById("country_code_select");
-    var phoneNumberField = document.getElementById("phone_number_field");
-    var fullPhoneNumberField = document.getElementById("full_phone_number_field");
-
-    function updateFullPhoneNumber() {
-      var countryCode = countryCodeSelect.value;
-      var phoneNumber = phoneNumberField.value;
-      fullPhoneNumberField.value = (countryCode + '-' + phoneNumber).slice(1);
-    }
-    // Update the full phone number field on page load
-    updateFullPhoneNumber();
-
-    // Add event listeners to update the full phone number field when values change
-    countryCodeSelect.addEventListener("change", updateFullPhoneNumber);
-    phoneNumberField.addEventListener("input", updateFullPhoneNumber);
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var countryCodeSelects = [
-      {select: document.getElementById("country_code_select"), phoneField: document.getElementById("phone_number_field")},
-      {select: document.getElementById("country_code_select_secondary"), phoneField: document.getElementById("phone_number_field_secondary")}
-    ];
-
-    function updateSelectedOption(selectElement, phoneField) {
-      var selectedOptionIndex = selectElement.selectedIndex;
-      var selectedOption = selectElement.options[selectedOptionIndex];
-      var selectedValue = selectedOption.value;
-
-      // Store the full text in a data attribute
-      if (!selectedOption.getAttribute("data-full-text")) {
-        selectedOption.setAttribute("data-full-text", selectedOption.text);
+    // Simplify element selection by using an object to group related elements
+    const elements = {
+      primary: {
+        countryCodeSelect: document.getElementById("country_code_select"),
+        phoneNumberField: document.getElementById("phone_number_field"),
+        fullPhoneNumberField: document.getElementById("full_phone_number_field")
+      },
+      secondary: {
+        countryCodeSelect: document.getElementById("country_code_select_secondary"),
+        phoneNumberField: document.getElementById("phone_number_field_secondary"),
+        fullPhoneNumberField: document.getElementById("full_secondary_phone_number_field")
       }
+    };
 
-      // Set the text of the selected option to the country code only
-      selectedOption.text = selectedValue;
-
-      // Update the phone field placeholder
-      phoneField.placeholder = selectedValue;
+    // Consolidate the full phone number update logic into a single function
+    function updateFullPhoneNumber(elementGroup) {
+      elementGroup.fullPhoneNumberField.value = (elementGroup.countryCodeSelect.value + '-' + elementGroup.phoneNumberField.value).slice(1);
     }
 
-    function addEventListeners(selectElement, phoneField) {
-      selectElement.addEventListener("change", function() {
-        updateSelectedOption(selectElement, phoneField);
-      });
+    // Update both primary and secondary phone number fields
+    function updateAllFullPhoneNumbers() {
+      updateFullPhoneNumber(elements.primary);
+      updateFullPhoneNumber(elements.secondary);
+    }
 
-      // Restore full text on dropdown open
-      selectElement.addEventListener("focus", function() {
-        for (var i = 0; i < selectElement.options.length; i++) {
-          var option = selectElement.options[i];
-          var fullText = option.getAttribute("data-full-text");
-          if (fullText) {
+    // Simplify the event listener setup for both select elements
+    function setupEventListeners(elementGroup) {
+      const { countryCodeSelect, phoneNumberField } = elementGroup;
+
+      countryCodeSelect.addEventListener("change", () => updateAllFullPhoneNumbers());
+      phoneNumberField.addEventListener("input", () => updateAllFullPhoneNumbers());
+
+      // Combine the focus and blur event listeners into a single function
+      function handleSelectElementEvents(event) {
+        const selectElement = event.target;
+        // Iterate over all options in the select element
+        for (let option of selectElement.options) {
+          // Retrieve the full text from the data attribute or use the option's text if not available
+          const fullText = option.getAttribute("data-full-text") || option.text;
+          // On focus, set the option's text to its full text for display
+          if (event.type === "focus") {
             option.text = fullText;
+            // Ensure the full text is stored in the data attribute for future reference
+            option.setAttribute("data-full-text", fullText);
+          } else if (event.type === "blur") {
+            // On blur, revert the option's text to its value for a simplified display
+            option.text = option.value;
           }
         }
-      });
+      }
 
-      // Maintain country code after selection
-      selectElement.addEventListener("blur", function() {
-        updateSelectedOption(selectElement, phoneField);
-      });
-
-      // Trigger the change event on page load to set the initial display value
-      selectElement.dispatchEvent(new Event('change'));
+      countryCodeSelect.addEventListener("focus", handleSelectElementEvents);
+      countryCodeSelect.addEventListener("blur", handleSelectElementEvents);
+      countryCodeSelect.dispatchEvent(new Event('change')); // Initialize display
     }
 
-    countryCodeSelects.forEach(function(element) {
-      if (element.select && element.phoneField) {
-        addEventListeners(element.select, element.phoneField);
+    // Apply event listeners to both primary and secondary elements
+    setupEventListeners(elements.primary);
+    setupEventListeners(elements.secondary);
+
+    // Initial update for both phone number fields
+    updateAllFullPhoneNumbers();
+
+    function toggleOtherFieldAndUpdateModel(selectId, otherFieldId, modelAttributeName) {
+      const selectElement = document.getElementById(selectId);
+      const otherField = document.getElementById(otherFieldId);
+
+      // Function to update the Rails model attribute
+      function updateModel(value) {
+        // Assuming you have a hidden field for the model attribute to capture the "other" value
+        const modelAttributeField = document.querySelector(`[name='user_particular[${modelAttributeName}]']`);        console.log(modelAttributeField);
+        if (modelAttributeField) {
+          modelAttributeField.value = value;
+          console.log(`Updated ${modelAttributeName} to: ${value}`)
+        }
       }
-    });
+
+      selectElement.addEventListener("change", () => {
+        if (selectElement.value === "Others") {
+          otherField.style.display = "block";
+          // Update the model when the other field is shown and its value changes
+          otherField.addEventListener("input", () => {
+            updateModel(otherField.value);
+          });
+        } else {
+          otherField.style.display = "none";
+          // Update the model with the selected value if it's not "Others"
+          updateModel(selectElement.value);
+        }
+      });
+    }
+
+  // Initialize the function for each select field with the corresponding model attribute name
+  toggleOtherFieldAndUpdateModel("ethnicity_select", "ethnicity_other", "ethnicity");
+  toggleOtherFieldAndUpdateModel("religion_select", "religion_other", "religion");
+  toggleOtherFieldAndUpdateModel("gender_select", "gender_other", "gender");
   });
 </script>
