@@ -3,18 +3,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile Page</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#generate-2fa-btn').click(function(e) {
+        e.preventDefault();
+        console.log('HELLO');
+        $.ajax({
+          url: '<%= generate_2fa_path(@user_particular) %>',
+          type: 'POST',
+          dataType: 'json',
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function(data) {
+            $('#two-fa-passcode').text(data.two_fa_passcode);
+          },
+          error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+          }
+        });
+      });
+    });
+  </script>
 </head>
 <body>
   <%# Start of EnableID card partial and filling in/edit button%>
-  <h1 class="text-center rounded py-1 mt-5">Your <strong style="color: #f1536a;">EnableID</strong></h1>
+  <h1 class="text-center rounded mt-3">Your <strong style="color: #f1536a;">EnableID</strong></h1>
   <%= render 'digitalid' %>
-  <% if @user_particular.nil? %>
-    <div class="d-flex justify-content-center my-3">
+  <div class="row justify-content-center align-items-center mt-2">
+    <button id="generate-2fa-btn" class="btn btn-info">Generate 2FA Passcode:</button>
+    <span id='two-fa-passcode' class='border lead px-3 py-1 h-100'><%= @user_particular&.two_fa_passcode || "2FA Passcode is not set up." %></span>
+  </div>
+  <div class="d-flex justify-content-center my-1">
+    <% if @user_particular.nil? %>
       <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", id: "fill-in-particulars" %>
-    </div>
-  <% else %>
-    <div class="d-flex justify-content-center my-3">
+    <% else %>
       <%= link_to "Edit", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
   <%# End of EnableID card partial and filling in/edit button%>

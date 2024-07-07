@@ -29,7 +29,12 @@
       </div>
     </div>
     <div class="card-footer text-muted d-flex justify-content-between">
-      <span>UnityPass - Pending your action</span>
+      <% if @user_particular.nil? %>
+        <span>EnableID - Pending your action</span>
+      <% else %>
+        <span>EnableID - Pending verification from an NGO</span>
+        <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
+      <% end %>
     </div>
   </div>
 </div>

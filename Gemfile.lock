@@ -286,6 +286,7 @@ GEM
       railties (>= 5.2)
     rexml (3.3.1)
       strscan
+    rotp (6.3.0)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.1)
@@ -403,6 +404,7 @@ DEPENDENCIES
   pg (~> 1.5.6)
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.4)
+  rotp
   rspec-rails
   sassc-rails (>= 2.1.0)
   selenium-webdriver
