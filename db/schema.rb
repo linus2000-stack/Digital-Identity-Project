@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_07_083011) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_07_175712) do
   create_table "ngo_users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_083011) do
     t.string "full_secondary_phone_number"
     t.integer "unique_id", limit: 4
     t.integer "two_fa_passcode", limit: 3
+    t.string "status"
     t.index ["unique_id"], name: "index_user_particulars_on_unique_id", unique: true
     t.index ["user_id"], name: "index_user_particulars_on_user_id"
   end

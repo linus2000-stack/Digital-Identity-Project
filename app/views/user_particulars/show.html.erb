@@ -7,6 +7,14 @@
   <% if @user_particular.present? %>
     <script>
       $(document).ready(function() {
+        // When the modal is opened
+        $('#verificationWarningModal').on('shown.bs.modal', function () {
+        $('body').css('overflow', 'hidden'); // Prevent scrolling when modal is open
+        });
+        // When the modal is closed
+        $('#verificationWarningModal').on('hidden.bs.modal', function () {
+        $('body').css('overflow', 'hidden'); // Re-enable scrolling when modal is closed
+        });
         $('#generate-2fa-btn').click(function(e) {
           e.preventDefault();
           console.log('HELLO');
