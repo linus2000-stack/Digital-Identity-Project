@@ -4,28 +4,30 @@
   <title>Profile Page</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#generate-2fa-btn').click(function(e) {
-        e.preventDefault();
-        console.log('HELLO');
-        $.ajax({
-          url: '<%= generate_2fa_path(@user_particular) %>',
-          type: 'POST',
-          dataType: 'json',
-          headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-          },
-          success: function(data) {
-            $('#two-fa-passcode').text(data.two_fa_passcode);
-          },
-          error: function(xhr, status, error) {
-            console.error('AJAX Error:', status, error);
-          }
+  <% if @user_particular.present? %>
+    <script>
+      $(document).ready(function() {
+        $('#generate-2fa-btn').click(function(e) {
+          e.preventDefault();
+          console.log('HELLO');
+          $.ajax({
+            url: '<%= generate_2fa_path(@user_particular) %>',
+            type: 'POST',
+            dataType: 'json',
+            headers: {
+              'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data) {
+              $('#two-fa-passcode').text(data.two_fa_passcode);
+            },
+            error: function(xhr, status, error) {
+              console.error('AJAX Error:', status, error);
+            }
+          });
         });
       });
-    });
-  </script>
+    </script>
+  <% end %>
 </head>
 <body>
   <%# Start of EnableID card partial and filling in/edit button%>
