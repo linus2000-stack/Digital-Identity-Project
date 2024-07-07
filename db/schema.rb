@@ -13,6 +13,7 @@
 ActiveRecord::Schema[7.1].define(version: 2024_07_07_175712) do
   create_table "ngo_users", force: :cascade do |t|
     t.string "name"
+    t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

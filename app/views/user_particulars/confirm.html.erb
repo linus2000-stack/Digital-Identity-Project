@@ -19,6 +19,7 @@
     <%= form.hidden_field :birth_certificate_url, value: @user_particular.birth_certificate_url %>
     <%= form.hidden_field :passport_url, value: @user_particular.passport_url %>
     <%= form.hidden_field :user_id, value: @user_particular.user_id %>
+    <%= form.hidden_field :status, value: "pending" %>
     <div class="d-flex justify-content-center my-3">
       <%= link_to "Back", new_user_particular_path, class: "btn btn-secondary mx-2" %>
       <%= form.submit "Confirm", class: "btn btn-danger mx-2" %>
