@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Set root path of web app to /user_particulars/show for now
-  root 'user_particulars#show'
+  root 'user_particulars#show' # set root path of web app as /user_particulars/show for now
 
   devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    sessions: 'users/sessions', # Updated sessions controller path
-    passwords: 'users/passwords'
+    registrations: 'users/registrations/registrations',
+    sessions: 'users/registrations/sessions', # Update sessions controller
+    passwords: 'users/registrations/passwords'
   }
 
   # Self-declared extra routes (must be before resources)
@@ -19,10 +18,8 @@ Rails.application.routes.draw do
   resources :ngo_users
 
   # Custom routes for login, home, and reset password
-  get 'login', to: 'users/sessions#new', as: 'login'
-  post 'login', to: 'users/sessions#create' # Added post route for login
-  delete 'logout', to: 'users/sessions#destroy', as: 'logout' # Added route for logout
+  get 'login', to: 'users/registrations/sessions#new', as: 'login'
   get 'home', to: 'home#index', as: 'home'
-  get 'reset_password', to: 'users/passwords#new', as: 'reset_password'
-  post 'reset_password', to: 'users/passwords#create' # Added post route for reset password
+  get 'reset_password', to: 'password_resets#new', as: 'reset_password'
+  post 'reset_password', to: 'password_resets#create' # Add post route for reset password
 end
