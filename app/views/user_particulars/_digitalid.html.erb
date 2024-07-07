@@ -7,18 +7,19 @@
       <div class="ms-md-3 flex-grow-1 row">
         <div class="col-md-6 mb-3 mb-md-0">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item text-nowrap"><strong>Full Name:</strong> <%= @user_particular&.full_name || "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Gender:</strong> <%= @user_particular&.gender || "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Ethnicity:</strong> <%= @user_particular&.ethnicity || "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Religion:</strong> <%= @user_particular&.religion || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Full Name:</strong> <%= user_particular&.full_name || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Gender:</strong> <%= user_particular&.gender || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Ethnicity:</strong> <%= user_particular&.ethnicity || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Religion:</strong> <%= user_particular&.religion || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Unique ID:</strong> <%= user_particular&.unique_id || "" %></li>
           </ul>
         </div>
         <div class="col-md-5 mb-3 mb-md-0">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item text-nowrap"><strong>Country of Origin:</strong> <%= @user_particular&.country_of_origin || "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Date of Birth:</strong> <%= @user_particular&.date_of_birth ? @user_particular.date_of_birth.strftime("%d-%m-%Y") : "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Date of Arrival:</strong> <%= @user_particular&.date_of_arrival ? @user_particular.date_of_arrival.strftime("%d-%m-%Y") : "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= @user_particular&.full_phone_number || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Country of Origin:</strong> <%= user_particular&.country_of_origin || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Date of Birth:</strong> <%= user_particular&.date_of_birth ? user_particular.date_of_birth.strftime("%d-%m-%Y") : "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Date of Arrival:</strong> <%= user_particular&.date_of_arrival ? user_particular.date_of_arrival.strftime("%d-%m-%Y") : "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= user_particular&.full_phone_number || "" %></li>
           </ul>
         </div>
         <div class="col-md-1 text-md-center">

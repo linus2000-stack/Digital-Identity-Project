@@ -1,1 +1,18 @@
-<p>verification!</p>
+<div class="container px-5">
+  <h2>User Verification</h2>
+  <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
+    <div class="mb-3">
+      <%= label_tag :unique_id, "Enter Unique ID" %>
+      <%= text_field_tag :unique_id, params[:unique_id], class: "form-control" %>
+    </div>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+
+  <% if @user_particular.present? %>
+    <%= render partial: "user_particulars/digitalid", locals: { user_particular: @user_particular } %>
+    <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
+      <input type="hidden" name="unique_id" value="<%= @user_particular.unique_id %>">
+      <%= submit_tag "Verify", class: "btn btn-success mt-3" %>
+    <% end %>
+  <% end %>
+</div>
