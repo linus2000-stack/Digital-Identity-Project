@@ -12,10 +12,14 @@ class NgoUsersController < ApplicationController
 
   def verify
     @ngo_user = NgoUser.find(params[:id])
+    @user_particular = UserParticular.new # Initialize to avoid nil error in form
+  end
+
+  def verify_user
+    @ngo_user = NgoUser.find(params[:id])
     @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
 
     if @user_particular
-      # Logic for successful search
       flash.now[:notice] = "User found."
     else
       flash.now[:alert] = "User not found."
