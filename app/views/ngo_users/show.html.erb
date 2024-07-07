@@ -1,6 +1,41 @@
-<div class="container mt-5">
-  <h3>hello</h3>
-  <h1><%= @ngo_user.name %></h1>
-  <!-- Display other attributes of @ngo_user as needed -->
-  <%= link_to 'Verify', verify_ngo_user_path(@ngo_user), class: 'btn btn-primary' %>
+<div class="container px-5">
+  <h2 class="mb-4 mt-4">EnableID Check</h2> <!-- Added margin-bottom and margin-top for spacing -->
+
+  <% if !@unique_id_exists && !defined?(@checked) %>
+    <%= form_with url: ngo_user_path(@ngo_user), method: :get, local: true do %>
+      <div class="mb-3">
+        <%= label_tag :unique_id, "Enter Unique ID" %>
+        <%= text_field_tag :unique_id, params[:unique_id], class: "form-control" %>
+      </div>
+      <%= submit_tag "Submit", class: "btn btn-primary" %>
+    <% end %>
+
+    <% if defined?(@unique_id_exists) && !@unique_id_exists %>
+      <div class="alert alert-danger mt-3">
+        Unique_ID does not exist. Please try again.
+      </div>
+    <% end %>
+  <% elsif @unique_id_exists && !@checked %>
+    <%= form_with url: check_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
+      <div class="mb-3">
+        <%= label_tag :unique_id, "Unique ID" %>
+        <%= text_field_tag :unique_id, params[:unique_id], class: "form-control", readonly: true %>
+      </div>
+      <div class="mb-3">
+        <%= label_tag :two_fa_passcode, "Enter 2FA Code" %>
+        <%= text_field_tag :two_fa_passcode, params[:two_fa_passcode], class: "form-control" %>
+      </div>
+      <%= hidden_field_tag :unique_id, params[:unique_id] %>
+      <%= submit_tag "Check", class: "btn btn-success" %>
+    <% end %>
+  <% elsif @checked %>
+    <div class="mt-4"> <!-- Add a margin top to create space -->
+      <%= render partial: "user_particulars/digitalid", locals: { user_particular: @user_particular } %>
+      <%= form_with url: check_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
+        <%= hidden_field_tag :unique_id, params[:unique_id] %>
+        <%= hidden_field_tag :two_fa_passcode, params[:two_fa_passcode] %>
+        <%= submit_tag "Verify", class: "btn btn-primary mt-3" %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
