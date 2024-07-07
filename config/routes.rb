@@ -11,13 +11,7 @@ Rails.application.routes.draw do
   # Self-declared extra routes (must be before resources)
   get 'user_particulars/confirm'
   get 'ngo_users/verify'
-
   # Resources: UserParticulars
   resources :user_particulars
   resources :ngo_users
-
-  # Custom routes for login, home, and reset password
-  get 'login', to: 'sessions#new', as: 'login'
-  get 'home', to: 'home#index', as: 'home'
-  get 'reset_password', to: 'password_resets#new', as: 'reset_password'
 end
