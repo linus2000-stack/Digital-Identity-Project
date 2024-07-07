@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # Resources: UserParticulars
   resources :user_particulars
   resources :ngo_users do
-    member do 
+    member do
       post 'check_user' # Add this line for post action to verify user
     end
   end
