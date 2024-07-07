@@ -12,7 +12,7 @@ class NgoUsersController < ApplicationController
 
   def verify
     @ngo_user = NgoUser.find(params[:id])
-    @user_particular = UserParticular.new # Initialize to avoid nil error in form
+    @user_particular = nil
   end
 
   def verify_user
@@ -23,7 +23,7 @@ class NgoUsersController < ApplicationController
       flash.now[:notice] = "User found."
     else
       flash.now[:alert] = "User not found."
-      @user_particular = UserParticular.new
+      @user_particular = nil
     end
 
     render :verify

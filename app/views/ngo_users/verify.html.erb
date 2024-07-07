@@ -1,5 +1,6 @@
 <div class="container px-5">
-  <h2>User Verification</h2>
+  <h2 class="mb-4 mt-4">EnableID Verification</h2> <!-- Added margin-bottom and margin-top for spacing -->
+  
   <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
     <div class="mb-3">
       <%= label_tag :unique_id, "Enter Unique ID" %>
@@ -9,10 +10,12 @@
   <% end %>
 
   <% if @user_particular.present? %>
-    <%= render partial: "user_particulars/digitalid", locals: { user_particular: @user_particular } %>
-    <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
-      <input type="hidden" name="unique_id" value="<%= @user_particular.unique_id %>">
-      <%= submit_tag "Verify", class: "btn btn-success mt-3" %>
-    <% end %>
+    <div class="mt-4"> <!-- Add a margin top to create space -->
+      <%= render partial: "user_particulars/digitalid", locals: { user_particular: @user_particular } %>
+      <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
+        <input type="hidden" name="unique_id" value="<%= @user_particular.unique_id %>">
+        <%= submit_tag "Verify", class: "btn btn-success mt-3" %>
+      <% end %>
+    </div>
   <% end %>
 </div>
