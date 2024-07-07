@@ -13,5 +13,10 @@ Rails.application.routes.draw do
   get 'ngo_users/verify'
   # Resources: UserParticulars
   resources :user_particulars
-  resources :ngo_users
+  resources :ngo_users do
+    member do
+      get 'verify' # Add this line to define the verify route
+      post 'verify_user' # Add this line for post action to verify user
+    end
+  end
 end
