@@ -140,9 +140,11 @@ Given(/^I enter the following details on the (phone number|email|username) login
 end
 
 # Step to enter the login details in a simplified way
-When(/^I enter the following details:$/) do |table|
+When(/^I enter the following login details:$/) do |table|
   details = table.hashes.first
-  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Phone Number', with: details['Phone Number'] if details['Phone Number']
+  fill_in 'Email', with: details['Email'] if details['Email']
+  fill_in 'Username', with: details['Username'] if details['Username']
   fill_in 'Password', with: details['Password']
 end
 
@@ -264,9 +266,11 @@ Then(/^I should see the empty login page again$/) do
 end
 
 # Step to enter login details (simplified)
-When(/^I enter the following details:$/) do |table|
+When(/^I enter the following login details:$/) do |table|
   details = table.hashes.first
-  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Phone Number', with: details['Phone Number'] if details['Phone Number']
+  fill_in 'Email', with: details['Email'] if details['Email']
+  fill_in 'Username', with: details['Username'] if details['Username']
   fill_in 'Password', with: details['Password']
 end
 
@@ -306,4 +310,21 @@ When(/^I enter the password incorrectly three times:$/) do |table|
     fill_in 'Password', with: 'wrongpassword'
     click_button 'Login'
   end
+end
+
+# New steps to handle the undefined steps
+When('I click {string}') do |link_text|
+  click_link(link_text)
+end
+
+Then('I should be redirected to the {string} page') do |page_name|
+  expect(current_path).to eq(path_to(page_name.downcase))
+end
+
+Then('I should see a form to enter my phone number or email') do
+  expect(page).to have_selector('input[name="phone_number"], input[name="email"]')
+end
+
+Then('I should see the empty login page') do
+  expect(page).to have_current_path(new_user_session_path)
 end
