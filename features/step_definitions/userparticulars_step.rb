@@ -107,10 +107,14 @@ Given('I am a logged-in user') do
 end
 
 # From here onwards User Story 2
-# Additional steps for the new feature file
-# Step to navigate to the login page
-Given(/^I am on the “Login” page$/) do
-  visit path_to('login')
+# Step to click the login button
+When(/^I press "Login"$/) do
+  click_button 'Login'
+end
+
+# Step to check for redirection to the home page
+Then(/^I should be redirected to the home page$/) do
+  expect(current_path).to eq(root_path)
 end
 
 # Step to click the "I am a NGO" button
@@ -149,7 +153,7 @@ When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |ena
 end
 
 # Step to fill in the 6 digit code field
-And(/^I key in a 6 digit code that is seen on his/her EnableID: (\d+)$/) do |code|
+And(/^I key in a 6 digit code that is seen on his\/her EnableID: (\d+)$/) do |code|
   fill_in '6 digit code', with: code
 end
 
@@ -164,7 +168,7 @@ Then(/^I should be redirected to the "User Verification" page$/) do
 end
 
 # Step to check for the EnableID Card on the User Verification page
-And(/^I should see his/her "EnableID Card"$/) do
+And(/^I should see his\/her "EnableID Card"$/) do
   expect(page).to have_content('EnableID Card')
 end
 
@@ -205,6 +209,81 @@ And(/^I should see "EnableID - verified by NGO: Gebirah"$/) do
 end
 
 # Step to check for the date of verification on the EnableID card
-And(/^I should see "Date of verification: (today's date)"$/) do
+And(/^I should see "Date of verification: #{Date.today.strftime('%Y-%m-%d')}"$/) do
   expect(page).to have_content("Date of verification: #{Date.today.strftime('%Y-%m-%d')}")
+end
+
+# New steps for handling incorrect login attempts
+# Step to check for an error message on the login page
+Then(/^I should see an error message "(.+)"$/) do |message|
+  expect(page).to have_content(message)
+end
+
+# Step to check for the empty login page
+Then(/^I should see the empty login page again$/) do
+  expect(page).to have_current_path(new_user_session_path)
+end
+
+# Step to enter login details (simplified)
+When(/^I enter the following login details:$/) do |table|
+  details = table.hashes.first
+  fill_in 'Phone Number', with: details['Phone Number'] if details['Phone Number']
+  fill_in 'Email', with: details['Email'] if details['Email']
+  fill_in 'Username', with: details['Username'] if details['Username']
+  fill_in 'Password', with: details['Password']
+end
+
+# Step to navigate to the login page
+Given(/^I am on the login page$/) do
+  visit new_user_session_path
+end
+
+# New steps for handling account lockout period
+Given(/^my account is locked due to multiple failed login attempts$/) do
+  # Add logic to lock the account
+end
+
+When(/^I wait for the lockout period to end$/) do
+  # Add logic to wait for the lockout period to end
+end
+
+Given(/^I enter the following correct password:$/) do |table|
+  details = table.hashes.first
+  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Password', with: details['Password']
+end
+
+# Step to register with the following details
+Given(/^I have registered with the following details:$/) do |table|
+  details = table.hashes.first
+  fill_in 'Phone Number', with: details['Phone Number']
+  fill_in 'Password', with: details['Password']
+  click_button 'Register'
+end
+
+# Step to enter the password incorrectly three times
+When(/^I enter the password incorrectly three times:$/) do |table|
+  details = table.hashes.first
+  3.times do
+    fill_in 'Phone Number', with: details['Phone Number']
+    fill_in 'Password', with: 'wrongpassword'
+    click_button 'Login'
+  end
+end
+
+# New steps to handle the undefined steps
+When('I click {string}') do |link_text|
+  click_link(link_text)
+end
+
+Then('I should be redirected to the {string} page') do |page_name|
+  expect(current_path).to eq(path_to(page_name.downcase))
+end
+
+Then('I should see a form to enter my phone number or email') do
+  expect(page).to have_selector('input[name="phone_number"], input[name="email"]')
+end
+
+Then('I should see the empty login page') do
+  expect(page).to have_current_path(new_user_session_path)
 end
