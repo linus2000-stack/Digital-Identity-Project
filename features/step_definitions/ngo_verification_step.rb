@@ -234,10 +234,9 @@ And(/^I should see a "(.+)" Button$/) do |button_text|
   expect(page).to have_selector(:link_or_button, button_text.downcase)
 end
 
-
 # Step to click the Verify button
-When(/^I press the "Verify" button$/) do
-  click_button 'Verify'
+When(/^I press the "(.*)" button$/) do |button_text|
+  click_button button_text
 end
 
 # Step to check for a success message after verification
@@ -247,7 +246,6 @@ end
 
 # Step to log in as a specific user by EnableID
 Given(/^that I am logged into user (\d+) EnableID account$/) do |enableid|
-  # Assuming there's a method to log in as a specific user by their EnableID
   log_in_as_enableid_user(enableid)
 end
 
@@ -257,8 +255,8 @@ Then(/^I should see the checkmark on the user's EnableID card$/) do
 end
 
 # Step to check for verification message on the EnableID card
-And(/^I should see "EnableID - verified by NGO: Gebirah"$/) do
-  expect(page).to have_content('EnableID - verified by NGO: Gebirah')
+And(/^I should see "EnableID - verified by NGO: (.*)"$/) do |ngo_name|
+  expect(page).to have_content("EnableID - verified by NGO: #{ngo_name}")
 end
 
 # Step to check for the date of verification on the EnableID card
