@@ -46,17 +46,18 @@
           </div>
           <div class="form-group mb-3">
             <div class="form-group mb-3">
-            <%= f.label :phone_number, class: "form-label" do %>
-              Contact number
-              <span class="text-danger">*</span>
-            <% end %>
-            <%= f.text_field :phone_number, class: "form-control", required:true %>
-          </div>
-          <div class="d-flex justify-content-between">
-            <%= link_to "Cancel", root_path, class: "btn btn-secondary" %>
-            <%= f.submit "Register", class: "btn btn-danger" %>
-          </div>
-        <% end %>
+              <%= f.label :phone_number, class: "form-label" do %>
+                Contact number
+                <span class="text-danger">*</span>
+              <% end %>
+              <%= f.text_field :phone_number, class: "form-control", required:true %>
+            </div>
+            <div class="d-flex justify-content-between">
+              <%= link_to "Cancel", root_path, class: "btn btn-secondary" %>
+              <%= f.submit "Register", class: "btn btn-danger" %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

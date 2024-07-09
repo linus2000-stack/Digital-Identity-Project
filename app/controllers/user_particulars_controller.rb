@@ -56,6 +56,7 @@ class UserParticularsController < ApplicationController
 
   def update
     @user_particular = UserParticular.update_user_particular(params[:id], user_particular_params)
+    @user_particular[:status] = 'pending' # Set status to pending after editing
     # Check if edit was successful
     if @user_particular.persisted?
       flash[:success] = 'Digital ID was successfully edited!'
@@ -74,7 +75,8 @@ class UserParticularsController < ApplicationController
   def user_particular_params
     params.require(:user_particular).permit(:full_name, :phone_number, :secondary_phone_number, :country_of_origin,
                                             :ethnicity, :religion, :gender, :date_of_birth, :date_of_arrival,
-                                            :photo_url, :birth_certificate_url, :passport_url, :user_id)
+                                            :photo_url, :birth_certificate_url, :passport_url, :user_id, :phone_number_country_code,
+                                            :secondary_phone_number_country_code, :full_phone_number, :full_secondary_phone_number)
   end
 
   def set_dropdown_options
@@ -82,6 +84,19 @@ class UserParticularsController < ApplicationController
     @ethnicities = ethnicity_options
     @religions = religion_options
     @country_code_options = country_code_options
+  end
+
+  def generate_2fa
+    @user_particular = UserParticular.find(params[:id])
+    @user_particular.generate_2fa_secret
+    puts @user_particular.two_fa_passcode
+    if @user_particular.save
+      respond_to do |format|
+        format.json { render json: { two_fa_passcode: @user_particular.two_fa_passcode } }
+      end
+    else
+      render json: { error: 'Failed to generate 2FA passcode' }, status: :unprocessable_entity
+    end
   end
 
   def validate_user_particulars(user_particular)

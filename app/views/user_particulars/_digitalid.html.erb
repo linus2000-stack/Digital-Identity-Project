@@ -21,15 +21,16 @@
             <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= @user_particular&.phone_number || "" %></li>
           </ul>
         </div>
-        <div class="col-md-1 text-md-center">
-          <div class="d-flex flex-column align-items-center">
-            <div class="bg-danger rounded-circle p-3 mb-4"><i class="fas fa-check text-white"></i></div>
-          </div>
         </div>
       </div>
     </div>
     <div class="card-footer text-muted d-flex justify-content-between">
-      <span>UnityPass - Pending your action</span>
+      <% if @user_particular.nil? %>
+        <span>EnableID - Pending your action</span>
+      <% else %>
+        <span>EnableID - Pending verification from an NGO <i class="bg-danger p-1 fas fa-check text-white"></i></span>
+        <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
+      <% end %>
     </div>
   </div>
 </div>

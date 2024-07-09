@@ -1,5 +1,5 @@
-<div class="container py-3">
-  <h1>Confirm Your Details</h1>
+<div class="container py-3 justify-content-center">
+  <h4 class="text-center m-1 text-nowrap">Confirm Your Details</h4>
   <%= render 'digitalid' %>
   <%= form_with model: @user_particular, url: user_particulars_path, method: :post do |form| %>
     <%= form.hidden_field :full_name, value: @user_particular.full_name %>
@@ -8,6 +8,7 @@
     <%= form.hidden_field :secondary_phone_number_country_code, value: @user_particular.secondary_phone_number_country_code %>
     <%= form.hidden_field :secondary_phone_number, value: @user_particular.secondary_phone_number %>
     <%= form.hidden_field :full_phone_number, value: @user_particular.full_phone_number %>
+    <%= form.hidden_field :full_secondary_phone_number, value: @user_particular.full_secondary_phone_number %>
     <%= form.hidden_field :country_of_origin, value: @user_particular.country_of_origin %>
     <%= form.hidden_field :ethnicity, value: @user_particular.ethnicity %>
     <%= form.hidden_field :religion, value: @user_particular.religion %>
@@ -18,6 +19,7 @@
     <%= form.hidden_field :birth_certificate_url, value: @user_particular.birth_certificate_url %>
     <%= form.hidden_field :passport_url, value: @user_particular.passport_url %>
     <%= form.hidden_field :user_id, value: @user_particular.user_id %>
+    <%= form.hidden_field :status, value: "pending" %>
     <div class="d-flex justify-content-center my-3">
       <%= link_to "Back", new_user_particular_path, class: "btn btn-secondary mx-2" %>
       <%= form.submit "Confirm", class: "btn btn-danger mx-2" %>
