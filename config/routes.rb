@@ -16,8 +16,6 @@ Rails.application.routes.draw do
   resources :ngo_users do
     member do
       post 'check_user' # Add this line for post action to verify user
-      get 'verify_user'
-      
     end
   end
 end
