@@ -323,18 +323,18 @@ When(/^I enter the password incorrectly three times:$/) do |table|
 end
 
 # New steps to handle the undefined steps
-When('I click {string}') do |link_text|
-  click_link(link_text)
+When(/^I click "(.*)"$/) do |link_text|
+  click_link link_text
 end
 
-Then('I should be redirected to the {string} page') do |page_name|
+Then(/^I should be redirected to the "(.*)" page$/) do |page_name|
   expect(current_path).to eq(path_to(page_name.downcase))
 end
 
-Then('I should see a form to enter my phone number or email') do
+Then(/^I should see a form to enter my phone number or email$/) do
   expect(page).to have_selector('input[name="phone_number"], input[name="email"]')
 end
 
-Then('I should see the empty login page') do
+Then(/^I should see the empty login page$/) do
   expect(page).to have_current_path(new_user_session_path)
 end
