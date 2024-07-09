@@ -35,7 +35,7 @@ def path_to(page_name)
     root_path
   when 'login'
     new_user_session_path
-  when 'ngo gebirah'
+  when 'ngo: gebirah'
     ngo_gebirah_path
   when 'user verification'
     user_verification_path
@@ -63,42 +63,57 @@ Then(/^I should see the following fields in the Digital ID:$/) do |table|
 end
 
 # Step to fill in a specific field with a value
-When(/^I fill in the "([^"]*)" field with "([^"]*)"$/) do |field, value|
-  fill_in /#{field}/, with: /#{value}/
+When(/^I fill in "([^"]*)" with "([^"]*)"$/) do |field, value|
+  fill_in field, with: value
 end
 
-# Step to leave a specific field empty
-And(/^I leave the "([^"]*)" field empty$/) do |field|
-  fill_in /#{field}/, with: ''
+# Step to check for specific text on the page
+Then(/^I should see "([^"]*)"$/) do |text|
+  expect(page).to have_content(/#{text}/)
 end
 
-# Step to check for a welcome message
-Then(/^I will see a welcome message "(.+)"$/) do |message|
-  expect(page).to have_content(/#{message}/)
+# Step to enter a specific text into a field
+When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |number|
+  fill_in 'EnableID', with: number
 end
 
-# Step to fill in particulars with the given table data
-Given(/^I entered the following particulars:$/) do |table|
-  fill_in_form(table)
+# Step to press a button
+And(/^I press "([^"]*)"$/) do |button|
+  click_button(/#{button}/)
 end
 
-# Step to leave the date of birth field empty
-And(/^I do not enter a date of birth$/) do
-  fill_in 'Date of Birth', with: ''
+# Step to key in a code
+When(/^I key in a 6 digit code that is seen on his\/her EnableID: (\d+)$/) do |code|
+  fill_in '2FA Code', with: code
 end
 
-# Step to leave the country of origin field unselected
-And(/^I do not select a country of origin$/) do
-  select '', from: 'Country of Origin'
+# Step to check for the presence of an element
+Then(/^I should see his\/her EnableID card$/) do
+  expect(page).to have_selector('#enableIDCard')
 end
 
-# Step to check for specific fields on the page
-Then(/^I should see the following fields:$/) do |table|
-  puts "Current URL: #{current_url}"
-  puts "Current Path: #{current_path}"
-  table.hashes.each do |row|
-    expect(page).to have_content(/#{row['Value']}/)
-  end
+# Step to check for the presence of a verify button
+Then(/^I should see a "Verify" button below$/) do
+  expect(page).to have_button(/Verify/)
+end
+
+# Step to check for a specific message after verification
+Then(/^I should see "Successfully verified EnableID: (\d+)!"$/) do |enableID|
+  expect(page).to have_content(/Successfully verified EnableID: #{enableID}!/)
+end
+
+# Step to check for the verified checkmark
+Then(/^I should see the checkmark on the user's EnableID card$/) do
+  expect(page).to have_selector('#enableIDCard .checkmark')
+end
+
+# Step to check for the verification message and date
+Then(/^I should see "EnableID - verified by NGO: Gebirah"$/) do
+  expect(page).to have_content(/EnableID - verified by NGO: Gebirah/)
+end
+
+Then(/^I should see "Date of verification: (.+)"$/) do |date|
+  expect(page).to have_content(/Date of verification: #{date}/)
 end
 
 # Step to navigate to a specific page
@@ -108,7 +123,7 @@ end
 
 # Step to click a specific button
 And(/^I press the "([^"]*)" button$/) do |button|
-  click_button button
+  click_button(/#{button}/)
 end
 
 # Step to log in as a user
@@ -117,16 +132,11 @@ Given('I am a logged-in user') do
   visit new_user_session_path
   fill_in 'Email', with: @user.email
   fill_in 'Password', with: @user.password
-  click_button 'Log in'
+  click_button(/Log in/)
   expect(page).to have_content(/Signed in successfully./)
 end
 
-# Step to navigate to the login page
-Given(/^I am on the "Login" page$/) do
-  visit path_to('login')
-end
-
-# Step to fill in the login details
+# Additional steps for the new feature file
 Given(/^I enter the following details on the (phone number|email|username) login page:$/) do |login_type, table|
   details = table.hashes.first
   case login_type
@@ -149,78 +159,17 @@ When(/^I enter the following login details:$/) do |table|
   fill_in 'Password', with: details['Password']
 end
 
-# Step to click the login button
-When(/^I press "Login"$/) do
-  click_button /Login/
-end
-
-# Step to check for redirection to the home page
-Then(/^I should be redirected to the home page$/) do
-  expect(current_path).to eq(root_path)
-end
-
-# Step to click the "I am a NGO" button
-When(/^I press the "(.*)" button$/) do |button_text|
-  click_button /#{button_text}/
-end
-
-# Step to check for NGO buttons on the page
+# Step to check for a set of different NGO buttons
 Then(/^I should see a set of different NGO buttons$/) do
-  expect(page).to have_selector(:link_or_button, /NGO Gebirah/)
+  expect(page).to have_selector('button.ngo-buttons')
 end
 
-# Step to click the "NGO Gebirah" button
-When(/^I press the "(.*?)" button$/) do |button_text|
-  click_button /#{button_text}/
+# Step to check for redirection to a specific page
+Then(/^I should be redirected to the "([^"]*)" page$/) do |page|
+  expect(current_path).to eq path_to(page)
 end
 
-# Step to check for redirection to the NGO: Gebirah page
-Then(/^I should be redirected to the "(.*?)" page$/) do |page_name|
-  expect(current_path).to eq(path_to(page_name.downcase))
-end
-
-# Step to check for a welcome message on the NGO: Gebirah page
-And(/^I should see "(.*)"$/) do |welcome_message|
-  expect(page).to have_content(/#{welcome_message}/)
-end
-
-# Step to navigate to the NGO: Gebirah page
-Given(/^I am already on my "NGO: (.*)" page$/) do |ngo_page|
-  visit path_to("ngo #{ngo_page.downcase}")
-end
-
-# Step to fill in the EnableID number field
-When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |enableid|
-  fill_in 'EnableID number', with: enableid
-end
-
-# Step to fill in the 6 digit code field
-When(/^I key in a 6 digit code that is seen on his\/her EnableID: (\d+)$/) do |code|
-  fill_in '6 digit code', with: code
-end
-
-# Step to click the Enter button
-And(/^I press "Submit"$/) do
-  click_button /Submit/
-end
-
-# Step to check for redirection to the User Verification page
-Then(/^I should see "Enter 2FA Code" with a textbox$/) do
-  expect(page).to have_content(/Enter 2FA Code/)
-  expect(page).to have_selector('input[type="text"]')
-end
-
-# Step to click the Check button
-And(/^I press "Check"$/) do
-  click_button /Check/
-end
-
-# Step to check for the EnableID Card on the User Verification page
-Then(/^I should see his\/her EnableID card$/) do
-  expect(page).to have_content(/EnableID Card/)
-end
-
-# Step to check for the Verify button on the User Verification page
-And(/^I should see a "Verify" button below$/) do
-  expect(page).to have_selector(:link_or_button, /Verify/)
+# Step to check for specific text
+And(/^I should see "([^"]*)"$/) do |text|
+  expect(page).to have_content(/#{text}/)
 end
