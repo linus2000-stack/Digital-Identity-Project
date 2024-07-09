@@ -215,24 +215,25 @@ And(/^I press "Enter"$/) do
 end
 
 # Step to check for redirection to the User Verification page
-Then(/^I should be redirected to the "User Verification" page$/) do
-  expect(current_path).to eq(path_to('user verification'))
+Then(/^I should be redirected to the "(.+)" page$/) do |page_name|
+  expect(current_path).to eq(path_to(page_name.downcase.gsub(' ', '_')))
 end
 
 # Step to check for the EnableID Card on the User Verification page
-And(/^I should see his\/her "EnableID Card"$/) do
-  expect(page).to have_content('EnableID Card')
+And(/^I should see his\/her "(.+)"$/) do |card_name|
+  expect(page).to have_content(card_name)
 end
 
 # Step to check for verification guidelines on the User Verification page
-And(/^I should see a set of guidelines to properly verify an EnableID user$/) do
-  expect(page).to have_content('guidelines to properly verify an EnableID user')
+And(/^I should see a set of guidelines to properly verify an (.+)$/) do |user_type|
+  expect(page).to have_content("guidelines to properly verify an #{user_type}")
 end
 
 # Step to check for the Verify button on the User Verification page
-And(/^I should see a "Verified" Button$/) do
-  expect(page).to have_selector(:link_or_button, 'Verify')
+And(/^I should see a "(.+)" Button$/) do |button_text|
+  expect(page).to have_selector(:link_or_button, button_text.downcase)
 end
+
 
 # Step to click the Verify button
 When(/^I press the "Verify" button$/) do
