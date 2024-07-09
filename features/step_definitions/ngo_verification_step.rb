@@ -30,7 +30,7 @@ end
 
 # Maps page names to their corresponding paths
 def path_to(page_name)
-  case page_name.downcase
+  case page_name.to_s.downcase
   when 'home'
     root_path
   when 'login'
@@ -103,12 +103,12 @@ end
 
 # Step to navigate to a specific page
 Given(/^I am on the "([^"]*)" page$/) do |page|
-  visit path_to(/#{page}/)
+  visit path_to(page)
 end
 
 # Step to click a specific button
 And(/^I press the "([^"]*)" button$/) do |button|
-  click_button /#{button}/
+  click_button button
 end
 
 # Step to log in as a user
@@ -123,7 +123,7 @@ end
 
 # Step to navigate to the login page
 Given(/^I am on the "Login" page$/) do
-  visit path_to(/login/)
+  visit path_to('login')
 end
 
 # Step to fill in the login details
@@ -176,7 +176,7 @@ end
 
 # Step to check for redirection to the NGO: Gebirah page
 Then(/^I should be redirected to the "(.*?)" page$/) do |page_name|
-  expect(current_path).to eq(path_to(/#{page_name.downcase}/))
+  expect(current_path).to eq(path_to(page_name.downcase))
 end
 
 # Step to check for a welcome message on the NGO: Gebirah page
@@ -186,7 +186,7 @@ end
 
 # Step to navigate to the NGO: Gebirah page
 Given(/^I am already on my "NGO: (.*)" page$/) do |ngo_page|
-  visit path_to(/ngo #{ngo_page.downcase}/)
+  visit path_to("ngo #{ngo_page.downcase}")
 end
 
 # Step to fill in the EnableID number field
