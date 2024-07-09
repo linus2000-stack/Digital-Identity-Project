@@ -1,15 +1,17 @@
 <div class="container px-5">
-  <h2 class="mb-4 mt-4">EnableID Verification</h2> <!-- Added margin-bottom and margin-top for spacing -->
-  <h1 class="text-center rounded mt-3">Your <strong style="color: #f1536a;">EnableID</strong></h1>
-  <%= render :partial => 'user_particulars/digitalid' %>
+  <h2 class="mb-4 mt-4">Verify User</h2> <!-- Added margin-bottom and margin-top for spacing -->
 
-  <% if @user_particular.present? %>
+  <% if @checked %>
     <div class="mt-4"> <!-- Add a margin top to create space -->
-      <%= render partial: "user_particulars/digitalid", locals: { user_particular: @user_particular } %>
+      <%= render partial: "user_particulars/digitalid", locals: { user_particular: @user_particular } %> <!-- Added underscore in path, unsure if correct -->
       <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
-        <input type="hidden" name="unique_id" value="<%= @user_particular.unique_id %>">
-        <%= submit_tag "Verify", class: "btn btn-success mt-3" %>
+        <%= hidden_field_tag :unique_id, params[:unique_id] %>
+        <%= hidden_field_tag :two_fa_passcode, params[:two_fa_passcode] %>
+        <%= submit_tag "Verify", class: "btn btn-primary mt-3" %>
       <% end %>
     </div>
   <% end %>
-</div>
+
+
+
+
