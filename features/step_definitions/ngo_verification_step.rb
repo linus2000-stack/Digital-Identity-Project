@@ -159,8 +159,8 @@ Then(/^I should be redirected to the home page$/) do
 end
 
 # Step to click the "I am a NGO" button
-When(/^I press the "I am a NGO" button$/) do
-  click_button 'I am a NGO'
+When(/^I press the "(.*)" button$/) do |button_text|
+  click_button button_text
 end
 
 Given(/^I am on the "([^"]*)" page$/) do |page_name|
@@ -188,14 +188,16 @@ end
 
 
 # Step to check for a welcome message on the NGO: Gebirah page
-And(/^I should see "Welcome Gebirah!"$/) do
-  expect(page).to have_content('Welcome Gebirah!')
+And(/^I should see "(.*)"$/) do |welcome_message|
+  expect(page).to have_content(welcome_message)
 end
 
+
 # Step to navigate to the NGO: Gebirah page
-Given(/^I am already on my "NGO: Gebirah" page$/) do
-  visit path_to('ngogebirah')
+Given(/^I am already on my "NGO: (.*)" page$/) do |ngo_page|
+  visit path_to("ngo#{ngo_page.downcase}")
 end
+
 
 # Step to fill in the EnableID number field
 When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |enableid|
