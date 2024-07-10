@@ -13,9 +13,16 @@
         crossorigin="anonymous"
     />
   </head> 
-  <body class="d-flex flex-column min-vh-100" style="overflow-x:hidden;">
-    <h4 class="text-center py-2" style="background-color: #f1536a; color: white; margin-bottom:0;"><%= @ngo_user&.name || "NGO" %></h4>
-
+  <body class="d-flex flex-column min-vh-100" style="overflow-x: hidden;"> 
+    <div class="container-fluid" style="background-color: #f1536a; color: white;">
+      <div class="row align-items-center py-2 justify-content-between">
+        <div class="col-auto">
+          <%= button_to "Back", @back_path, class: "btn btn-light text-nowrap", method: :get %>
+        </div>
+        <div class="col-auto"> <!-- This empty column helps maintain the centering of the NGO text -->
+        </div>
+      </div>
+    </div>
 
       <%= yield %>
 
