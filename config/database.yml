@@ -29,4 +29,4 @@ production:
 
   username: "user1"
   password: "fXozweJAcVcVcKStsywxIYMvdkFNRVTdOSXYIPREmKRHSsieJZ"
-  host:   "/var/run/postgresql"
+  host: <%= ENV.fetch("DB_SOCKET_DIR") { '/cloudsql' } %>/<%= ENV["CLOUD_SQL_CONNECTION_NAME"] %>  
