@@ -4,8 +4,10 @@ class CreateUserParticulars < ActiveRecord::Migration[7.1]
       t.string :full_name
       t.string :phone_number_country_code
       t.string :phone_number
+      t.string :full_phone_number
       t.string :secondary_phone_number_country_code
       t.string :secondary_phone_number
+      t.string :full_secondary_phone_number
       t.string :country_of_origin
       t.string :ethnicity
       t.string :religion
@@ -15,7 +17,15 @@ class CreateUserParticulars < ActiveRecord::Migration[7.1]
       t.string :photo_url
       t.string :birth_certificate_url
       t.string :passport_url
+      t.string :verifier_ngo
+      t.integer :unique_id, limit: 4
+      t.integer :two_fa_passcode, limit: 3
+      t.string :status
+      t.references :user, null: false, foreign_key: true
       t.timestamps
     end
+
+    # Add a unique index to unique_id column to enforce uniqueness
+    add_index :user_particulars, :unique_id, unique: true
   end
 end

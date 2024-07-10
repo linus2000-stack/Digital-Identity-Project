@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_07_175712) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_10_122655) do
   create_table "ngo_users", force: :cascade do |t|
     t.string "name"
     t.string "image_url"
@@ -22,8 +22,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_175712) do
     t.string "full_name"
     t.string "phone_number_country_code"
     t.string "phone_number"
+    t.string "full_phone_number"
     t.string "secondary_phone_number_country_code"
     t.string "secondary_phone_number"
+    t.string "full_secondary_phone_number"
     t.string "country_of_origin"
     t.string "ethnicity"
     t.string "religion"
@@ -33,14 +35,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_175712) do
     t.string "photo_url"
     t.string "birth_certificate_url"
     t.string "passport_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.string "full_phone_number"
-    t.string "full_secondary_phone_number"
+    t.string "verifier_ngo"
     t.integer "unique_id", limit: 4
     t.integer "two_fa_passcode", limit: 3
     t.string "status"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["unique_id"], name: "index_user_particulars_on_unique_id", unique: true
     t.index ["user_id"], name: "index_user_particulars_on_user_id"
   end
