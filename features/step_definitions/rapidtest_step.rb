@@ -82,6 +82,16 @@ end
 Then(/^I should see "([^"]*)" button$/) do |button_text|
   expect(page).to have_selector(".btn[value='#{button_text}']")
 end
+
+Given(/^I have a verified user (\d+) by NGO: (.+)$/) do |user_id, ngo_name|
+  @user = create(:user, id: user_id, verified_by_ngo: ngo_name)
+  visit new_user_session_path
+  fill_in 'Email', with: @user.email
+  fill_in 'Password', with: @user.password
+  click_button 'Log in'
+  expect(page).to have_content('Signed in successfully.')
+end
+
 # Maps page names to their corresponding paths
 def path_to(page_name)
   case page_name.downcase
