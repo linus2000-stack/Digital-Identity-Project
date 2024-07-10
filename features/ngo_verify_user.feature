@@ -31,13 +31,13 @@ Scenario: Wrong Unique ID number
   And I press "Check" button
   Then I should see "User not found. Please check your Unique ID and 2FA Code."
 
-Scenario: Mark undocumented user's EnableID status as verified
+Scenario: Mark undocumented user's EnableID status as verified, then check the account
   Given I am on "User Verification" page
   When I press the "Verify" button
   Then I should see "Verification successful for unique ID: 1071783."
   Then I should be redirected to the NGO "Gebirah" page
-
-Scenario: Undocumented user's 1071783 EnableID getting verified
+  
+  Given I am on the "Login" page
   Given I have a user 1071783 verified by NGO: Gebirah
   When I am logged into user 1071783 EnableID account'
   Then I should see the checkmark on the user's EnableID card

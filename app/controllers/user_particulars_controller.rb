@@ -63,6 +63,7 @@ class UserParticularsController < ApplicationController
     # Check if edit was successful
     if @user_particular.persisted?
       flash[:success] = 'Digital ID was successfully edited!'
+      @user_particular[:status] = 'pending' # Set status to pending after editing
       redirect_to @user_particular # redirects to /user_particulars/:id
     else
       flash[:error_message] = 'Edit failed. Please try again.'
