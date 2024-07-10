@@ -18,18 +18,26 @@
             <li class="list-group-item text-nowrap"><strong>Country of Origin:</strong> <%= @user_particular&.country_of_origin || "" %></li>
             <li class="list-group-item text-nowrap"><strong>Date of Birth:</strong> <%= @user_particular&.date_of_birth ? @user_particular.date_of_birth.strftime("%d-%m-%Y") : "" %></li>
             <li class="list-group-item text-nowrap"><strong>Date of Arrival:</strong> <%= @user_particular&.date_of_arrival ? @user_particular.date_of_arrival.strftime("%d-%m-%Y") : "" %></li>
-            <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= @user_particular&.phone_number || "" %></li>
+            <li class="list-group-item text-nowrap"><strong>Phone Number:</strong> <%= "+#{@user_particular&.full_phone_number&.gsub('-', '') || ''}" %></li>
           </ul>
-        </div>
         </div>
       </div>
     </div>
+
     <div class="card-footer text-muted d-flex justify-content-between">
       <% if @user_particular.nil? %>
         <span>EnableID - Pending your action</span>
       <% else %>
-        <span>EnableID - Pending verification from an NGO <i class="bg-danger p-1 fas fa-check text-white"></i></span>
-        <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
+        <% if @user_particular.status = 'pending' %>
+          <span>EnableID - Pending verification from an NGO <i class="bg-danger p-1 fas fa-check text-white"></i></span>
+          <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
+        <% elsif @user_particular.status = 'verified' %>
+          <span>EnableID - Verified by an NGO <i class="bg-success p-1 fas fa-check text-white"></i></span>
+          <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
+        <% else %>
+          <span>EnableID - Pending verification from an NGO</span>
+          <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
+        <% end %>
       <% end %>
     </div>
   </div>

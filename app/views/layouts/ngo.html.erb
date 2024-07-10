@@ -14,7 +14,7 @@
     />
   </head> 
   <body class="d-flex flex-column min-vh-100" style="overflow-x:hidden;">
-    <h4 class="text-center py-2" style="background-color: #f1536a; color: white; margin-bottom:0;">NGOs</h4>
+    <h4 class="text-center py-2" style="background-color: #f1536a; color: white; margin-bottom:0;"><%= @ngo_user&.name || "NGO" %></h4>
 
 
       <%= yield %>
