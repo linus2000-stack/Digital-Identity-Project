@@ -55,9 +55,7 @@
         Edit your particulars!
       </button>
     <% else %>
-      <button type="button" class="btn btn-primary p-3">
-        <%= link_to "Edit your Particulars!", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
-      </button>
+      <%= link_to "Edit your Particulars!", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
     <% end %>
   <% end %>
 </div>
