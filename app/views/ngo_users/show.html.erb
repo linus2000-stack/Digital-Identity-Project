@@ -36,7 +36,7 @@
         <%= form_with url: check_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
           <%= hidden_field_tag :unique_id, params[:unique_id] %>
           <%= hidden_field_tag :two_fa_passcode, params[:two_fa_passcode] %>
-          <%= submit_tag "Verify", class: "btn btn-primary mt-3" %>
+          <%= submit_tag "Verify", class: "btn btn-primary mt-3", id: "ngo-verify-btn" %>
         <% end %>
       </div>
     <% end %>
