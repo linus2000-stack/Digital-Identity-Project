@@ -16,13 +16,15 @@ Scenario: Retrieving undocumented user's EnableID personal particulars
   When I key in the undocumented user's unique EnableID number: 1071783
   And I key in a 6 digit code that is seen on his/her EnableID: 958523
   And I press "Check" button
+  Then I should be redirected to the "User Verification" page
   Then I should see his/her EnableID card
-  And a "Verify" button below
+  And I should see "Verify" button
 
 Scenario: Wrong Unique ID number
-  Given I am already on my "NGO: Gebirah" page
-  When I key in the undocumented user's unique EnableID number incorrectly
-  And I press "Submit"
+  Given I am already on my NGO "Gebirah" page
+  When I key in the undocumented user's unique EnableID number: 1071783
+  And I key in a 6 digit code that is seen on his/her EnableID: 958523
+  And I press "Check" button
   Then I should see "Unique_ID does not exist. Please try again."
 
 Scenario: Mark undocumented user's EnableID status as verified
