@@ -30,4 +30,4 @@ production:
   database: "db1"
   username: "user1"
   password: "fXozweJAcVcVcKStsywxIYMvdkFNRVTdOSXYIPREmKRHSsieJZ"
-  host: <%= ENV.fetch("DB_SOCKET_DIR") { '/cloudsql' } %>/<%= ENV["CLOUD_SQL_CONNECTION_NAME"] %>  
+  host: /cloudsql/our-id-boleh-426919:asia-southeast1:prod1  
