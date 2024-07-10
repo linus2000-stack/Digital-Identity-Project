@@ -12,12 +12,10 @@ Scenario: Going to my own "NGO" page
   And I should see "Hello, Gebirah"
 
 Scenario: Retrieving undocumented user's EnableID personal particulars
-  Given I am already on my "NGO: Gebirah" page
+  Given I am already on my NGO "Gebirah" page
   When I key in the undocumented user's unique EnableID number: 1071783
-  And I press "Submit"
-  Then I should see "Enter 2FA Code" with a textbox
-  When I key in a 6 digit code that is seen on his/her EnableID: 958523
-  And I press "Check"
+  And I key in a 6 digit code that is seen on his/her EnableID: 958523
+  And I press "Check" button
   Then I should see his/her EnableID card
   And a "Verify" button below
 
