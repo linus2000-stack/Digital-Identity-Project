@@ -3,6 +3,7 @@ class NgoUsersController < ApplicationController
   end
 
   def show
+    
     @ngo_user = NgoUser.find(params[:id])
     return unless params[:unique_id].present?
 
@@ -14,15 +15,17 @@ class NgoUsersController < ApplicationController
       flash[:alert] = 'Unique ID does not exist. Please try again.'
       @unique_id_exists = false
     end
+    @back_path = ngo_users_path
   end
 
   def index
     # @ngo_users = NgoUser.all
-    @ngo_users = if params[:search].present?
-                   NgoUser.where('name LIKE ?', "%#{params[:search]}%")
-                 else
-                   NgoUser.all
-                 end
+    if params[:search].present?
+      @ngo_users = NgoUser.where("name LIKE ?", "%#{params[:search]}%")
+    else
+      @ngo_users = NgoUser.all
+    end
+    @back_path = new_user_session_path
   end
 
   def check_user
@@ -44,15 +47,17 @@ class NgoUsersController < ApplicationController
   end
 
   def verify
+    
     @ngo_user = NgoUser.find(params[:id])
     logger.debug "params[:unique_id]: #{params[:unique_id]}"
     @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
     logger.debug "User Particular: #{@user_particular}"
     # Any additional logic you want to include before rendering the verify view
     # render 'verify' is implicit
-    # flash[:notice] = "Verification successful."
-
-    # redirect_to ngo_user_path(@ngo_user, id: params[:id], commit:'Verify')
+    #flash[:notice] = "Verification successful."
+    
+    @back_path = ngo_user_path
+    #redirect_to ngo_user_path(@ngo_user, id: params[:id], commit:'Verify')
   end
 
   def confirm_verify
