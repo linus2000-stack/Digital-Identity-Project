@@ -31,6 +31,25 @@ Then(/^I should see "([^"]*)"$/) do |name|
   expect(page).to have_content("#{name}")
 end
 
+Given(/^I am already on my NGO "([^"]*)" page$/) do |ngo_name|
+  step 'I am on the "Login" page'
+  puts "Current path: |||||||| #{current_path} ||||||||"
+  step 'I press the "I am a NGO" button'
+  step %(I press the NGO "#{ngo_name}" card)
+end
+
+When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |enable_id|
+  fill_in 'unique_id', with: enable_id
+end
+
+And(%r{^I key in a 6 digit code that is seen on his/her EnableID: (\d{6})$}) do |code|
+  fill_in 'two_fa_passcode', with: code
+end
+
+Then('I should see his/her EnableID card') do
+  expect(page).to have_selector('#digitalcard')
+end
+
 # Maps page names to their corresponding paths
 def path_to(page_name)
   case page_name.downcase
