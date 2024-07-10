@@ -4,25 +4,25 @@ class NgoUsersController < ApplicationController
 
   def show
     @ngo_user = NgoUser.find(params[:id])
-    if params[:unique_id].present?
-      @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
-      if @user_particular
-        flash.now[:notice] = "Unique ID found. Please enter your 2FA code."
-        @unique_id_exists = true
-      else
-        flash[:alert] = "Unique ID does not exist. Please try again."
-        @unique_id_exists = false
-      end
+    return unless params[:unique_id].present?
+
+    @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
+    if @user_particular
+      flash.now[:notice] = 'Unique ID found. Please enter your 2FA code.'
+      @unique_id_exists = true
+    else
+      flash[:alert] = 'Unique ID does not exist. Please try again.'
+      @unique_id_exists = false
     end
   end
 
   def index
     # @ngo_users = NgoUser.all
-    if params[:search].present?
-      @ngo_users = NgoUser.where("name LIKE ?", "%#{params[:search]}%")
-    else
-      @ngo_users = NgoUser.all
-    end
+    @ngo_users = if params[:search].present?
+                   NgoUser.where('name LIKE ?', "%#{params[:search]}%")
+                 else
+                   NgoUser.all
+                 end
   end
 
   def check_user
@@ -30,14 +30,14 @@ class NgoUsersController < ApplicationController
     @user_particular = UserParticular.find_by(unique_id: params[:unique_id], two_fa_passcode: params[:two_fa_passcode])
     logger.debug "User Particular: #{@user_particular}"
     if @user_particular
-      flash.now[:notice] = "User found."
+      flash.now[:notice] = 'User found.'
       @checked = true
       @unique_id_exists = true
       params[:unique_id] = @user_particular.unique_id
       logger.debug "params[:unique_id]: #{params[:unique_id]}"
-      redirect_to verify_ngo_user_path(@ngo_user, unique_id: @user_particular.unique_id)
+      redirect_to verify_ngo_user_path(@ngo_user, unique_id: @user_particular.unique_id) # Yiqing redirect to verify code
     else
-      flash[:alert] = "User not found."
+      flash[:alert] = 'User not found.'
       @checked = false
       @unique_id_exists = true
     end
@@ -50,10 +50,9 @@ class NgoUsersController < ApplicationController
     logger.debug "User Particular: #{@user_particular}"
     # Any additional logic you want to include before rendering the verify view
     # render 'verify' is implicit
-    #flash[:notice] = "Verification successful."
-    
-    
-    #redirect_to ngo_user_path(@ngo_user, id: params[:id], commit:'Verify')
+    # flash[:notice] = "Verification successful."
+
+    # redirect_to ngo_user_path(@ngo_user, id: params[:id], commit:'Verify')
   end
 
   def confirm_verify
