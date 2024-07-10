@@ -17,6 +17,16 @@ steps:
         "-c",
         "/buildstep/execute.sh -i gcr.io/${_PROJECT_ID}/${_SERVICE_NAME} -s ${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME} -- bundle exec rails db:migrate",
       ]
+      
+  - id: "run seeds"
+    name: "gcr.io/google-appengine/exec-wrapper"
+    entrypoint: "bash"
+    args:
+      [
+        "-c",
+        "/buildstep/execute.sh -i gcr.io/${_PROJECT_ID}/${_SERVICE_NAME} -s ${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME} -- bundle exec rails db:seed",
+      ]
+
   - id: "run deploy"
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
