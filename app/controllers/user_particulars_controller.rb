@@ -6,6 +6,9 @@ class UserParticularsController < ApplicationController
   def show; end
   # No need for content when using @user_particular from before_action
 
+  def page2; end
+  # No need for content when using @user_particular from before_action
+
   def create
     error_messages_arr = validate_user_particulars(UserParticular.new(user_particular_params))
     flash[:error] = error_messages_arr
@@ -60,6 +63,7 @@ class UserParticularsController < ApplicationController
     # Check if edit was successful
     if @user_particular.persisted?
       flash[:success] = 'Digital ID was successfully edited!'
+      @user_particular[:status] = 'pending' # Set status to pending after editing
       redirect_to @user_particular # redirects to /user_particulars/:id
     else
       flash[:error_message] = 'Edit failed. Please try again.'
@@ -89,7 +93,6 @@ class UserParticularsController < ApplicationController
   def generate_2fa
     @user_particular = UserParticular.find(params[:id])
     @user_particular.generate_2fa_secret
-    puts @user_particular.two_fa_passcode
     if @user_particular.save
       respond_to do |format|
         format.json { render json: { two_fa_passcode: @user_particular.two_fa_passcode } }

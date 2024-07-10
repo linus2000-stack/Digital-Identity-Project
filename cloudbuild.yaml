@@ -15,8 +15,18 @@ steps:
     args:
       [
         "-c",
-        "/buildstep/execute.sh -i gcr.io/${_PROJECT_ID}/${_SERVICE_NAME} -s ${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME} -- bundle exec rake db:migrate",
+        "/buildstep/execute.sh -i gcr.io/${_PROJECT_ID}/${_SERVICE_NAME} -s ${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME} -- bundle exec rails db:migrate",
       ]
+      
+  - id: "run seeds"
+    name: "gcr.io/google-appengine/exec-wrapper"
+    entrypoint: "bash"
+    args:
+      [
+        "-c",
+        "/buildstep/execute.sh -i gcr.io/${_PROJECT_ID}/${_SERVICE_NAME} -s ${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME} -- bundle exec rails db:seed",
+      ]
+
   - id: "run deploy"
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
@@ -31,11 +41,12 @@ steps:
         "${_REGION}",
         "--image",
         "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
+        "--add-cloudsql-instances", "${_INSTANCE_NAME}"
       ]
 
 substitutions:
   _REGION: asia-southeast1
-  _SERVICE_NAME: sprint1
+  _SERVICE_NAME: enable-id
   _INSTANCE_NAME: prod1
   _PROJECT_ID: our-id-boleh-426919
 
