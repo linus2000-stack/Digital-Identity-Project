@@ -60,6 +60,7 @@ class NgoUsersController < ApplicationController
     @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
     # Add any verification logic here
     #redirect_to "http://localhost:3000/ngo_users/:id"
+    @user_particular.update(status: 'verified') # Update the status to 'verified'
     flash[:notice] = "Verification successful for unique ID: #{@user_particular.unique_id}."
     redirect_to ngo_user_path(@ngo_user), status: :found
   end

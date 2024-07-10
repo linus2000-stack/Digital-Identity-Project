@@ -23,7 +23,8 @@ user1.create_user_particular!(
   date_of_arrival: Date.new(2017, 9, 10),
   photo_url: 'https://example.com/rohingya_aung_photo.jpg',
   birth_certificate_url: 'https://example.com/rohingya_aung_birth_certificate.jpg',
-  passport_url: 'https://example.com/rohingya_aung_passport.jpg'
+  passport_url: 'https://example.com/rohingya_aung_passport.jpg',
+  status:'pending'
 )
 
 user2 = User.create!(
@@ -50,7 +51,8 @@ user2.create_user_particular!(
   date_of_arrival: Date.new(2010, 5, 20),
   photo_url: 'https://example.com/fatima_ali_photo.jpg',
   birth_certificate_url: 'https://example.com/fatima_ali_birth_certificate.jpg',
-  passport_url: 'https://example.com/fatima_ali_passport.jpg'
+  passport_url: 'https://example.com/fatima_ali_passport.jpg',
+  status:'pending'
 )
 
 user3 = User.create!(
@@ -75,7 +77,8 @@ user3.create_user_particular!(
   gender: 'Male',
   date_of_birth: Date.new(1992, 7, 3),
   date_of_arrival: Date.new(2015, 2, 10),
-  photo_url: 'https://example.com/ahmed_khalid_photo.jpg'
+  photo_url: 'https://example.com/ahmed_khalid_photo.jpg',
+  status:'pending'
 )
 
 user4 = User.create!(
@@ -101,7 +104,8 @@ user4.create_user_particular!(
   date_of_arrival: Date.new(2012, 8, 15),
   photo_url: 'https://example.com/phyu_phyu_win_photo.jpg',
   birth_certificate_url: 'https://example.com/phyu_phyu_win_birth_certificate.jpg',
-  passport_url: 'https://example.com/phyu_phyu_win_passport.jpg'
+  passport_url: 'https://example.com/phyu_phyu_win_passport.jpg',
+  status:'pending'
 )
 
 user5 = User.create!(
@@ -127,7 +131,8 @@ user5.create_user_particular!(
   date_of_arrival: Date.new(2018, 4, 22),
   photo_url: 'https://example.com/hussein_abbas_photo.jpg',
   birth_certificate_url: 'https://example.com/hussein_abbas_birth_certificate.jpg',
-  passport_url: 'https://example.com/hussein_abbas_passport.jpg'
+  passport_url: 'https://example.com/hussein_abbas_passport.jpg',
+  status:'pending'
 )
 
 ngo_users = [

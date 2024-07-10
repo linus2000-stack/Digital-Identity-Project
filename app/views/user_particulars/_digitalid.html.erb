@@ -28,10 +28,10 @@
       <% if @user_particular.nil? %>
         <span>EnableID - Pending your action</span>
       <% else %>
-        <% if @user_particular.status = 'pending' %>
+        <% if @user_particular.status == 'pending' %>
           <span>EnableID - Pending verification from an NGO <i class="bg-danger p-1 fas fa-check text-white"></i></span>
           <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
-        <% elsif @user_particular.status = 'verified' %>
+        <% elsif @user_particular.status == 'verified' %>
           <span>EnableID - Verified by an NGO <i class="bg-success p-1 fas fa-check text-white"></i></span>
           <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
         <% else %>
