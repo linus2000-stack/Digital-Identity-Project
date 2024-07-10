@@ -16,6 +16,11 @@ class UserParticular < ActiveRecord::Base
     user_particular
   end
 
+  def self.set_pending_status(id)
+    user_particular = UserParticular.find_by(id:)
+    user_particular.update(status: 'pending')
+  end
+
   def assign_unique_id
     self.unique_id = generate_unique_id
   end
