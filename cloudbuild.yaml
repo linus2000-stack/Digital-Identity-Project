@@ -31,11 +31,12 @@ steps:
         "${_REGION}",
         "--image",
         "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
+        "--add-cloudsql-instances", "${_INSTANCE_NAME}"
       ]
 
 substitutions:
   _REGION: asia-southeast1
-  _SERVICE_NAME: sprint1
+  _SERVICE_NAME: enable-id
   _INSTANCE_NAME: prod1
   _PROJECT_ID: our-id-boleh-426919
 
