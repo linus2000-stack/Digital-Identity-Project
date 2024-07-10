@@ -52,7 +52,7 @@ class NgoUsersController < ApplicationController
     #@user_particular.update(status: 'verified')
     logger.debug "User Particular: #{@ngo_user.name}"
     @user_particular.update(status: 'verified', verifier_ngo: @ngo_user.name)# Update the status to 'verified'
-    flash[:notice] = "Verification successful for unique ID: #{@user_particular.unique_id}."
+    flash[:success] = "Verification successful for unique ID: #{@user_particular.unique_id}."
     redirect_to ngo_user_path(@ngo_user), status: :found
   end
 end
