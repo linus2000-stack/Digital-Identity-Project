@@ -36,9 +36,8 @@ Scenario: Mark undocumented user's EnableID status as verified, then check the a
   When I press the "Verify" button
   Then I should see "Verification successful for unique ID: 1071783."
   Then I should be redirected to the NGO "Gebirah" page
-  
+
   Given I am on the "Login" page
-  Given I have a user 1071783 verified by NGO: Gebirah
-  When I am logged into user 1071783 EnableID account'
+  Given I have a user 1071783 verified by NGO: Gebirah, and logs in
   Then I should see the checkmark on the user's EnableID card
   And I should see "EnableID - verified by NGO: Gebirah"
