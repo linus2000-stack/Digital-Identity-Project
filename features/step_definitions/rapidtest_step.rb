@@ -18,6 +18,17 @@ When(/^I press the NGO "([^"]*)" card$/) do |image_alt|
   card_link.click
 end
 
+Then(/^I should be redirected to the "([^"]*)" page$/) do |page_name|
+  expected_path = if page_name == 'User Verification'
+                    verify_ngo_user_path(@ngo_user, unique_id: @user_particular.unique_id)
+                  else
+                    "/ngo_users/#{ngo_user.id}"
+                  end
+
+  expect(current_path).to eq(expected_path),
+                          "Expected to be redirected to #{expected_path} but was at #{current_path} instead."
+end
+
 Then(/^I should be redirected to the NGO "([^"]*)" page$/) do |page_name|
   ngo_user = NgoUser.find_by(name: page_name)
   expect(ngo_user).not_to be_nil, "NgoUser with name #{page_name} not found."
@@ -29,6 +40,29 @@ end
 
 Then(/^I should see "([^"]*)"$/) do |name|
   expect(page).to have_content("#{name}")
+end
+
+Given(/^I am already on my NGO "([^"]*)" page$/) do |ngo_name|
+  step 'I am on the "Login" page'
+  puts "Current path: |||||||| #{current_path} ||||||||"
+  step 'I press the "I am a NGO" button'
+  step %(I press the NGO "#{ngo_name}" card)
+end
+
+When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |enable_id|
+  fill_in 'unique_id', with: enable_id
+end
+
+And(%r{^I key in a 6 digit code that is seen on his/her EnableID: (\d{6})$}) do |code|
+  fill_in 'two_fa_passcode', with: code
+end
+
+Then('I should see his/her EnableID card') do
+  expect(page).to have_selector('#digitalcard')
+end
+
+Then(/^I should see "([^"]*)" button$/) do |button_text|
+  expect(page).to have_selector('#ngo-verify-btn')
 end
 
 # Maps page names to their corresponding paths
