@@ -27,6 +27,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fall back to assets pipeline if a precompiled asset is missed.
+  # set to true to silence errors but first run of each container will take long to precompile
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
@@ -86,6 +87,12 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # do not allow dumping debug information in http response, default false for production
+  config.consider_all_requests_local = false
+
+  # verbosity of rails logger, defaults to debug for all env, but info for production
+  config.log_level = :info
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
