@@ -58,9 +58,10 @@ class NgoUsersController < ApplicationController
 
   def confirm_verify
     @ngo_user = NgoUser.find(params[:id])
+    @user_particular = UserParticular.find_by(unique_id: params[:unique_id])
     # Add any verification logic here
     #redirect_to "http://localhost:3000/ngo_users/:id"
-    flash[:confirm_verify_notice] = "Verification successful for #{@ngo_user.unique_id}."
-    redirect_to ngo_user_path(@ngo_user)
+    flash[:confirm_verify_notice] = "Verification successful for unique ID: #{@user_particular.unique_id}."
+    redirect_to ngo_user_path(@ngo_user), status: :found
   end
 end

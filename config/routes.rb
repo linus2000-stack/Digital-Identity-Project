@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       post 'check_user' # Add this line for post action to verify user
       get 'verify', to: 'ngo_users#verify', as: 'verify'# Add this line for the verify action
       post 'verify', to: 'ngo_users#verify'
-      post 'confirm_verify', to: 'ngo_users#show'
+      post 'confirm_verify', to: 'ngo_users#confirm_verify'
     end
   end
 end
