@@ -6,6 +6,9 @@ class UserParticularsController < ApplicationController
   def show; end
   # No need for content when using @user_particular from before_action
 
+  def page2; end
+  # No need for content when using @user_particular from before_action
+
   def create
     error_messages_arr = validate_user_particulars(UserParticular.new(user_particular_params))
     flash[:error] = error_messages_arr
