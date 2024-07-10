@@ -7,8 +7,8 @@ Given('I am on "User Verification" page') do
   # Assuming the journey starts at the "Home" page and requires login
   step 'I am already on my NGO "Gebirah" page'
 
-  step 'I key in the undocumented user\'s unique EnableID number: 1071783'
-  step 'I key in a 6 digit code that is seen on his/her EnableID: 958523'
+  step 'I key in the undocumented user\'s unique EnableID number: 3451765'
+  step 'I key in a 6 digit code that is seen on his/her EnableID: 347628'
   step 'I press "Check" button'
 end
 
