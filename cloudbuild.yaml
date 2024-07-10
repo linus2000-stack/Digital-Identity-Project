@@ -15,7 +15,7 @@ steps:
     args:
       [
         "-c",
-        "/buildstep/execute.sh -i gcr.io/${_PROJECT_ID}/${_SERVICE_NAME} -s ${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME} -- bundle exec rake db:migrate",
+        "/buildstep/execute.sh -i gcr.io/${_PROJECT_ID}/${_SERVICE_NAME} -s ${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME} -- bundle exec rails db:migrate",
       ]
   - id: "run deploy"
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
