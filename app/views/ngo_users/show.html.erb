@@ -1,5 +1,8 @@
-<div class="container px-5">
-  <h2 class="mb-4 mt-4">Hello <%= @ngo_user.name %></h2> <!-- Added margin-bottom and margin-top for spacing -->
+<div class="container px-5"> 
+  <div style="text-align: center; padding-top: 10px;">
+    <%= image_tag @ngo_user.image_url, alt: "#{@ngo_user.name} image", style:"width: 250px; height: 250px; object-fit: contain;" %>
+    </div>
+    <h2 class="mb-4 mt-4">Hello, <%= @ngo_user.name %></h2> <!-- Added margin-bottom and margin-top for spacing -->
 
   <% if !@unique_id_exists && !defined?(@checked) %>
     <%= form_with url: ngo_user_path(@ngo_user), method: :get, local: true do %>
