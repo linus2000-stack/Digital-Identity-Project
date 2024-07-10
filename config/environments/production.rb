@@ -87,6 +87,12 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # do not allow dumping debug information in http response, default false for production
+  config.consider_all_requests_local = false
+
+  # verbosity of rails logger, defaults to debug for all env, but info for production
+  config.log_level = :info
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
