@@ -30,4 +30,8 @@ class UserParticular < ActiveRecord::Base
   def generate_2fa_secret
     self.two_fa_passcode = rand(100_000..999_999)
   end
+
+  def verified_by_ngo_user_name
+    self.verified_by_ngo_user&.name
+  end
 end

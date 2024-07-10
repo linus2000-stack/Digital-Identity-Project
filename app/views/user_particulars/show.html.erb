@@ -51,31 +51,36 @@
     <% if @user_particular.nil? %>
       <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", id: "fill-in-particulars" %>
     <% else %>
-      <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal" data-bs-target="#verificationWarningModal">
-        Edit your particulars!
-      </button>
+      <% if @user_particular.status = 'verified' %>
+        <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal" data-bs-target="#verificationWarningModal">
+          Edit your particulars!
+        </button>
+      <% else %>
+        <button type="button" class="btn btn-primary p-3">
+          Edit your particulars!
+        </button>
     <% end %>
   </div>
   <%# End of EnableID card partial and filling in/edit button%>
-  <!-- Modal -->
-  <div class="modal fade" id="verificationWarningModal" tabindex="-1" role="dialog" aria-labelledby="verificationWarningModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="verificationWarningModalLabel">Caution!</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          If you continue, you will lose your verification status and will need to be verified again by an NGO admin. Do you want to proceed?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <% if @user_particular.present? %>
-            <%= link_to "Proceed", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
-          <% end %>
+    <!-- Modal -->
+    <div class="modal fade" id="verificationWarningModal" tabindex="-1" role="dialog" aria-labelledby="verificationWarningModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verificationWarningModalLabel">Caution!</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            If you continue, you will lose your verification status and will need to be verified again by an NGO admin. Do you want to proceed?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <% if @user_particular.present? %>
+              <%= link_to "Proceed", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>

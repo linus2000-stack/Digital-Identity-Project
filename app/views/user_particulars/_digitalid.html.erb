@@ -31,7 +31,7 @@
           <span>EnableID - Pending verification from an NGO <i class="bg-danger p-1 fas fa-check text-white"></i></span>
           <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
         <% elsif @user_particular.status == 'verified' %>
-          <span>EnableID - Verified by an NGO <i class="bg-success p-1 fas fa-check text-white"></i></span>
+          <span>EnableID - Verified by <%= @user_particular.verifier_ngo %> <i class="bg-success p-1 fas fa-check text-white"></i></span>
           <span>EnableID Unique Identifier: <%= @user_particular.unique_id %></span>
         <% else %>
           <span>EnableID - Pending verification from an NGO</span>
