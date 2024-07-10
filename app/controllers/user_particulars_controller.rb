@@ -63,7 +63,7 @@ class UserParticularsController < ApplicationController
     # Check if edit was successful
     if @user_particular.persisted?
       flash[:success] = 'Digital ID was successfully edited!'
-      UserParticular.set_pending_status(params[:id]) # Set status to pending after editing
+      UserParticular.reset_verification(params[:id]) # Set status to pending and reset verifier_ngo
       @user_particular = UserParticular.find_by_id(params[:id]) # Retrieve user particular
       redirect_to @user_particular # redirects to /user_particulars/:id
     else
