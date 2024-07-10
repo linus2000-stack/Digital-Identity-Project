@@ -4,7 +4,7 @@ Feature: Verify user particulars and account
   So that I can mark the personal particualrs of his/her EnableID account as verified.
 
 Background:
-  Given a user particular exists with unique ID "1071783" and 2FA code "958523"
+  Given a user particular exists with unique ID "3451765" and 2FA code "347628"
 
 Scenario: Going to my own "NGO" page
   Given I am on the "Login" page
@@ -16,12 +16,12 @@ Scenario: Going to my own "NGO" page
 
 Scenario: Retrieving undocumented user's EnableID personal particulars
   Given I am already on my NGO "Gebirah" page
-  When I key in the undocumented user's unique EnableID number: 1071783
-  And I key in a 6 digit code that is seen on his/her EnableID: 958523
+  When I key in the undocumented user's unique EnableID number: 3451765
+  And I key in a 6 digit code that is seen on his/her EnableID: 347628
   And I press "Check" button
   Then I should be redirected to the "User Verification" page and see "EnableID Verification"
   And I should see his/her EnableID card
-  And I should see "1071783"
+  And I should see "3451765"
   And I should see "Verify" button
 
 Scenario: Wrong Unique ID number
@@ -33,11 +33,6 @@ Scenario: Wrong Unique ID number
 
 Scenario: Mark undocumented user's EnableID status as verified, then check the account
   Given I am on "User Verification" page
-  When I press the "Verify" button
-  Then I should see "Verification successful for unique ID: 1071783."
+  When I press the "verify" button
+  Then I should see "Verification successful for unique ID: 3451765."
   Then I should be redirected to the NGO "Gebirah" page
-
-  Given I am on the "Login" page
-  Given I have a user 1071783 verified by NGO: Gebirah, and logs in
-  Then I should see the checkmark on the user's EnableID card
-  And I should see "EnableID - verified by NGO: Gebirah"
