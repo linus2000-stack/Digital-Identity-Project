@@ -15,7 +15,24 @@
   </head> 
   <body class="d-flex flex-column min-vh-100" style="overflow-x:hidden;">
     <h4 class="text-center py-2" style="background-color: #f1536a; color: white; margin-bottom:0;"><%= @ngo_user&.name || "NGO" %></h4>
-
+  
+      <!--Display messages at the top of the page-->
+      <%- if flash[:notice]%>
+      <div class="alert alert-info text-center"><%=flash[:notice]%></div>
+      <%- elsif flash[:success]%>
+      <div class="alert alert-success text-center"><%=flash[:success]%></div>
+      <%- elsif flash[:error_message].present? %>
+        <div class="alert alert-danger">
+          <ul><%= flash[:error_message] %></ul>
+          <% if flash[:error].present? %>
+            <ul>
+              <% flash[:error].each do |error| %>
+                <li><%= error %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
 
       <%= yield %>
 
@@ -31,5 +48,7 @@
         <a href="#" class="text-white">Terms of use</a> | 
         </div>
     </footer>
+  
   </body>
+
 </html>
