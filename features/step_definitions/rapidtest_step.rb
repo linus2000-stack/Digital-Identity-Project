@@ -1,6 +1,4 @@
 Given('a user particular exists with unique ID {string} and 2FA code {string}') do |unique_id, two_fa_code|
-  UserParticular.find_by_id(1).update(unique_id:, two_fa_passcode: two_fa_code)
-  $user_particular = UserParticular.find_by_id(1)
 end
 
 Given('I am on "User Verification" page') do
@@ -48,10 +46,10 @@ Then('I should be redirected to the "User Verification" page and see "EnableID V
 end
 
 Then(/^I should be redirected to the NGO "([^"]*)" page$/) do |page_name|
-  $ngo_user = NgoUser.find_by(name: page_name)
-  expect($ngo_user).not_to be_nil, "NgoUser with name #{page_name} not found."
+  @ngo_user = NgoUser.find_by(name: page_name)
+  expect(@ngo_user).not_to be_nil, "NgoUser with name #{page_name} not found."
 
-  expected_path = "/ngo_users/#{$ngo_user.id}"
+  expected_path = "/ngo_users/#{@ngo_user.id}"
   expect(current_path).to eq(expected_path),
                           "Expected to be redirected to #{expected_path} but was at #{current_path} instead."
 end
@@ -64,7 +62,6 @@ Given(/^I am already on my NGO "([^"]*)" page$/) do |ngo_name|
   step 'I am on the "Login" page'
   step 'I press the "I am a NGO" button'
   step %(I press the NGO "#{ngo_name}" card)
-  $ngo_user = NgoUser.find_by(name: ngo_name)
 end
 
 When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |enable_id|
@@ -83,11 +80,13 @@ Then(/^I should see "([^"]*)" button$/) do |button_text|
   expect(page).to have_selector(".btn[value='#{button_text}']")
 end
 
-Given(/^I have a verified user (\d+) by NGO: (.+)$/) do |user_id, ngo_name|
-  @user = create(:user, id: user_id, verified_by_ngo: ngo_name)
-  visit new_user_session_path
-  fill_in 'Email', with: @user.email
-  fill_in 'Password', with: @user.password
+Given(/^I have a user (\d+) verified by NGO: (.+)$/) do |user_id, ngo_name|
+  @ngo_user = NgoUser.fid_by(name: ngo_name)
+  @user_particular = UserParticular.find_by(unique_id: user_id)
+  @user = User.find_by(id: @user_particular.user_id)
+  step 'I am on the "Login" page'
+  fill_in 'Email', with: @user.username
+  fill_in 'Password', with: @user.encrypted_password
   click_button 'Log in'
   expect(page).to have_content('Signed in successfully.')
 end
