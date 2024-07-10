@@ -4,12 +4,12 @@ Feature: Verify user particulars and account
   So that I can mark the personal particualrs of his/her EnableID account as verified.
 
 Scenario: Going to my own "NGO" page
-  Given I am on the “Login” page
+  Given I am on the "Login" page
   When I press the "I am a NGO" button
   Then I should see a set of different NGO buttons 
-  When I press the "NGO Gebirah", button
-  Then I should be redirected to the "NGO: Gebirah" page
-  And I should see "Welcome Gebirah!"
+  When I press the NGO "Gebirah" card
+  Then I should be redirected to the NGO "Gebirah" page
+  And I should see "Hello, Gebirah"
 
 Scenario: Retrieving undocumented user's EnableID personal particulars
   Given I am already on my "NGO: Gebirah" page
@@ -20,6 +20,12 @@ Scenario: Retrieving undocumented user's EnableID personal particulars
   And I press "Check"
   Then I should see his/her EnableID card
   And a "Verify" button below
+
+Scenario: Wrong Unique ID number
+  Given I am already on my "NGO: Gebirah" page
+  When I key in the undocumented user's unique EnableID number incorrectly
+  And I press "Submit"
+  Then I should see "Unique_ID does not exist. Please try again."
 
 Scenario: Mark undocumented user's EnableID status as verified
   Given I am on the "User Verfication" page
