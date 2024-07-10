@@ -82,13 +82,13 @@ Then(/^I should see "([^"]*)" button$/) do |button_text|
   expect(page).to have_selector(".btn[value='#{button_text}']")
 end
 
-Given(/^I have a user (\d+) verified by NGO: (.+)$/) do |user_id, ngo_name|
+Given(/^I have a user (\d+) verified by NGO: (.+), and logs in$/) do |user_id, ngo_name|
   @ngo_user = NgoUser.find_by(name: ngo_name)
   @user_particular = UserParticular.find_by(unique_id: user_id)
   @user = User.find_by(id: @user_particular.user_id)
   step 'I am on the "Login" page'
   fill_in 'Log in', with: @user.username
-  fill_in 'Password', with: 'adminpassword'
+  fill_in 'Password', with: '$2a$04$Vq4zF.IhWYCHqSuL2gOumepveZ1E38fXgW.N7kY.rgFiqPK6xkJ8O'
   click_button 'Log in'
   expect(page).to have_content('Welcome,')
 end
