@@ -7,8 +7,8 @@ Given('I am on "User Verification" page') do
   # Assuming the journey starts at the "Home" page and requires login
   step 'I am already on my NGO "Gebirah" page'
 
-  step 'I key in the undocumented user\'s unique EnableID number: 1071783'
-  step 'I key in a 6 digit code that is seen on his/her EnableID: 958523'
+  step 'I key in the undocumented user\'s unique EnableID number: 3451765'
+  step 'I key in a 6 digit code that is seen on his/her EnableID: 347628'
   step 'I press "Check" button'
 end
 
@@ -87,9 +87,7 @@ Given(/^I have a user (\d+) verified by NGO: (.+), and logs in$/) do |user_id, n
   @user_particular = UserParticular.find_by(unique_id: user_id)
   @user = User.find_by(id: @user_particular.user_id)
   step 'I am on the "Login" page'
-  fill_in 'Log in', with: @user.username
-  fill_in 'Password', with: '$2a$04$Vq4zF.IhWYCHqSuL2gOumepveZ1E38fXgW.N7kY.rgFiqPK6xkJ8O'
-  click_button 'Log in'
+  login_as(@user, scope: :user)
   expect(page).to have_content('Welcome,')
 end
 
