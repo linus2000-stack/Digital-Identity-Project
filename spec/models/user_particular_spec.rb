@@ -118,8 +118,8 @@ RSpec.describe UserParticular, type: :model do
     end
   end
 
-  describe '.set_pending_status' do
-  it 'sets an existing verified status as pending' do
+  describe '.reset_verification' do
+  it 'sets status as pending and verifier ngo to nil' do
     new_user = User.new(username: 'user6', email: 'user6@mail.com', password: 'password6',
                       phone_number: '90000006')
 
@@ -139,7 +139,8 @@ RSpec.describe UserParticular, type: :model do
       photo_url: 'https://example.com/ashin_jinarakkhita_photo.jpg',
       birth_certificate_url: 'https://example.com/ashin_jinarakkhita_birth_certificate.jpg',
       passport_url: 'https://example.com/ashin_jinarakkhita_passport.jpg',
-      status: 'verified'
+      status: 'verified',
+      verifier_ngo: 'Oxfam'
     )
 
     new_user.save!
@@ -147,10 +148,11 @@ RSpec.describe UserParticular, type: :model do
 
     expect(new_user_particular).to be_valid  # Ensure the instance is valid
     
-    UserParticular.set_pending_status(new_user_particular.id)
+    UserParticular.reset_verification(new_user_particular.id)
     
     found_user_particular = UserParticular.find_by_id(new_user_particular.id)
     expect(found_user_particular.status).to eq('pending')
+    expect(found_user_particular.verifier_ngo).to be_nil
   end
 end
 
