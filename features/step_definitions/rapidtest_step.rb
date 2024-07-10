@@ -1,4 +1,6 @@
 Given('a user particular exists with unique ID {string} and 2FA code {string}') do |unique_id, two_fa_code|
+  user_particular = UserParticular.first
+  user_particular.update(unique_id:, two_fa_passcode: two_fa_code)
 end
 
 Given('I am on "User Verification" page') do
@@ -81,14 +83,14 @@ Then(/^I should see "([^"]*)" button$/) do |button_text|
 end
 
 Given(/^I have a user (\d+) verified by NGO: (.+)$/) do |user_id, ngo_name|
-  @ngo_user = NgoUser.fid_by(name: ngo_name)
+  @ngo_user = NgoUser.find_by(name: ngo_name)
   @user_particular = UserParticular.find_by(unique_id: user_id)
   @user = User.find_by(id: @user_particular.user_id)
   step 'I am on the "Login" page'
-  fill_in 'Email', with: @user.username
-  fill_in 'Password', with: @user.encrypted_password
+  fill_in 'Log in', with: @user.username
+  fill_in 'Password', with: 'adminpassword'
   click_button 'Log in'
-  expect(page).to have_content('Signed in successfully.')
+  expect(page).to have_content('Welcome,')
 end
 
 # Maps page names to their corresponding paths
