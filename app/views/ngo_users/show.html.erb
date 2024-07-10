@@ -4,24 +4,21 @@
   </div>
   <div style="flex: 3; padding-left: 20px;"> <!-- Content on the right, with padding -->
     <h2 class="mb-4 mt-4">Hello, <%= @ngo_user.name %></h2>
-
-    <%= form_with url: check_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
+    <%= form_with url: check_user_ngo_user_path(@ngo_user), method: :post, local: true do |form| %>
       <div class="mb-3">
-        <%= label_tag :unique_id, "Unique ID" %>
-        <%= text_field_tag :unique_id, params[:unique_id], class: "form-control" %>
+        <%= form.label :unique_id, "Unique ID" %>
+        <%= form.text_field :unique_id, value: params[:unique_id], class: "form-control" %>
       </div>
       <div class="mb-3">
-        <%= label_tag :two_fa_passcode, "Enter 2FA Code" %>
-        <%= text_field_tag :two_fa_passcode, params[:two_fa_passcode], class: "form-control" %>
+        <%= form.label :two_fa_passcode, "Enter 2FA Code" %>
+        <%= form.text_field :two_fa_passcode, value: params[:two_fa_passcode], class: "form-control" %>
       </div>
-      <%= submit_tag "Check", class: "btn btn-success" %>
+      <%= form.submit "Check", class: "btn btn-success" %>
     <% end %>
-
     <%- if flash[:notice]%>
-        <div class="alert alert-info text-center"><%=flash[:notice]%></div>
+      <div class="alert alert-info text-center"><%=flash[:notice]%></div>
     <%- elsif flash[:alert]%>
-        <div class="alert alert-warning text-center"><%=flash[:alert]%></div>
+      <div class="alert alert-warning text-center"><%=flash[:alert]%></div>
     <% end %>
   </div>
 </div>
-
