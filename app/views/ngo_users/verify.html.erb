@@ -1,12 +1,14 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <div class="container px-5">
   <h2 class="mb-4 mt-4">EnableID Verification</h2> <!-- Added margin-bottom and margin-top for spacing -->
   <h1 class="text-center rounded mt-3">Your <strong style="color: #f1536a;">EnableID</strong></h1>
-  <%= render :partial => 'user_particulars/digitalid' %>
 
   <% if @user_particular.present? %>
     <div class="mt-4"> <!-- Add a margin top to create space -->
       <%= render partial: "user_particulars/digitalid", locals: { user_particular: @user_particular } %>
-      <%= form_with url: verify_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
+      <%= form_with url: confirm_verify_ngo_user_path(@ngo_user), method: :post, local: true, id: "verify" do %>
         <input type="hidden" name="unique_id" value="<%= @user_particular.unique_id %>">
         <%= submit_tag "Verify", class: "btn btn-success mt-3" %>
       <% end %>
