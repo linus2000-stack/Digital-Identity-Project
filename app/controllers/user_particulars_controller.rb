@@ -89,7 +89,6 @@ class UserParticularsController < ApplicationController
   def generate_2fa
     @user_particular = UserParticular.find(params[:id])
     @user_particular.generate_2fa_secret
-    puts @user_particular.two_fa_passcode
     if @user_particular.save
       respond_to do |format|
         format.json { render json: { two_fa_passcode: @user_particular.two_fa_passcode } }
