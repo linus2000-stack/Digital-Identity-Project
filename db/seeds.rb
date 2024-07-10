@@ -2,7 +2,7 @@ require 'date'
 
 user1 = User.create!(
   username: 'user1',
-  email: 'user1@example.com',
+  email: 'user1@mail.com',
   password: 'password1',
   password_confirmation: 'password1',
   phone_number: '90000001'
@@ -14,9 +14,10 @@ user1.create_user_particular!(
   phone_number: '111-222-3333',
   secondary_phone_number_country_code: '+60',
   secondary_phone_number: '555-555-5555',
+  full_phone_number: '60111-222-3333',
   country_of_origin: 'Myanmar',
   ethnicity: 'Rohingya',
-  religion: 'Muslim',
+  religion: 'Islam',
   gender: 'Male',
   date_of_birth: Date.new(1990, 3, 25),
   date_of_arrival: Date.new(2017, 9, 10),
@@ -27,7 +28,7 @@ user1.create_user_particular!(
 
 user2 = User.create!(
   username: 'user2',
-  email: 'user2@example.com',
+  email: 'user2@mail.com',
   password: 'password2',
   password_confirmation: 'password2',
   phone_number: '90000002'
@@ -38,9 +39,12 @@ user2.create_user_particular!(
   full_name: 'Fatima Ali',
   phone_number_country_code: '+60',
   phone_number: '444-555-6666',
+  secondary_phone_number_country_code: '+60',
+  secondary_phone_number: '111-222-333',
+  full_phone_number: '60444-555-6666',
   country_of_origin: 'Iraq',
   ethnicity: 'Kurdish',
-  religion: 'Muslim',
+  religion: 'Islam',
   gender: 'Female',
   date_of_birth: Date.new(1985, 12, 18),
   date_of_arrival: Date.new(2010, 5, 20),
@@ -51,7 +55,7 @@ user2.create_user_particular!(
 
 user3 = User.create!(
   username: 'user3',
-  email: 'user3@example.com',
+  email: 'user3@mail.com',
   password: 'password3',
   password_confirmation: 'password3',
   phone_number: '90000003'
@@ -64,9 +68,10 @@ user3.create_user_particular!(
   phone_number: '777-888-9999',
   secondary_phone_number_country_code: '+60',
   secondary_phone_number: '555-555-5555',
+  full_phone_number: '60777-888-9999',
   country_of_origin: 'Syria',
   ethnicity: 'Arab',
-  religion: 'Muslim',
+  religion: 'Islam',
   gender: 'Male',
   date_of_birth: Date.new(1992, 7, 3),
   date_of_arrival: Date.new(2015, 2, 10),
@@ -75,7 +80,7 @@ user3.create_user_particular!(
 
 user4 = User.create!(
   username: 'user4',
-  email: 'user4@example.com',
+  email: 'user4@mail.com',
   password: 'password4',
   password_confirmation: 'password4',
   phone_number: '90000004'
@@ -87,9 +92,10 @@ user4.create_user_particular!(
   phone_number: '123-456-7890',
   secondary_phone_number_country_code: '+60',
   secondary_phone_number: '555-123-4567',
+  full_phone_number: '60123-456-7890',
   country_of_origin: 'Myanmar',
   ethnicity: 'Burmese',
-  religion: 'Buddhist',
+  religion: 'Buddhism',
   gender: 'Female',
   date_of_birth: Date.new(1988, 5, 12),
   date_of_arrival: Date.new(2012, 8, 15),
@@ -100,7 +106,7 @@ user4.create_user_particular!(
 
 user5 = User.create!(
   username: 'user5',
-  email: 'user5@example.com',
+  email: 'user5@mail.com',
   password: 'password5',
   password_confirmation: 'password5',
   phone_number: '90000005'
@@ -112,9 +118,10 @@ user5.create_user_particular!(
   phone_number: '555-666-7777',
   secondary_phone_number_country_code: '+60',
   secondary_phone_number: '010-814-4567',
+  full_phone_number: '60555-666-7777',
   country_of_origin: 'Iraq',
   ethnicity: 'Arab',
-  religion: 'Muslim',
+  religion: 'Islam',
   gender: 'Male',
   date_of_birth: Date.new(1995, 10, 7),
   date_of_arrival: Date.new(2018, 4, 22),
