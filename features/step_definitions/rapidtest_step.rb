@@ -94,15 +94,17 @@ end
 
 Given(/^I am a freshly logged in new user$/) do
   step 'I am on the "Login" page'
-  @user = User.create(username: 'example1234', email: 'example123@example.com', password: 'password',
-                      password_confirmation: 'password', phone_number: '123456789')
+  user = User.create(username: 'example1234', email: 'example123@example.com', password: 'password',
+                     password_confirmation: 'password', phone_number: '123456789')
   # Debugging: Check if user was successfully created
-  raise "User creation failed: #{@user.errors.full_messages.join(', ')}" unless @user.persisted?
+  raise "User creation failed: #{user.errors.full_messages.join(', ')}" unless @user.persisted?
 
-  fill_in 'Log in EnableID', with: @user.username
-  fill_in 'Password', with: @user.password
+  fill_in 'Log in EnableID', with: user.username
+  fill_in 'Password', with: user.password
   step 'I press the "Log in" button'
-  expected_path = '/user_particular'
+  login_as(user, scope: :user)
+  visit root_path
+  expected_path = '/'
   raise "Expected to be on #{expected_path}, but was on #{current_path}" unless current_path == expected_path
 
   step 'I should see "Welcome, "'
@@ -112,7 +114,7 @@ end
 def path_to(page_name)
   case page_name.downcase
   when 'home'
-    user_particular_path
+    user_particular_path(user.id)
   when 'login'
     new_user_session_path
   when 'ngogebirah'
