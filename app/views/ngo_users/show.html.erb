@@ -1,31 +1,24 @@
-<div class="container px-5 py-3"> <!-- Add padding for top and bottom -->
-  <div class="row align-items-center"> <!-- Use Bootstrap's grid system for alignment -->
-    <div class="col-md-4 text-center mb-3 mb-md-0"> <!-- Center logo horizontally and vertically, add margin for small screens -->
-      <%= image_tag @ngo_user.image_url, alt: "#{@ngo_user.name} image", class: "img-fluid", style:"max-width: 250px; height: auto; object-fit: contain;" %>
-    </div>
-    <div class="col-md-8"> <!-- Content on the right -->
-      <div class="rounded" style="border: 1px solid #ccc; padding: 20px; border-radius: 20px;"> <!-- Add border, padding, and larger border-radius -->
-        <h4 class="text-center" style="color: #f1536a;">EnableID Verification</h4>
-        <%= form_with url: check_user_ngo_user_path(@ngo_user), method: :post, local: true do %>
-          <div class="mb-3">
-            <%= label_tag :unique_id, "Unique ID" %>
-            <%= text_field_tag :unique_id, params[:unique_id], class: "form-control" %>
-          </div>
-          <div class="mb-3">
-            <%= label_tag :two_fa_passcode, "Enter 2FA Code" %>
-            <%= text_field_tag :two_fa_passcode, params[:two_fa_passcode], class: "form-control" %>
-          </div>
-          <div class="text-right"> <!-- Align button to the right -->
-            <%= submit_tag "Check", class: "btn btn-success" %>
-          </div>
-        <% end %>
-
-        <%- if flash[:notice]%>
-            <div class="alert alert-info text-center"><%=flash[:notice]%></div>
-        <%- elsif flash[:alert]%>
-            <div class="alert alert-warning text-center"><%=flash[:alert]%></div>
-        <% end %>
+<div class="container px-5 d-flex" style="align-items: center; display: flex; padding-top: 10px;"> <!-- Use flexbox for alignment -->
+  <div style="flex: 1; display: flex; justify-content: center; align-items: center;"> <!-- Center logo horizontally and vertically -->
+    <%= image_tag @ngo_user.image_url, alt: "#{@ngo_user.name} image", style:"width: 250px; height: 250px; object-fit: contain;" %>
+  </div>
+  <div style="flex: 3; padding-left: 20px;"> <!-- Content on the right, with padding -->
+    <h2 class="mb-4 mt-4">Hello, <%= @ngo_user.name %></h2>
+    <%= form_with url: check_user_ngo_user_path(@ngo_user), method: :post, local: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :unique_id, "Unique ID" %>
+        <%= form.text_field :unique_id, value: params[:unique_id], class: "form-control" %>
       </div>
-    </div>
+      <div class="mb-3">
+        <%= form.label :two_fa_passcode, "Enter 2FA Code" %>
+        <%= form.text_field :two_fa_passcode, value: params[:two_fa_passcode], class: "form-control" %>
+      </div>
+      <%= form.submit "Check", class: "btn btn-success" %>
+    <% end %>
+    <%- if flash[:notice]%>
+      <div class="alert alert-info text-center"><%=flash[:notice]%></div>
+    <%- elsif flash[:alert]%>
+      <div class="alert alert-warning text-center"><%=flash[:alert]%></div>
+    <% end %>
   </div>
 </div>
