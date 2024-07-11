@@ -18,6 +18,7 @@
             justify-content: center;
             color: #d6d6d6;
             cursor: pointer;
+            text-align: center;
         }
 
         /* Hover effect for the file upload wrapper */
@@ -25,13 +26,9 @@
             background-color: #f5f5f5;
         }
 
-        /* Make the file input field invisible and cover the entire wrapper */
+        /* Hide the file input field */
         .file-upload-wrapper input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
+            display: none;
         }
     </style>
 </head>
@@ -44,10 +41,8 @@
         <!-- Form for file upload -->
         <form id="uploadForm">
             <!-- File upload wrapper -->
-            <div class="file-upload-wrapper" data-mdb-file-upload-init>
-                <!-- File input field (hidden but clickable) -->
-                <input type="file" id="fileInput" name="file" class="form-control-file" multiple />
-                <span>Drag and drop a file here or click</span>
+            <div class="file-upload-wrapper" data-mdb-file-upload-init id="dropArea">
+                <span>Drag and drop a file here</span>
             </div>
             <!-- Button to trigger file selection modal -->
             <div class="text-center mt-3">
@@ -88,35 +83,81 @@
 
     <!-- JavaScript to handle file upload -->
     <script>
-        // Event listener for clicking the file upload wrapper to open the file dialog
-        document.querySelector('.file-upload-wrapper').addEventListener('click', function() {
-            document.getElementById('fileInput').click();
-        });
+        // Variable to temporarily store selected files in the modal
+        let tempFiles = [];
+
+        // Variable to store selected files
+        let selectedFiles = [];
 
         // Event listener for the modal file input change to store selected files
-        let selectedFiles = [];
         document.getElementById('modalFileInput').addEventListener('change', function() {
-            selectedFiles = selectedFiles.concat(Array.from(this.files));
+            // Store selected files temporarily
+            tempFiles = Array.from(this.files);
         });
 
         // Event listener for the confirm button in the modal
         document.getElementById('confirmFiles').addEventListener('click', function() {
-            if (selectedFiles.length === 0) {
+            if (tempFiles.length === 0) {
+                // No files selected, display message and close modal
                 document.getElementById('statusMessage').innerText = 'No files selected.';
                 $('#fileModal').modal('hide');
                 return;
             }
 
+            // Add tempFiles to selectedFiles
+            selectedFiles = selectedFiles.concat(tempFiles);
+            tempFiles = []; // Clear tempFiles
+            updateFileList(); // Update the file list display
+            $('#fileModal').modal('hide'); // Close the modal after confirming files
+            document.getElementById('statusMessage').innerText = 'Files selected successfully!';
+        });
+
+        // Function to update the file list display
+        function updateFileList() {
             var fileListContainer = document.getElementById('fileList');
             fileListContainer.innerHTML = ''; // Clear previous file list
             selectedFiles.forEach(file => {
                 var fileItem = document.createElement('div');
-                fileItem.innerText = file.name + ' (' + file.size + ' bytes)';
+                // Display file name and formatted size
+                fileItem.innerText = file.name + ' (' + formatFileSize(file.size) + ')';
                 fileListContainer.appendChild(fileItem);
             });
+        }
 
-            // Close the modal after confirming files
-            $('#fileModal').modal('hide');
+        // Function to format file size
+        function formatFileSize(bytes) {
+            const units = ['bytes', 'KB', 'MB', 'GB', 'TB'];
+            let unitIndex = 0;
+            let size = bytes;
+
+            // Convert bytes to the largest unit possible
+            while (size >= 1024 && unitIndex < units.length - 1) {
+                size /= 1024;
+                unitIndex++;
+            }
+
+            // Return size with two decimal places and unit
+            return size.toFixed(2) + ' ' + units[unitIndex];
+        }
+
+        // Event listeners for drag and drop functionality
+        const dropArea = document.getElementById('dropArea');
+
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.classList.add('hover'); // Add hover effect on dragover
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('hover'); // Remove hover effect on dragleave
+        });
+
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('hover'); // Remove hover effect on drop
+            const files = Array.from(event.dataTransfer.files); // Get files from drop event
+            selectedFiles = selectedFiles.concat(files); // Add files to selectedFiles
+            updateFileList(); // Update the file list display
             document.getElementById('statusMessage').innerText = 'Files selected successfully!';
         });
 
@@ -151,6 +192,16 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 
