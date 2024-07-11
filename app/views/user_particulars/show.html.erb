@@ -51,7 +51,7 @@
     <% if @user_particular.nil? %>
       <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", id: "fill-in-particulars" %>
     <% else %>
-      <% if @user_particular.status = 'verified' %>
+      <% if @user_particular.status == 'verified' %>
         <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal" data-bs-target="#verificationWarningModal">
           Edit your particulars!
         </button>
@@ -59,6 +59,7 @@
         <button type="button" class="btn btn-primary p-3">
           Edit your particulars!
         </button>
+      <%end %>
     <% end %>
   </div>
   <%# End of EnableID card partial and filling in/edit button%>
@@ -84,3 +85,5 @@
         </div>
       </div>
     </div>
+  <%# end%>
+</body>
