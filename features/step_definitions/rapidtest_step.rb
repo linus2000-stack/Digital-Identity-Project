@@ -1,16 +1,17 @@
 Given('a user particular exists with unique ID {string} and 2FA code {string}') do |unique_id, two_fa_code|
-  user_particular = UserParticular.first
-  user_particular.update(unique_id:, two_fa_passcode: two_fa_code)
+  @user_particular = UserParticular.first
+  @user_particular.update(unique_id:, two_fa_passcode: two_fa_code)
 end
 
-Given('I am on "User Verification" page') do
-  # Assuming the journey starts at the "Home" page and requires login
-  step 'I am already on my NGO "Gebirah" page'
-
-  step 'I key in the undocumented user\'s unique EnableID number: 3451765'
-  step 'I key in a 6 digit code that is seen on his/her EnableID: 347628'
-  step 'I press "Check" button'
-end
+# Given(/^I am on NGO "([^"]*)" User Verification page$/) do |ngo_name|
+#   # Assuming the journey starts at the "Home" page and requires login
+#   step 'I am already on my NGO "Gebirah" page'
+#   step 'I key in the undocumented user\'s unique EnableID number: 3451765'
+#   step 'I key in a 6 digit code that is seen on his/her EnableID: 347628'
+#   step 'I press "Check" button'
+#   step "I should be redirected to the NGO \"#{ngo_name}\" User Verification page"
+#   puts current_path
+# end
 
 # Step to click a specific button
 And(/^I press the "([^"]*)" button$/) do |button|
@@ -19,13 +20,11 @@ And(/^I press the "([^"]*)" button$/) do |button|
     click_link button
   elsif has_button?(button)
     click_button button
+  elsif has_selector?("input[type='submit'][value='#{button}']")
+    find("input[type='submit'][value='#{button}']").click
   else
-    find("input[type='submit'][value='#{button.capitalize}']").click
+    raise 'Verification element not found'
   end
-end
-
-And(/^I press "Check" button$/) do
-  click_button 'Check'
 end
 
 # Step to navigate to a specific page
@@ -43,9 +42,13 @@ When(/^I press the NGO "([^"]*)" card$/) do |image_alt|
   card_link.click
 end
 
-Then('I should be redirected to the "User Verification" page and see "EnableID Verification"') do
-  puts current_path
-  step 'I should see "EnableID Verification"'
+Then(/^I should be redirected to the User Verification page under "([^"]*)"$/) do |ngo_name|
+  @ngo_user = NgoUser.find_by(name: ngo_name)
+  @user_particular = UserParticular.find_by(unique_id: '3451765', two_fa_passcode: '347628')
+  puts verify_ngo_user_path(@ngo_user, unique_id: '3451765')
+  using_wait_time(10) do
+    expect(current_path).to eq("/ngo_users/#{@ngo_user.id}/verify")
+  end
 end
 
 Then(/^I should be redirected to the NGO "([^"]*)" page$/) do |page_name|
@@ -67,12 +70,10 @@ Given(/^I am already on my NGO "([^"]*)" page$/) do |ngo_name|
   step %(I press the NGO "#{ngo_name}" card)
 end
 
-When(/^I key in the undocumented user's unique EnableID number: (\d+)$/) do |enable_id|
-  fill_in 'unique_id', with: enable_id
-end
-
-And(%r{^I key in a 6 digit code that is seen on his/her EnableID: (\d{6})$}) do |code|
-  fill_in 'two_fa_passcode', with: code
+When(/^I key in the Unique ID: '([^"]*)" and 6 digit code 2FA: "([^"]*)", then I press the check button$/) do |unique_id, two_fa_code|
+  fill_in 'unique_id', with: unique_id # Replace 'unique_id_field' with the actual field identifier
+  fill_in 'two_fa_passcode', with: two_fa_code # Replace 'two_fa_code_field' with the actual field identifier
+  find('#check-btn').click
 end
 
 Then('I should see his\/her EnableID card') do
