@@ -6,8 +6,8 @@ users_data = [
   {
     username: 'user1',
     email: 'user1@mail.com',
-    password: 'password1',
-    password_confirmation: 'password1',
+    password: 'adminpassword',
+    password_confirmation: 'adminpassword',
     phone_number: '90000001',
     particulars: {
       full_name: 'Rohingya Aung',

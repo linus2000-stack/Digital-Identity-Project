@@ -4,8 +4,23 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
-require 'cucumber/rails'
+require 'capybara/cucumber'
+require 'selenium/webdriver'
+require 'warden'
+require 'devise'
+require 'simplecov'
+SimpleCov.start
 
+World(Warden::Test::Helpers)
+Warden.test_mode!
+After { Warden.test_reset! } # devise inherits from warden, putting this here enables login_as methods in steps file
+
+# Previous content of test helper now starts here
+
+require 'cucumber/rails'
+Capybara.default_driver = :selenium_chrome
+Capybara.server_port = 3000
+Capybara.app_host = 'http://127.0.0.1:3000'
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
 # your application behaves in the production environment, where an error page will
@@ -50,5 +65,3 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
-# For FactoryBot, creating user in the test database
-World(FactoryBot::Syntax::Methods)
