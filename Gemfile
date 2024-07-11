@@ -76,6 +76,6 @@ group :test do
 end
 
 group :production do
-  gem "appengine", "~> 0.6"
+  gem 'appengine', '~> 0.6'
   gem 'pg', '~> 1.5.6' # for gcloud deployment
 end
