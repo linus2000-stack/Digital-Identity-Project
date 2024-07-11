@@ -36,54 +36,49 @@
     </script>
   <% end %>
 </head>
-<body>
-  <%# Start of EnableID card partial and filling in/edit button%>
-  <h1 class="text-center rounded mt-3">Your <strong style="color: #f1536a;">EnableID</strong></h1>
-  <%= render 'digitalid' %>
-  <div class="row justify-content-center align-items-center mt-2">
-    <button id="generate-2fa-btn" class="btn btn-info">Generate 2FA Passcode:</button>
-    <span id='two-fa-passcode' class='border lead px-3 py-1 h-100'><%= @user_particular&.two_fa_passcode || "2FA Passcode is not set up." %></span>
-  </div>
-  <div class="alert alert-info text-center my-1">
-    Make sure to fill in your particulars correctly before being verified by a NGO admin!
-  </div>
-  <div class='row justify-content-center'>
-    <% if @user_particular.nil? %>
-      <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", id: "fill-in-particulars" %>
+<%# Start of EnableID card partial and filling in/edit button%>
+<h1 class="text-center rounded mt-3">Your <strong style="color: #f1536a;">EnableID</strong></h1>
+<%= render 'digitalid' %>
+<div class="row justify-content-center align-items-center mt-2">
+  <button id="generate-2fa-btn" class="btn btn-info">Generate 2FA Passcode:</button>
+  <span id='two-fa-passcode' class='border lead px-3 py-1 h-100'><%= @user_particular&.two_fa_passcode || "2FA Passcode is not set up." %></span>
+</div>
+<div class="alert alert-info text-center my-1">
+  Make sure to fill in your particulars correctly before being verified by a NGO admin!
+</div>
+<div class='row justify-content-center'>
+  <% if @user_particular.nil? %>
+    <%= link_to "Fill in your particulars to get your Digital ID!", new_user_particular_path, class: "btn btn-danger", id: "fill-in-particulars" %>
+  <% else %>
+    <% if @user_particular.status == 'verified' %>
+      <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal" data-bs-target="#verificationWarningModal">
+        Edit your particulars!
+      </button>
     <% else %>
-      <% if @user_particular.status == 'verified' %>
-        <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal" data-bs-target="#verificationWarningModal">
-          Edit your particulars!
-        </button>
-      <% else %>
-        <button type="button" class="btn btn-primary p-3">
-          Edit your particulars!
-        </button>
-      <%end %>
+      <%= link_to "Edit your Particulars!", edit_user_particular_path(@user_particular), class: "btn btn-primary btn-danger p-3" %>
     <% end %>
-  </div>
-  <%# End of EnableID card partial and filling in/edit button%>
-    <!-- Modal -->
-    <div class="modal fade" id="verificationWarningModal" tabindex="-1" role="dialog" aria-labelledby="verificationWarningModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="verificationWarningModalLabel">Caution!</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            If you continue, you will lose your verification status and will need to be verified again by an NGO admin. Do you want to proceed?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <% if @user_particular.present? %>
-              <%= link_to "Proceed", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
-            <% end %>
-          </div>
-        </div>
+  <% end %>
+</div>
+<%# End of EnableID card partial and filling in/edit button%>
+<!-- Modal -->
+<div class="modal fade" id="verificationWarningModal" tabindex="-1" role="dialog" aria-labelledby="verificationWarningModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="verificationWarningModalLabel">Caution!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        If you continue, you will lose your verification status and will need to be verified again by an NGO admin. Do you want to proceed?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <% if @user_particular.present? %>
+          <%= link_to "Proceed", edit_user_particular_path(@user_particular), class: "btn btn-danger" %>
+        <% end %>
       </div>
     </div>
-  <%# end%>
-</body>
+  </div>
+</div>
