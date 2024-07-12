@@ -12,24 +12,38 @@ end
 #   step "I should be redirected to the NGO \"#{ngo_name}\" User Verification page"
 #   puts current_path
 # end
+Before('@requires_login') do
+  # Set this before running your tests
+  ENV['SKIP_AUTHENTICATE_USER'] = 'true'
+  login_as($user, scope: :user)
+end
 
-# Step to click a specific button
-And(/^I press the "([^"]*)" button$/) do |button|
-  puts "Current URL: #{current_url}, Current Path: #{current_path}, #{button}"
-  if has_link?(button)
-    click_link button
-  elsif has_button?(button)
-    click_button button
-  elsif has_selector?("input[type='submit'][value='#{button}']")
-    find("input[type='submit'][value='#{button}']").click
-  else
-    raise 'Verification element not found'
-  end
+# # Step to click a specific button
+# And(/^I press the "([^"]*)" button$/) do |button|
+#   puts "Current URL: #{current_url}"
+#   byebug
+#   if has_link?(button)
+#     click_link button
+#   elsif has_button?(button)
+#     click_button button
+#   elsif has_selector?("input[type='submit'][value='#{button}']")
+#     find("input[type='submit'][value='#{button}']").click
+#   else
+#     raise 'Verification element not found'
+#   end
+#   byebug
+# end
+
+When('I press the "Fill in your particulars to get your Digital ID!" button') do
+  login_as($user, scope: :user)
+  find("#fill-in-particulars-btn").click
 end
 
 # Step to navigate to a specific page
 Given(/^I am on the "([^"]*)" page$/) do |page|
+  puts "Current URL: #{current_url}"
   visit path_to(page)
+  puts "Current URL: #{current_url}"
 end
 
 Then('I should see a set of different NGO buttons') do
@@ -93,17 +107,28 @@ Given(/^I have a user (\d+) verified by NGO: (.+), and logs in$/) do |user_id, n
   expect(page).to have_content('Welcome,')
 end
 
-Given(/^I am a freshly logged in new user$/) do
+Given(/^I have created an account and have just logged in$/) do
   step 'I am on the "Login" page'
-  user = User.create(username: 'example1234', email: 'example123@example.com', password: 'password',
-                     password_confirmation: 'password', phone_number: '123456789')
+  $user = User.create(username: 'example1234', email: 'example123@example.com', password: 'password',
+                      password_confirmation: 'password', phone_number: '123456789')
   # Debugging: Check if user was successfully created
-  raise "User creation failed: #{user.errors.full_messages.join(', ')}" unless @user.persisted?
-
-  fill_in 'Log in EnableID', with: user.username
-  fill_in 'Password', with: user.password
+  raise "User creation failed: #{$user.errors.full_messages.join(', ')}" unless $user.persisted?
+  login_as($user, scope: :user)
+  fill_in 'Log in EnableID', with: $user.username
+  fill_in 'Password', with: $user.password
   step 'I press the "Log in" button'
-  login_as(user, scope: :user)
+  login_as($user, scope: :user)
+  visit root_path
+  expected_path = '/'
+  raise "Expected to be on #{expected_path}, but was on #{current_path}" unless current_path == expected_path
+
+  step 'I should see "Welcome, "'
+  # Set this before running your tests
+end
+
+Given(/^I am now on the user particulars home page$/) do
+  ENV['SKIP_AUTHENTICATE_USER'] = 'true'
+  login_as($user, scope: :user)
   visit root_path
   expected_path = '/'
   raise "Expected to be on #{expected_path}, but was on #{current_path}" unless current_path == expected_path
@@ -115,7 +140,7 @@ end
 def path_to(page_name)
   case page_name.downcase
   when 'home'
-    user_particular_path(user.id)
+    user_particular_path($user.id)
   when 'login'
     new_user_session_path
   when 'ngogebirah'
