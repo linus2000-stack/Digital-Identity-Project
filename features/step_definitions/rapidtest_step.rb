@@ -1,13 +1,13 @@
 Given('a user particular exists with unique ID {string} and 2FA code {string}') do |unique_id, two_fa_code|
-  @user_particular = UserParticular.first
-  @user_particular.update(unique_id:, two_fa_passcode: two_fa_code)
+  user_particular = UserParticular.find_by(unique_id:, two_fa_passcode: two_fa_code)
+  expect(user_particular).not_to be_nil
 end
 
 # Given(/^I am on NGO "([^"]*)" User Verification page$/) do |ngo_name|
 #   # Assuming the journey starts at the "Home" page and requires login
 #   step 'I am already on my NGO "Gebirah" page'
-#   step 'I key in the undocumented user\'s unique EnableID number: 3451765'
-#   step 'I key in a 6 digit code that is seen on his/her EnableID: 347628'
+#   step 'I key in the undocumented user\'s unique EnableID number: 3665753'
+#   step 'I key in a 6 digit code that is seen on his/her EnableID: 310263'
 #   step 'I press "Check" button'
 #   step "I should be redirected to the NGO \"#{ngo_name}\" User Verification page"
 #   puts current_path
@@ -44,8 +44,8 @@ end
 
 Then(/^I should be redirected to the User Verification page under "([^"]*)"$/) do |ngo_name|
   @ngo_user = NgoUser.find_by(name: ngo_name)
-  @user_particular = UserParticular.find_by(unique_id: '3451765', two_fa_passcode: '347628')
-  puts verify_ngo_user_path(@ngo_user, unique_id: '3451765')
+  @user_particular = UserParticular.find_by(unique_id: '3665753', two_fa_passcode: '310263')
+  puts verify_ngo_user_path(@ngo_user, unique_id: '3665753')
   using_wait_time(10) do
     expect(current_path).to eq("/ngo_users/#{@ngo_user.id}/verify")
   end
