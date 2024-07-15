@@ -1,57 +1,65 @@
 <head>
-    <%= stylesheet_link_tag '_digitalid', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag '_digitalid', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 <body>
   <div class="container-1">
-      <div class="card-1">
-          <div class="card-1-header">
-              EnableID Digital Card
-          </div>
-          <div class="card-1-body">
-              <div class="photo-1">
-                  <%= image_tag 'default.png', alt: "Default image", class: 'img-fluid', style: 'border: 2px solid black;' %>
-              </div>
-              <div class="details-1">
-                  <p><strong>Full Name:</strong><br><%= @user_particular&.full_name || "" %></p>                    
-                  <p><strong>Unique Identifier:</strong><br> <%= @user_particular.unique_id %></p>
-              </div>
-          </div>
-<div class="collapse-1">
-    <div class="card-1-body-hide">
-        <div class="details-1">
-            <p><strong>Gender:</strong><br> <%= @user_particular&.gender || "" %></p>
-            <p><strong>Ethnicity:</strong><br> <%= @user_particular&.ethnicity || "" %></p>
-            <p><strong>Religion:</strong><br> <%= @user_particular&.religion || "" %></p>
-            <p><strong>Country of Origin:</strong><br> <%= @user_particular&.country_of_origin || "" %></p>
-            <p><strong>Date of Birth:</strong><br> <%= @user_particular&.date_of_birth ? @user_particular.date_of_birth.strftime("%d-%m-%Y") : "" %></p>
-            <p><strong>Date of Arrival:</strong><br> <%= @user_particular&.date_of_arrival ? @user_particular.date_of_arrival.strftime("%d-%m-%Y") : "" %></p>
-            <p><strong>Phone Number:</strong><br> <%= "+#{@user_particular&.full_phone_number&.gsub('-', '') || ''}" %></p>
+    <div class="card-1">
+      <div class="card-1-header">
+        EnableID Digital Card
+      </div>
+      <div class="card-1-body">
+        <div class="photo-1">
+          <%= image_tag 'default.png', alt: "Default image", class: 'img-fluid', style: 'border: 2px solid black;' %>
         </div>
-    </div>
-</div>
-      <button class="toggle-button-1" type="button" onclick="toggleDetails(this)">Show details</button>
-        <div class="card-footer text-muted d-flex justify-content-between">
-          <% if @user_particular.nil? %>
-            <span>EnableID - Pending your action</span>
-          <% else %>
-            <% if @user_particular.status == 'pending' %>
-              <span class="custom-pending-verification-text-1">EnableID - Pending verification from an NGO <i class="custom-pending-verification fas fa-check"></i></span>
-            <% elsif @user_particular.status == 'verified' %>
-              <span>EnableID - Verified by <%= @user_particular.verifier_ngo %> <i class="custom-verified fas fa-check"></i></span>
-            <% else %>
-              <span class="custom-pending-verification-text-1">EnableID - Pending verification from an NGO</span>
-            <% end %>
-          <% end %>
+        <div class="details-1">
+          <p><strong>Full Name:</strong><br>
+            <%= @user_particular&.full_name || "" %></p>
+          <p><strong>Unique Identifier:</strong><br>
+ <%= @user_particular&.unique_id %></p>
         </div>
       </div>
+      <div class="collapse-1">
+        <div class="card-1-body-hide">
+          <div class="details-1">
+            <p><strong>Gender:</strong><br>
+ <%= @user_particular&.gender || "" %></p>
+            <p><strong>Ethnicity:</strong><br>
+ <%= @user_particular&.ethnicity || "" %></p>
+            <p><strong>Religion:</strong><br>
+ <%= @user_particular&.religion || "" %></p>
+            <p><strong>Country of Origin:</strong><br>
+ <%= @user_particular&.country_of_origin || "" %></p>
+            <p><strong>Date of Birth:</strong><br>
+ <%= @user_particular&.date_of_birth ? @user_particular.date_of_birth.strftime("%d-%m-%Y") : "" %></p>
+            <p><strong>Date of Arrival:</strong><br>
+ <%= @user_particular&.date_of_arrival ? @user_particular.date_of_arrival.strftime("%d-%m-%Y") : "" %></p>
+            <p><strong>Phone Number:</strong><br>
+ <%= "+#{@user_particular&.full_phone_number&.gsub('-', '') || ''}" %></p>
+          </div>
+        </div>
+      </div>
+      <button class="toggle-button-1" type="button" onclick="toggleDetails(this)">Show details</button>
+      <div class="card-footer text-muted d-flex justify-content-between">
+        <% if @user_particular.nil? %>
+          <span>EnableID - Pending your action</span>
+        <% else %>
+          <% if @user_particular.status == 'pending' %>
+            <span class="custom-pending-verification-text-1">EnableID - Pending verification from an NGO <i class="custom-pending-verification fas fa-check"></i></span>
+          <% elsif @user_particular.status == 'verified' %>
+            <span>EnableID - Verified by <%= @user_particular.verifier_ngo %> <i class="custom-verified fas fa-check"></i></span>
+          <% else %>
+            <span class="custom-pending-verification-text-1">EnableID - Pending verification from an NGO</span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-    <script>
-        function toggleDetails(button) {
-            const collapse = button.previousElementSibling;
-            collapse.classList.toggle('show');
-            button.classList.toggle('show');
-            button.textContent = collapse.classList.contains('show') ? 'Hide details' : 'Show details';
-        }
-    </script>
+  <script>
+    function toggleDetails(button) {
+        const collapse = button.previousElementSibling;
+        collapse.classList.toggle('show');
+        button.classList.toggle('show');
+        button.textContent = collapse.classList.contains('show') ? 'Hide details' : 'Show details';
+    }
+  </script>
 </body>
