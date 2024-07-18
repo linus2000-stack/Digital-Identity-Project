@@ -120,6 +120,13 @@ users_data = [
       birth_certificate_url: 'https://example.com/hussein_abbas_birth_certificate.jpg',
       passport_url: 'https://example.com/hussein_abbas_passport.jpg'
     }
+  },
+  {
+    username: 'newuser',
+    email: 'newuser@mail.com',
+    password: 'newuserpassword',
+    phone_number: '60001119',
+    particulars: {}
   }
 ]
 
@@ -146,7 +153,7 @@ users_data.each do |user_data|
   # Only create user data
   if user.new_record?
     user.email = user_data[:email]
-    user.password = user_data[:password] #TODO: Has error when updating password during deployment
+    user.password = user_data[:password] # TODO: Has error when updating password during deployment
     user.phone_number = user_data[:phone_number]
     user.save!
   end
@@ -157,7 +164,6 @@ users_data.each do |user_data|
   user_particular.assign_attributes(particulars_data)
   user_particular.save!
 end
-
 
 # Create or update NgoUsers
 ngo_users_data.each do |ngo_data|
