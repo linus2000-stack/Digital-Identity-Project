@@ -45,11 +45,11 @@ Background:
   Given a user particular exists with unique ID "3665753" and 2FA code "310263"
 
 Scenario: Going to my own "NGO" page
-  Given I am on the "Login" page
-  When I press the "I am a NGO" button
-  Then I should see a set of different NGO buttons 
-  When I press the NGO "Gebirah" card
-  Then I should be redirected to the NGO "Gebirah" page
+    Given I am on the "Login" page
+    When I press the "I am a NGO" button
+    Then I should see a set of different NGO buttons 
+    When I press the NGO "Gebirah" card
+    Then I should be redirected to the NGO "Gebirah" page
 
   Scenario: Retrieving undocumented user's EnableID personal particulars, then complete the verification checklist below the EnableID
     Given I am already on my NGO "Gebirah" page 
