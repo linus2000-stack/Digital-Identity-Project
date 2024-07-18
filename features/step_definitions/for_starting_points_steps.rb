@@ -3,36 +3,11 @@ Given('a user particular exists with unique ID {string} and 2FA code {string}') 
   expect(user_particular).not_to be_nil
 end
 
-# Given(/^I am on NGO "([^"]*)" User Verification page$/) do |ngo_name|
-#   # Assuming the journey starts at the "Home" page and requires login
-#   step 'I am already on my NGO "Gebirah" page'
-#   step 'I key in the undocumented user\'s unique EnableID number: 3665753'
-#   step 'I key in a 6 digit code that is seen on his/her EnableID: 310263'
-#   step 'I press "Check" button'
-#   step "I should be redirected to the NGO \"#{ngo_name}\" User Verification page"
-#   puts current_path
-# end
 Before('@requires_login') do
   # Set this before running your tests
   ENV['SKIP_AUTHENTICATE_USER'] = 'true'
   login_as($user, scope: :user)
 end
-
-# Step to click a specific button
-# And(/^I press the "([^"]*)" button$/) do |button|
-#   puts "Current URL: #{current_url}"
-#   byebug
-#   if has_link?(button)
-#     click_link button
-#   elsif has_button?(button)
-#     click_button button
-#   elsif has_selector?("input[type='submit'][value='#{button}']")
-#     find("input[type='submit'][value='#{button}']").click
-#   else
-#     raise 'Verification element not found'
-#   end
-#   byebug
-# end
 
 When('I press the "I am a NGO" button') do
   login_as($user, scope: :user)
@@ -88,12 +63,6 @@ Then(/^I should see "([^"]*)"$/) do |name|
   expect(page).to have_content("#{name}")
 end
 
-Given(/^I am already on my NGO "([^"]*)" page$/) do |ngo_name|
-  step 'I am on the "Login" page'
-  step 'I press the "I am a NGO" button'
-  step %(I press the NGO "#{ngo_name}" card)
-end
-
 When(/^I key in the Unique ID: '([^"]*)" and 6 digit code 2FA: "([^"]*)", then I press the check button$/) do |unique_id, two_fa_code|
   fill_in 'unique_id', with: unique_id # Replace 'unique_id_field' with the actual field identifier
   fill_in 'two_fa_passcode', with: two_fa_code # Replace 'two_fa_code_field' with the actual field identifier
@@ -135,16 +104,6 @@ Given(/^I have created an account and have just logged in$/) do
 
   step 'I should see "Welcome, "'
   # Set this before running your tests
-end
-
-Given(/^I am now on the user particulars home page$/) do
-  ENV['SKIP_AUTHENTICATE_USER'] = 'true'
-  login_as($user, scope: :user)
-  visit root_path
-  expected_path = '/'
-  raise "Expected to be on #{expected_path}, but was on #{current_path}" unless current_path == expected_path
-
-  step 'I should see "Welcome, "'
 end
 
 # Maps page names to their corresponding paths
